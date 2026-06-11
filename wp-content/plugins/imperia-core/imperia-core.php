@@ -2,12 +2,8 @@
 
 /**
  * Plugin Name: Imperia Core
- * Description: Modular architecture plugin
+ * Description: Modular architecture plugin (sleeping system)
  * Version: 0.1.0
- * Author: Imperia
- * Requires PHP: 8.3
- * Requires at least: 6.8
- * Text Domain: imperia-core
  */
 
 if (!defined('ABSPATH')) {
@@ -15,140 +11,75 @@ if (!defined('ABSPATH')) {
 }
 
 /**
- * это единственная helper-функция в файле imperia-core.php
+ * ==========================================================
+ * HELPERS
+ * ==========================================================
+ * Подключаем чистые функции (логирование и утилиты).
+ * Без них ядро не должно зависеть от классов.
  */
-if (!function_exists('imperia_log')) {
-
-	/**
-	 * Запись сообщения в журнал отладки WordPress.
-	 *
-	 * Логирование работает только если:
-	 * - включён WP_DEBUG
-	 * - включён WP_DEBUG_LOG
-	 *
-	 * В продакшене функция молча завершится.
-	 */
-	function imperia_log(string $message): void
-	{
-		if (
-			defined('WP_DEBUG')
-			&& WP_DEBUG
-			&& defined('WP_DEBUG_LOG')
-			&& WP_DEBUG_LOG
-		) {
-			error_log('[Imperia] ' . $message);
-		}
-	}
-
-	/* function imperia_log(string $message): void
-	{
-		if (
-			defined('WP_DEBUG')
-			&& WP_DEBUG
-			&& defined('WP_DEBUG_LOG')
-			&& WP_DEBUG_LOG
-		) {
-
-			error_log(sprintf(
-				'[Imperia] URI=%s | ACTION=%s | AJAX=%s | CRON=%s | %s',
-				$_SERVER['REQUEST_URI'] ?? 'unknown',
-				$_REQUEST['action'] ?? 'none',
-				(defined('DOING_AJAX') && DOING_AJAX) ? 'yes' : 'no',
-				(defined('DOING_CRON') && DOING_CRON) ? 'yes' : 'no',
-				$message
-			));
-		}
-	} */
-}
+require_once __DIR__ . '/inc/Helpers/functions.php';
 
 /**
  * ==========================================================
- * 1. ОПРЕДЕЛЯЕМ КРИТИЧЕСКИЕ ФАЙЛЫ ЯДРА
+ * AUTOLOADER + BOOTSTRAP
  * ==========================================================
- *
- * Это "обязательный минимум" для работы плагина.
- * Если хотя бы одного файла нет — плагин НЕ должен стартовать.
+ * Подключаем только инфраструктуру.
+ * Никакой логики выполнения здесь нет.
  */
-
 $coreFiles = [
 	'autoloader' => __DIR__ . '/inc/Core/Autoloader.php',
-	'bootstrap' => __DIR__ . '/inc/Core/Bootstrap.php',
+	'bootstrap'  => __DIR__ . '/inc/Core/Bootstrap.php',
 ];
 
 /**
- * ==========================================================
- * 2. ПРОВЕРКА ЦЕЛОСТНОСТИ ЯДРА (FAIL-FAST SAFETY LAYER)
- * ==========================================================
- *
- * Здесь мы НЕ даём PHP упасть с fatal error.
- * Вместо этого:
- * - фиксируем проблему
- * - пишем в лог
- * - мягко останавливаем плагин
+ * Fail-fast: если ядро повреждено — плагин не стартует.
+ * Это защищает WordPress от частично сломанного состояния.
  */
-
 foreach ($coreFiles as $name => $file) {
 
 	if (!is_file($file)) {
 
-		/**
-		 * Логируем критическую ошибку ядра
-		 * (WordPress debug.log или error_log сервера)
-		 */
-		imperia_log(
-			sprintf(
-				'CRITICAL: Missing core file [%s]: %s',
-				$name,
-				$file
-			)
-		);
-		/**
-		 * Останавливаем выполнение плагина.
-		 *
-		 * ВАЖНО:
-		 * - WordPress не падает
-		 * - но плагин НЕ активируется
-		 */
+		if (function_exists('imperia_log')) {
+			imperia_log("Critical missing core file: {$name}");
+		}
+
 		return;
 	}
+
+	require_once $file;
 }
 
 /**
  * ==========================================================
- * 3. ПОДКЛЮЧЕНИЕ ЯДРА (ТОЛЬКО ЕСЛИ ВСЁ ОК)
+ * BOOTSTRAP ENTRYPOINT
  * ==========================================================
  *
- * Здесь уже безопасно подключаем файлы,
- * потому что мы убедились, что они существуют.
- */
-
-require_once $coreFiles['autoloader'];
-require_once $coreFiles['bootstrap'];
-
-/**
- * ==========================================================
- * 4. ЗАПУСК ПЛАГИНА (ЕДИНСТВЕННАЯ ТОЧКА СТАРТА)
- * ==========================================================
+ * ВАЖНО:
+ * Мы не запускаем систему сразу.
+ * Только регистрируем запуск после загрузки всех плагинов.
  *
- * Вся бизнес-логика начинается ТОЛЬКО отсюда.
- * Autoloader уже подключён.
- * Bootstrap уже доступен.
+ * Это стандартный и безопасный WordPress lifecycle hook.
  */
+add_action('plugins_loaded', static function (): void {
 
-add_action(
-	'plugins_loaded',
-	static function (): void {
+	/**
+	 * Дополнительная защита:
+	 * если класс ядра не загрузился — ничего не делаем.
+	 */
+	if (!class_exists(\Imperia\Core\Bootstrap::class)) {
 
-		if (!class_exists(\Imperia\Core\Bootstrap::class)) {
-			imperia_log(
-				'CRITICAL: Core Bootstrap class not found after include'
-			);
-
-			return;
+		if (function_exists('imperia_log')) {
+			imperia_log('Bootstrap class not found');
 		}
 
-		\Imperia\Core\Bootstrap::instance()->run();
+		return;
 	}
-);
 
-imperia_log('PLUGIN FILE LOADED');
+	/**
+	 * Старт системы.
+	 * Дальше всё управление переходит в Bootstrap → Context → ModuleManager
+	 */
+	\Imperia\Core\Bootstrap::instance()->run();
+});
+
+imperia_log('ENTRY POINT HIT');

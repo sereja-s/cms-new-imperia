@@ -14,6 +14,25 @@
 
 ---
 
+## ГЛАВНОЕ ПРАВИЛО архитектуры ПРОЕКТА:
+
+Module::init() только регистрирует hooks, а вся бизнес-логика выполняется внутри обработчиков этих hooks.
+
+При создании модулей: в init() запрещено:
+
+- DB запросы
+- API запросы
+- кэширование
+- расчёты
+- рендеринг
+
+Разрешено только:
+
+add_action(...)
+add_filter(...)
+
+---
+
 ## Основной стек
 
 CMS:
@@ -55,8 +74,36 @@ Blocksy Free
 Структура плагина:
 
 imperia-core/
+│
 ├── imperia-core.php
+│
 ├── inc/
-├── assets/
+│ ├── Core/
+│ │ ├── Autoloader.php
+│ │ ├── Bootstrap.php
+│ │ ├── Context.php
+│ │ ├── Constants.php
+│ │ ├── ModuleInterface.php
+│ │ └── ModuleManager.php
+│ │
+│ └── Helpers/
+│ └── functions.php
+│
 ├── modules/
-└── languages/
+│ ├── Catalog/
+│ │ └── Module.php
+│ │
+│ ├── Checkout/
+│ │ └── Module.php
+│ │
+│ ├── Search/
+│ │ └── Module.php
+│ │
+│ └── Account/
+│ └── Module.php
+│
+├── assets/
+│
+├── languages/
+│
+└── uninstall.php

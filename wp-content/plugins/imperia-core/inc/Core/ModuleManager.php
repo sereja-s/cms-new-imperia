@@ -3,144 +3,113 @@
 namespace Imperia\Core;
 
 /**
+ * ==========================================================
  * MODULE MANAGER
+ * ==========================================================
  *
- * Центральный оркестратор модульной системы Imperia Core.
+ * Отвечает только за:
+ * - определение доступных модулей;
+ * - фильтрацию по контексту;
+ * - безопасную инициализацию.
  *
- * Отвечает ТОЛЬКО за:
- * - создание экземпляров модулей
- * - проверку соответствия ModuleInterface
- * - безопасную инициализацию модулей
- * - изоляцию ошибок модулей (graceful degradation)
- *
- * НЕ отвечает за:
- * - бизнес-логику модулей
- * - регистрацию WordPress hooks внутри модулей
- * - загрузку файлов (это делает Autoloader)
- *
- * Архитектурный принцип:
- * "Один сломанный модуль не должен ломать систему"
+ * Модули НЕ выполняют бизнес-логику.
+ * Они только регистрируют hooks.
  */
-class ModuleManager
+final class ModuleManager
 {
-	/**
-	 * Флаг защиты от повторной загрузки модулей.
-	 *
-	 * Обеспечивает idempotency:
-	 * метод load() может быть вызван сколько угодно раз,
-	 * но реально выполнится только один раз.
-	 */
 	private bool $loaded = false;
 
 	/**
-	 * Явно определённый список модулей системы.
+	 * Реестр модулей.
 	 *
-	 * Это "static registry" модулей:
-	 * - предсказуемый порядок загрузки
-	 * - отсутствие магии
-	 * - простая отладка
-	 *
-	 * Каждый модуль ОБЯЗАН реализовывать ModuleInterface.
+	 * Формат:
+	 * ModuleClass => allowed contexts
 	 */
-	private array $modules = [
-		'Imperia\\Modules\\Catalog\\Module',
-		/* 'Imperia\\Modules\\Checkout\\Module',
-		'Imperia\\Modules\\Search\\Module',
-		'Imperia\\Modules\\Account\\Module', */
+	private const MODULES = [
+
+		'Imperia\\Modules\\Catalog\\Module' => [
+			'frontend',
+		],
+
+		/* 'Imperia\\Modules\\Checkout\\Module' => [
+			'frontend',
+		],
+
+		'Imperia\\Modules\\Search\\Module' => [
+			'frontend',
+			'ajax',
+		],
+
+		'Imperia\\Modules\\Account\\Module' => [
+			'frontend',
+			'admin',
+		], */
+
 	];
 
-	/**
-	 * Загрузка всех модулей системы.
-	 *
-	 * Последовательность:
-	 * 1. проверка защиты от повторного запуска
-	 * 2. фиксация состояния "loaded"
-	 * 3. обход списка модулей
-	 * 4. создание объекта модуля
-	 * 5. проверка контракта ModuleInterface
-	 * 6. безопасный вызов init()
-	 */
 	public function load(): void
 	{
-		/**
-		 * 1. Защита от повторного запуска
-		 *
-		 * Если модульный менеджер уже выполнялся —
-		 * повторный запуск игнорируется.
-		 */
 		if ($this->loaded) {
 			return;
 		}
 
-		/**
-		 * 2. Фиксируем состояние загрузки
-		 *
-		 * Делается ДО запуска модулей,
-		 * чтобы исключить повторную инициализацию
-		 * при возможных ошибках внутри модулей.
-		 */
 		$this->loaded = true;
 
+		$context = Context::type();
+
+		imperia_log('CONTEXT: ' . $context);
+
 		/**
-		 * 3. Обход всех зарегистрированных модулей
+		 * Контексты,
+		 * в которых система должна спать.
 		 */
-		foreach ($this->modules as $moduleClass) {
+		if (
+			$context === 'heartbeat'
+			|| $context === 'cron'
+			|| $context === 'cli'
+		) {
+			return;
+		}
+
+		foreach (self::MODULES as $moduleClass => $allowedContexts) {
+
+			if (!in_array($context, $allowedContexts, true)) {
+				continue;
+			}
 
 			try {
-				/**
-				 * 4. Создание экземпляра модуля
-				 *
-				 * Автозагрузчик сам подгрузит файл класса.
-				 */
+
 				$module = new $moduleClass();
 
-				/**
-				 * 5. Проверка контракта
-				 *
-				 * Каждый модуль ОБЯЗАН реализовывать ModuleInterface.
-				 *
-				 * Это гарантирует:
-				 * - наличие метода init()
-				 * - единый жизненный цикл модулей
-				 */
 				if (!($module instanceof ModuleInterface)) {
 
-					imperia_log(sprintf(
-						"[Module ERROR] %s does not implement ModuleInterface",
-						$moduleClass
-					));
+					imperia_log(
+						sprintf(
+							'Invalid module: %s',
+							$moduleClass
+						)
+					);
 
 					continue;
 				}
 
 				/**
-				 * 6. Инициализация модуля
-				 *
-				 * Внутри init() модуль:
-				 * - регистрирует hooks (add_action / add_filter)
-				 * - подключает свою бизнес-логику
-				 * - настраивает сервисы
+				 * ВАЖНО:
+				 * init() должен только
+				 * регистрировать hooks.
 				 */
 				$module->init();
+
+				imperia_log('CONTEXT: ' . Context::type());
 			} catch (\Throwable $e) {
 
-				/**
-				 * ГЛАВНЫЙ ПРИНЦИП:
-				 *
-				 * Ошибка одного модуля НЕ должна ломать систему.
-				 * Поэтому:
-				 * - логируем ошибку
-				 * - пропускаем модуль
-				 * - продолжаем загрузку остальных
-				 */
-				imperia_log(sprintf(
-					"[Module ERROR] %s | %s | %s",
-					$moduleClass,
-					$e->getMessage(),
-					$e->getFile() . ':' . $e->getLine()
-				));
-
-				continue;
+				imperia_log(
+					sprintf(
+						'[Module ERROR] %s | %s',
+						$moduleClass,
+						$e->getMessage()
+					)
+				);
 			}
 		}
 	}
