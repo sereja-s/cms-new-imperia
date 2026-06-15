@@ -100,6 +100,10 @@
 		border-radius: 0;
 		box-shadow: none;
 		background-color: transparent;
+
+		&:focus {
+			background-color: transparent;
+		}
 	}
 
 	&:has(:is(input, .ct-select-taxonomy):focus) {

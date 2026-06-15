@@ -31,6 +31,7 @@
 		padding-block: var(--theme-form-inner-spacing);
 		padding-inline: var(--has-classic-forms, var(--theme-form-inner-spacing));		
 		border-radius: var(--has-classic-forms, var(--theme-form-border-radius));
+		background-color: transparent;
 
 		@include functions.media-breakpoint-up(md) {
 			margin-bottom: 35px;

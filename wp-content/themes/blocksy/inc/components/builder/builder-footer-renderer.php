@@ -71,108 +71,9 @@ class Blocksy_Footer_Builder_Render extends Blocksy_Builder_Render {
 		$count = count($row['columns']);
 
 		$data_stack = [];
+		$columns = $this->get_normalized_columns_layout($count, $atts);
 
-		if ($count === 2) {
-			$columns = blocksy_default_akg(
-				'2_columns_layout',
-				$atts,
-				[
-					'desktop' => 'repeat(2, 1fr)',
-					'tablet' => 'initial',
-					'mobile' => 'initial'
-				]
-			);
-
-			$columns = blocksy_expand_responsive_value($columns);
-
-			if ($columns['tablet'] === 'initial') {
-				$data_stack[] = 'tablet';
-			}
-
-			if ($columns['mobile'] === 'initial') {
-				$data_stack[] = 'mobile';
-			}
-		}
-
-		if ($count === 3) {
-			$columns = blocksy_default_akg(
-				'3_columns_layout',
-				$atts,
-				[
-					'desktop' => 'repeat(3, 1fr)',
-					'tablet' => 'initial',
-					'mobile' => 'initial'
-				]
-			);
-
-			$columns = blocksy_expand_responsive_value($columns);
-
-			if ($columns['tablet'] === 'initial') {
-				$data_stack[] = 'tablet';
-			}
-
-			if ($columns['mobile'] === 'initial') {
-				$data_stack[] = 'mobile';
-			}
-		}
-
-		if ($count === 4) {
-			$columns = blocksy_default_akg(
-				'4_columns_layout',
-				$atts,
-				[
-					'desktop' => 'repeat(4, 1fr)',
-					'tablet' => 'initial',
-					'mobile' => 'initial'
-				]
-			);
-
-			$columns = blocksy_expand_responsive_value($columns);
-
-			if ($columns['tablet'] === 'initial') {
-				$data_stack[] = 'tablet';
-			}
-
-			if ($columns['mobile'] === 'initial') {
-				$data_stack[] = 'mobile';
-			}
-		}
-
-		if ($count === 5) {
-			$columns = blocksy_default_akg(
-				'5_columns_layout',
-				$atts,
-				[
-					'desktop' => 'repeat(5, 1fr)',
-					'tablet' => 'initial',
-					'mobile' => 'initial'
-				]
-			);
-
-			$columns = blocksy_expand_responsive_value($columns);
-
-			if ($columns['tablet'] === 'initial') {
-				$data_stack[] = 'tablet';
-			}
-
-			if ($columns['mobile'] === 'initial') {
-				$data_stack[] = 'mobile';
-			}
-		}
-
-		if ($count === 6) {
-			$columns = blocksy_default_akg(
-				'6_columns_layout',
-				$atts,
-				[
-					'desktop' => 'repeat(6, 1fr)',
-					'tablet' => 'initial',
-					'mobile' => 'initial'
-				]
-			);
-
-			$columns = blocksy_expand_responsive_value($columns);
-
+		if ($count >= 2 && $count <= 6) {
 			if ($columns['tablet'] === 'initial') {
 				$data_stack[] = 'tablet';
 			}
@@ -311,6 +212,51 @@ class Blocksy_Footer_Builder_Render extends Blocksy_Builder_Render {
 		$result .= '</div>';
 
 		return $result;
+	}
+
+	/**
+	 * Normalizes a footer row's stored `*_columns_layout` value (which may be a
+	 * full responsive array, a partial array, a bare scalar, or absent) into a
+	 * complete ['desktop', 'tablet', 'mobile'] shape with stacked small screens.
+	 *
+	 * Small screens can only stack or split into two columns, so any other
+	 * layout collapses to a stacked layout. This mirrors the clamp in
+	 * middle-row/dynamic-styles.php so the divider gate stays aligned with the
+	 * actual rendered grid.
+	 */
+	public function get_normalized_columns_layout($count, $atts) {
+		$default_columns = [
+			'desktop' => 'initial',
+			'tablet' => 'initial',
+			'mobile' => 'initial',
+		];
+
+		if ($count >= 2 && $count <= 6) {
+			$default_columns['desktop'] = 'repeat(' . $count . ', 1fr)';
+		}
+
+		$columns = wp_parse_args(
+			blocksy_expand_responsive_value(
+				blocksy_default_akg(
+					$count . '_columns_layout',
+					$atts,
+					$default_columns
+				)
+			),
+			$default_columns
+		);
+
+		$small_screen_choices = ['initial', 'repeat(2, 1fr)'];
+
+		if (! in_array($columns['tablet'], $small_screen_choices)) {
+			$columns['tablet'] = 'initial';
+		}
+
+		if (! in_array($columns['mobile'], $small_screen_choices)) {
+			$columns['mobile'] = 'initial';
+		}
+
+		return $columns;
 	}
 
 	public function is_row_empty($row) {

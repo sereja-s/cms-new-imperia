@@ -7,9 +7,9 @@
 		box-shadow: none;
 		background-color: transparent;
 
-		// &:focus {
-		// 	background-color: transparent;
-		// }
+		&:focus {
+			background-color: transparent;
+		}
 	}
 
 	&:has(:is(input, select):focus) {

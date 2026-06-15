@@ -294,7 +294,7 @@ $inner_wrapper_class = implode(' ', $inner_wrapper_classes);
 ?>
 
 
-<form role="search" method="get" class="ct-search-form" <?php echo blocksy_attr_to_html($html_atts); ?> action="<?php echo esc_url($home_url); ?>" aria-haspopup="listbox" <?php echo wp_kses_post($search_live_results_output) ?>>
+<form role="search" method="get" class="ct-search-form" <?php echo blocksy_attr_to_html($html_atts); ?> action="<?php echo esc_url($home_url); ?>" <?php echo wp_kses_post($search_live_results_output) ?>>
 
 	<div class="<?php echo esc_attr($inner_wrapper_class); ?>" <?php echo blocksy_attr_to_html($inner_wrapper_atts); ?>>
 		<?php if (
@@ -316,6 +316,7 @@ $inner_wrapper_class = implode(' ', $inner_wrapper_classes);
 				title="<?php echo __('Search for...', 'blocksy') ?>"
 				aria-label="<?php echo __('Search for...', 'blocksy') ?>"
 				<?php if ($has_live_results === 'yes') { ?>
+					role="combobox"
 					aria-autocomplete="list"
 					aria-controls="<?php echo esc_attr($results_id); ?>"
 					aria-describedby="<?php echo esc_attr($status_id); ?>"

@@ -7,7 +7,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-05-29 14:11+0000\n"
+"POT-Creation-Date: 2026-06-11 16:50+0000\n"
 "Project-Id-Version: undefined\n"
 "X-Poedit-Basepath: ..\n"
 "X-Poedit-KeywordsList: __;_e;_ex:1,2c;_n:1,2;_n_noop:1,2;_nx:1,2,4c;"
@@ -66,11 +66,11 @@ msgstr ""
 msgid "Search for..."
 msgstr ""
 
-#: searchform.php:341
+#: searchform.php:342
 msgid "Search in category"
 msgstr ""
 
-#: searchform.php:429, inc/manager.php:240, inc/manager.php:243
+#: searchform.php:430, inc/manager.php:240, inc/manager.php:243
 msgid "No results"
 msgstr ""
 

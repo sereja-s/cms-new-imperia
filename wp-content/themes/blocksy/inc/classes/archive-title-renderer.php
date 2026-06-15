@@ -23,7 +23,7 @@ class ArchiveTitleRenderer {
 			[
 				'class' => 'ct-title-label'
 			],
-			rtrim(trim($prefix), ':')
+			preg_replace('/\s*:\s*$/u', '', trim($prefix))
 		) . ' ' . $original_title;
 	}
 

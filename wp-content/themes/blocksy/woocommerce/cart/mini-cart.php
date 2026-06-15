@@ -110,7 +110,7 @@ do_action( 'woocommerce_before_mini_cart' ); ?>
 		?>
 	</ul>
 
-	<?php do_action( 'blocksy:pro:woo-extra:offcanvas:minicart:list:after' ); ?>
+	<?php do_action( 'blocksy:minicart:list:after' ); ?>
 
 	<?php //do_action( 'woocommerce_widget_shopping_cart_before_totals' ); ?>
 	
@@ -133,12 +133,13 @@ do_action( 'woocommerce_before_mini_cart' ); ?>
 
 <?php else :
 
-	ob_start();
-	do_action( 'blocksy:pro:woo-extra:offcanvas:minicart:empty' );
-	$maybe_content_block = ob_get_clean();
+	$minicart_empty_custom_content = apply_filters(
+		'blocksy:minicart:empty:custom-output',
+		''
+	);
 
-	if (trim($maybe_content_block) !== '') {
-		echo $maybe_content_block;
+	if (trim($minicart_empty_custom_content) !== '') {
+		echo $minicart_empty_custom_content;
 	} else {
 		wc_get_template( 'cart/cart-empty.php' );
 	}

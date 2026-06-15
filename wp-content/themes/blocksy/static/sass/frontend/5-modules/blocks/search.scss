@@ -95,20 +95,22 @@
 		.wp-element-button {
 			--theme-icon-color: currentColor;
 			padding: initial;
-			width: var(--search-button-size, var(--theme-form-field-height, 40px));
+			aspect-ratio: 1/1;
 		}
 	}
 
 	&[data-submit-button*="minimal"] {
 
 		.wp-element-button {
+			--outline-offset: 0px;
 			--theme-icon-size: 13px;
+			--theme-button-min-height: 100%;
 			--theme-button-shadow: none;
 			--theme-button-transform: none;
 			--theme-button-text-initial-color: var(--theme-text-color);
 			--theme-button-text-hover-color: var(--theme-form-field-border-focus-color);
-			--theme-button-background-initial-color: var(--has-classic-forms, var(--theme-form-field-background-initial-color));
-			--theme-button-background-hover-color: var(--has-classic-forms, var(--theme-form-field-background-initial-color));
+			--theme-button-background-initial-color: transparent;
+			--theme-button-background-hover-color: transparent;
 		}
 	}
 }

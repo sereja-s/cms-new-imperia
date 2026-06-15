@@ -1,3 +1,13 @@
+2.1.45: 2026-06-11
+- Improvement: Archive title label spacing issue in locales with no-break spaces
+- Improvement: Header search modal - correctly apply background value to input field
+- Improvement: Heading color settings consistency between site content and editor interface elements
+- Improvement: Improved footer column divider behavior to prevent dividers from appearing in stacked mobile layouts
+- Improvement: Improved frontend compatibility by enhancing handling of unsupported CSS selector features in older browsers
+- Improvement: Search box - improved ARIA labeling and accessibility for live search results
+- Improvement: Search box - prevent button overflow outside the input field
+- Improvement: Search box - prevent unintended input background Color inheritance on the button
+
 2.1.44: 2026-05-29
 - Improvement: Potential CLS issue when sidebar is set on the left for single posts
 - Fix: Search - fix fatal error when search_thumb_radius has legacy ct-spacing format
