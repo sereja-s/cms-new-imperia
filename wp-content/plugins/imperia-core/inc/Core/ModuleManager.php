@@ -57,7 +57,7 @@ final class ModuleManager
 
 		$context = Context::type();
 
-		imperia_log('CONTEXT: ' . $context);
+		//imperia_log('CONTEXT: ' . $context);
 
 		/**
 		 * Контексты,
@@ -68,8 +68,18 @@ final class ModuleManager
 			|| $context === 'cron'
 			|| $context === 'cli'
 		) {
+
+			imperia_log(
+				sprintf(
+					'SLEEP MODE: %s',
+					$context
+				)
+			);
+
 			return;
 		}
+
+		imperia_log('CONTEXT: ' . $context);
 
 		foreach (self::MODULES as $moduleClass => $allowedContexts) {
 
@@ -100,7 +110,14 @@ final class ModuleManager
 				 */
 				$module->init();
 
-				imperia_log('CONTEXT: ' . Context::type());
+				//imperia_log('CONTEXT: ' . Context::type());
+
+				imperia_log(
+					sprintf(
+						'MODULE LOADED: %s',
+						$moduleClass
+					)
+				);
 			} catch (\Throwable $e) {
 
 				imperia_log(

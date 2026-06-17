@@ -8,6 +8,7 @@ final class Module implements ModuleInterface
 {
 	public function init(): void
 	{
+		imperia_log('Catalog module init');
 		/**
 		 * Пока регистрируем тестовый hook.
 		 *
@@ -27,7 +28,7 @@ final class Module implements ModuleInterface
 			defined('WP_DEBUG')
 			&& WP_DEBUG
 		) {
-			imperia_log('Catalog hook executed');
+			imperia_log('Catalog wp hook');
 		}
 	}
 }

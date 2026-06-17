@@ -49,8 +49,8 @@ final class Bootstrap
 
 		$this->modules = new ModuleManager();
 
-		$this->modules->load();
-
 		imperia_log('BOOTSTRAP RUN');
+
+		$this->modules->load();
 	}
 }
