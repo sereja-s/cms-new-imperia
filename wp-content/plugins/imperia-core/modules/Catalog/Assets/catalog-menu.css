@@ -1,0 +1,76 @@
+/**
+ * ==========================================================
+ * CATALOG MENU
+ * ==========================================================
+ */
+
+.imperia-catalog {
+    position: relative;
+
+    width: 900px;
+
+    margin: 40px auto;
+
+    font-family: inherit;
+}
+
+.imperia-catalog__button {
+    padding: 12px 20px;
+
+    border: none;
+
+    cursor: pointer;
+
+    font-size: 16px;
+}
+
+.imperia-catalog__dropdown {
+    display: block;
+
+    margin-top: 15px;
+
+    border: 1px solid #ddd;
+
+    background: #fff;
+
+    min-height: 350px;
+
+    display: flex;
+}
+
+.imperia-catalog__left {
+    width: 300px;
+
+    border-right: 1px solid #ddd;
+}
+
+.imperia-catalog__right {
+    flex: 1;
+}
+
+.imperia-catalog__categories,
+.imperia-catalog__children {
+    list-style: none;
+
+    margin: 0;
+
+    padding: 0;
+}
+
+.imperia-catalog__category {
+    padding: 12px 16px;
+
+    border-bottom: 1px solid #eee;
+
+    cursor: pointer;
+}
+
+.imperia-catalog__category:hover {
+    background: #f5f5f5;
+}
+
+.imperia-catalog__children li {
+    padding: 12px 16px;
+
+    border-bottom: 1px solid #eee;
+}
