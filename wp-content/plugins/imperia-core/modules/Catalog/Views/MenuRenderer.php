@@ -27,23 +27,6 @@ use Imperia\Modules\Catalog\Services\CategoryCache;
  * - кэширование.
  *
  * ==========================================================
- *
- * Структура вывода:
- *
- * .imperia-catalog
- *
- *      button
- *
- *      dropdown
- *
- *          left
- *              категории
- *
- *          right
- *              подкатегории
- *
- *
- * ==========================================================
  */
 final class MenuRenderer
 {
@@ -74,71 +57,49 @@ final class MenuRenderer
 	 * ======================================================
 	 * RENDER
 	 * ======================================================
-	 *
-	 * Главный метод вывода меню.
 	 */
 	public function render(): void
 	{
 
 
-		/**
-		 * Получаем дерево.
-		 */
 		$tree =
 			$this->cache
 			->getTree();
 
 
 
-		/**
-		 * Даже если категорий нет или есть служебная категория, но без товаров,
-		 * кнопка каталога должна быть не видна.
-		 *
-		 */
+		if (empty($tree)) {
 
-		if (empty($tree)) return;
+			return;
+		}
 
 ?>
 
 		<div class="imperia-catalog ct-container">
 
 
-			<!--
-				Главная кнопка каталога.
-
-				Всегда присутствует
-				на странице.
-			-->
 			<button
 				type="button"
 				class="imperia-catalog__button"
-				aria-expanded="false">
+				aria-expanded="false"
+				aria-controls="imperia-catalog-dropdown">
+
 				Каталог товаров
+
 			</button>
 
 
 
-			<!--
-				Выпадающее меню.
-
-				По умолчанию скрыто CSS.
-
-				JS добавит класс:
-				
-				imperia-catalog--open
-			-->
-			<div class="imperia-catalog__dropdown">
+			<div
+				class="imperia-catalog__dropdown"
+				id="imperia-catalog-dropdown">
 
 
-				<!--
-					Левая колонка.
 
-					Основные категории.
-				-->
 				<div class="imperia-catalog__left">
 
-					<ul
-						class="imperia-catalog__categories">
+
+					<ul class="imperia-catalog__categories">
 
 
 						<?php foreach ($tree as $category): ?>
@@ -146,111 +107,135 @@ final class MenuRenderer
 
 							<li
 								class="imperia-catalog__category
-	<?= !empty($category['children'])
+						<?= !empty($category['children'])
 								? 'imperia-catalog__category--has-children'
 								: ''; ?>"
+
 								data-category-id="<?= esc_attr($category['id']); ?>">
 
 
 
-								<!--
-		Обычная ссылка категории.
-
-		Клик по названию:
-		переход в WooCommerce категорию.
-	-->
-								<a
-									class="imperia-catalog__link"
-									href="<?= esc_url($category['url']); ?>">
+								<div class="imperia-catalog__row">
 
 
-									<span class="imperia-catalog__category-name">
 
-										<?= esc_html($category['name']); ?>
+									<a
+										class="imperia-catalog__link"
+										href="<?= esc_url($category['url']); ?>">
 
-									</span>
+
+										<span class="imperia-catalog__category-name">
+
+											<?= esc_html($category['name']); ?>
+
+										</span>
 
 
-								</a>
+									</a>
+
+
+
+
+									<?php if (!empty($category['children'])): ?>
+
+
+										<button
+											type="button"
+											class="imperia-catalog__toggle"
+
+											data-category-id="<?= esc_attr($category['id']); ?>"
+
+											aria-expanded="false"
+
+											aria-controls="imperia-mobile-submenu-<?= esc_attr($category['id']); ?>"
+
+											aria-label="Открыть подкатегории категории <?= esc_attr($category['name']); ?>">
+
+
+
+											<svg
+												class="imperia-catalog__icon"
+												width="18"
+												height="18"
+												viewBox="0 0 24 24"
+												fill="none"
+												aria-hidden="true">
+
+
+												<path
+													d="M9 18l6-6-6-6"
+													stroke="currentColor"
+													stroke-width="2"
+													stroke-linecap="round"
+													stroke-linejoin="round" />
+
+
+											</svg>
+
+
+
+										</button>
+
+
+
+									<?php endif; ?>
+
+
+
+								</div>
+
+
 
 
 
 								<?php if (!empty($category['children'])): ?>
 
 
-									<button
-										type="button"
-										class="imperia-catalog__toggle"
+									<div
+										class="imperia-catalog__mobile-children"
 
-										data-category-id="<?= esc_attr($category['id']); ?>"
+										id="imperia-mobile-submenu-<?= esc_attr($category['id']); ?>"
 
-										aria-expanded="false"
-
-										aria-controls="imperia-submenu-<?= esc_attr($category['id']); ?>"
-
-										aria-label="Открыть подкатегории категории <?= esc_attr($category['name']); ?>">
+										hidden>
 
 
-										<svg
-											class="imperia-catalog__icon"
+									</div>
 
-											width="18"
-											height="18"
-
-											viewBox="0 0 24 24"
-
-											fill="none"
-
-											aria-hidden="true">
-
-
-											<path
-												d="M9 18l6-6-6-6"
-
-												stroke="currentColor"
-
-												stroke-width="2"
-
-												stroke-linecap="round"
-
-												stroke-linejoin="round" />
-
-
-										</svg>
-
-
-									</button>
 
 
 								<?php endif; ?>
 
 
+
 							</li>
+
 
 
 						<?php endforeach; ?>
 
 
+
 					</ul>
+
 
 
 				</div>
 
-				<!--
-	Плавающая панель подкатегорий.
 
-	JS будет:
-	- наполнять HTML;
-	- позиционировать напротив категории;
-	- скрывать/показывать.
--->
+
+
+
 				<div
 					class="imperia-catalog__submenu"
 					hidden>
 
+
 				</div>
 
+
+
 			</div>
+
 
 
 		</div>
@@ -259,23 +244,7 @@ final class MenuRenderer
 
 <?php
 
-		/**
-		 * ==================================================
-		 * Передача дерева JavaScript.
-		 * ==================================================
-		 *
-		 * JS получит:
-		 *
-		 * window.imperiaCatalogTree
-		 *
-		 * и сможет:
-		 *
-		 * - открывать подкатегории;
-		 * - строить мобильный аккордеон;
-		 * - работать без AJAX.
-		 *
-		 * ==================================================
-		 */
+
 		wp_add_inline_script(
 			'imperia-catalog-menu',
 			'window.imperiaCatalogTree = '
@@ -284,10 +253,13 @@ final class MenuRenderer
 			'before'
 		);
 
+
+
 		if (
 			defined('WP_DEBUG')
 			&& WP_DEBUG
 		) {
+
 			imperia_log(
 				'CATALOG MENU RENDERED'
 			);

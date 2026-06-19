@@ -1,336 +1,323 @@
-/**
-==================================================
-IMPERIA CATALOG MENU
-==================================================
-*/
-
-
 .imperia-catalog {
 
-position:relative;
-
-width:100%;
-
-max-width:1200px;
-
-margin:10px 0px 10px 20px;
-
-font-family:inherit;
+	position: relative;
+	width: 100%;
+	max-width: 1200px;
+	margin: 10px 0 10px 20px;
+	font-family: inherit;
 
 }
-
-
-
-/**
-==================================================
-BUTTON
-==================================================
-*/
 
 
 .imperia-catalog__button {
 
-padding:5px 10px;
-
-cursor:pointer;
-
-border-radius:5px;
-
-font-size:16px;
-border: 1px solid #1559ed;
-    background: #fff;
-	 color: #1559ed;
+	padding: 5px 10px;
+	cursor: pointer;
+	border-radius: 5px;
+	font-size: 16px;
+	border: 1px solid #1559ed;
+	background: #fff;
+	color: #1559ed;
 
 }
 
-.imperia-catalog__button:hover {	
-background:#1559ed;
-box-shadow: 0 10px 20px 0 rgba(3, 19, 245, 0.15);
-color:#fff;
+
+.imperia-catalog__button:hover {
+
+	background: #1559ed;
+	box-shadow: 0 10px 20px 0 rgba(3, 19, 245, 0.15);
+	color: #fff;
+
 }
-
-
-
-/**
-==================================================
-DROPDOWN
-==================================================
-*/
 
 
 .imperia-catalog__dropdown {
 
 	position: absolute;
-
 	display: none;
-
 	top: calc(100% + 10px);
-
-	left:0;
-
-	z-index:1000;
-
-	width:320px;
-
-	/* min-height:350px; */
-
-	background:#fff;
-
-	border:1px solid #ddd;
-
-	box-shadow:0 10px 30px rgba(0,0,0,.15);
+	left: 0;
+	z-index: 1000;
+	width: 320px;
+	background: #fff;
+	border: 1px solid #ddd;
+	box-shadow: 0 10px 30px rgba(0, 0, 0, .15);
 
 }
 
 
+.imperia-catalog--open .imperia-catalog__dropdown {
 
-.imperia-catalog--open
-.imperia-catalog__dropdown {
-
-	display:block;
+	display: block;
 
 }
-
-
-
-
-/*
-========================================
-FLOATING SUBMENU
-========================================
-*/
 
 
 .imperia-catalog__submenu {
 
-
-	position:absolute;
-
-
-	left:100%;
-
-
-	width:280px;
-
-
-	/* min-height:100%; */
-
-
-	background:#fff;
-
-
-	border:1px solid #ddd;
-
-
-	box-shadow:0 10px 25px rgba(0,0,0,.15);
-
-
-	padding:20px;
-
+	position: absolute;
+	left: 100%;
+	width: 280px;
+	background: #fff;
+	border: 1px solid #ddd;
+	box-shadow: 0 10px 25px rgba(0, 0, 0, .15);
+	padding: 20px;
 
 }
-
 
 
 .imperia-catalog__submenu[hidden] {
 
-	display:none;
+	display: none;
 
 }
-
 
 
 .imperia-catalog__submenu ul {
 
-
-	list-style:none;
-
-	margin:0;
-
-	padding:0;
+	list-style: none;
+	margin: 0;
+	padding: 0;
 
 }
 
 
-
 .imperia-catalog__submenu li {
 
-	margin-bottom:12px;
+	margin-bottom: 12px;
 
 }
 
 
 .imperia-catalog__submenu a {
 
-	text-decoration:none;
-
-	color:#222;
+	text-decoration: none;
+	color: #222;
 
 }
-
-
-/**
-==================================================
-CATEGORY LIST
-==================================================
-*/
 
 
 .imperia-catalog__categories {
 
-margin:0;
-
-padding:0;
-
-list-style:none;
+	margin: 0;
+	padding: 0;
+	list-style: none;
 
 }
-
 
 
 .imperia-catalog__category {
 
-position:relative;
+	position: relative;
+	border-bottom: 1px solid #eee;
 
 }
 
 
+.imperia-catalog__row {
 
-.imperia-catalog__category a {
-
-
-display:flex;
-
-align-items:center;
-
-justify-content:space-between;
-
-padding:14px 16px;
-
-text-decoration:none;
-
-color:#222;
-
-border-bottom:1px solid #eee;
+	display: flex;
+	align-items: center;
+	min-width: 0;
 
 }
 
 
+.imperia-catalog__link {
 
-.imperia-catalog__category a:hover {
-
-background:#f5f5f5;
+	flex: 1 1 auto;
+	min-width: 0;
+	display: block;
+	padding: 14px 16px;
+	text-decoration: none;
+	color: #222;
 
 }
 
 
+.imperia-catalog__link:hover {
+
+	background: #f5f5f5;
+
+}
 
 
-/**
-==================================================
-SVG BUTTON
-==================================================
-*/
+.imperia-catalog__category-name {
+
+	display: block;
+	word-break: break-word;
+	overflow-wrap: anywhere;
+
+}
 
 
 .imperia-catalog__toggle {
 
-
-width:32px;
-
-height:32px;
-
-border-radius:50%;
-
-border:1px solid #ccc;
-
-background:#fff;
-
-display:flex;
-
-align-items:center;
-
-justify-content:center;
-
-cursor:pointer;
-
-padding:0;
+	flex: 0 0 auto;
+	width: 32px;
+	height: 32px;
+	margin-right: 12px;
+	border-radius: 50%;
+	border: 1px solid #ccc;
+	background: #fff;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	cursor: pointer;
+	padding: 0;
 
 }
-
 
 
 .imperia-catalog__toggle svg {
 
-transition:.2s;
+	transition: .2s;
 
 }
-
 
 
 .imperia-catalog__toggle:hover {
 
-background:#222;
-
-color:#fff;
-
-}
-
-
-
-/**
-==================================================
-ACTIVE
-==================================================
-*/
-
-
-.imperia-catalog__category.is-active
->a {
-
-background:#f0f0f0;
+	background: #2872fa;
+	color: #fff;
 
 }
 
 
-/**
-==================================================
-MOBILE
-==================================================
-*/
+.imperia-catalog__category.is-active > .imperia-catalog__row {
+
+	background: #f0f0f0;
+
+}
 
 
-@media(max-width:768px){
+.imperia-catalog__mobile-children {
 
-	.imperia-catalog__button {
-		margin-bottom: 7px;
+	display: none;
+
+}
+
+
+.imperia-catalog__mobile-children[hidden] {
+
+	display: none;
+
+}
+
+
+@media (max-width:768px) {
+
+
+	.imperia-catalog {
+
+		margin:10px 0;
+
 	}
 
 
-.imperia-catalog__dropdown {
+	.imperia-catalog__button {
+
+		margin-bottom:7px;
+		width:100%;
+
+	}
 
 
-position:static;
+	.imperia-catalog__dropdown {
 
-max-width: 100%;
+		position:static;
+		width:100%;
+		max-width:100%;
+
+	}
+
+
+	.imperia-catalog__submenu {
+
+		display:none !important;
+
+	}
+
+
+	.imperia-catalog__row {
+
+		align-items:center;
+
+	}
+
+
+	.imperia-catalog__link {
+
+		padding-right:8px;
+
+	}
+
+
+	.imperia-catalog__toggle {
+
+		margin-right:12px;
+		flex-shrink:0;
+
+	}
+
+
+	.imperia-catalog__mobile-children {
+
+		display:block;
+		padding:0 0 10px 0;
+
+	}
+
+
+	.imperia-catalog__mobile-children[hidden] {
+
+		display:none;
+
+	}
+
+
+	.imperia-catalog__mobile-children a {
+
+		display:block;
+		padding:10px;
+		text-decoration:none;
+		color:#222;
+
+	}
+
+
+	.imperia-catalog__mobile-children a:hover {
+
+		background:#f5f5f5;
+
+	}
+
+	.imperia-catalog__mobile-children ul {
+
+		list-style:none;
+		margin:0;
+		padding:0;
+
+	}
+
+
+	.imperia-catalog__mobile-children li {
+
+		list-style:none;
+
+	}
+
+	.imperia-catalog__toggle svg {
+
+	transition: transform .25s ease;
 
 }
 
 
+.imperia-catalog__toggle.is-open svg {
 
-.imperia-catalog__submenu {
-
-
-position:static;
-
-width:auto;
-
-margin-top:10px;
-
-box-shadow:none;
+	transform: rotate(90deg);
 
 }
-
-
 
 }

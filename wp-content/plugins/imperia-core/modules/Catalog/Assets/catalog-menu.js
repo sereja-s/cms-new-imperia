@@ -16,10 +16,9 @@ document.querySelector(
 );
 
 
-
 if(!catalog)
 {
-return;
+	return;
 }
 
 
@@ -43,19 +42,30 @@ catalog.querySelector(
 '.imperia-catalog__submenu'
 );
 
-	if(!submenu)
-{
-	console.error(
-		'Imperia Catalog: submenu container missing'
-	);
 
-	return;
-}
 
 const categories =
 catalog.querySelectorAll(
 '.imperia-catalog__category'
 );
+
+
+
+const arrows =
+catalog.querySelectorAll(
+'.imperia-catalog__toggle'
+);
+
+
+
+if(!window.imperiaCatalogTree)
+{
+	console.error(
+		'Imperia Catalog: tree missing'
+	);
+
+	return;
+}
 
 
 
@@ -77,6 +87,7 @@ catalog.classList.toggle(
 );
 
 
+
 button.setAttribute(
 'aria-expanded',
 opened
@@ -85,10 +96,13 @@ opened
 );
 
 
+
 if(!opened)
 {
 
-submenu.hidden=true;
+closeDesktopSubmenu();
+
+closeMobileAccordion();
 
 }
 
@@ -100,16 +114,9 @@ submenu.hidden=true;
 
 /**
 ==================================================
-ARROW CLICK
+ARROWS
 ==================================================
 */
-
-
-const arrows =
-catalog.querySelectorAll(
-'.imperia-catalog__toggle'
-);
-
 
 
 arrows.forEach(
@@ -121,10 +128,6 @@ arrow.addEventListener(
 event=>{
 
 
-/**
-Не даём перейти
-по ссылке родителя.
-*/
 event.preventDefault();
 
 event.stopPropagation();
@@ -138,21 +141,6 @@ arrow.closest(
 
 
 
-categories.forEach(
-item=>
-item.classList.remove(
-'is-active'
-)
-);
-
-
-
-category.classList.add(
-'is-active'
-);
-
-
-
 const id =
 Number(
 category.dataset.categoryId
@@ -160,10 +148,32 @@ category.dataset.categoryId
 
 
 
-showChildren(
+const isMobile =
+window.matchMedia(
+'(max-width: 768px)'
+).matches;
+
+
+
+if(isMobile)
+{
+
+toggleMobileCategory(
+id,
+category,
+arrow
+);
+
+}
+else
+{
+
+showDesktopChildren(
 id,
 category
 );
+
+}
 
 
 
@@ -177,38 +187,29 @@ category
 
 /**
 ==================================================
-SHOW CHILDREN
+DESKTOP SUBMENU
 ==================================================
 */
 
 
-function showChildren(
+function showDesktopChildren(
 id,
 element
 )
 {
 
 
-if(
-!window.imperiaCatalogTree
-)
-{
-return;
-}
-
-
-
 const category =
 window.imperiaCatalogTree.find(
-item=>
-item.id===id
+item =>
+Number(item.id) === id
 );
 
 
 
 if(
-!category
-||
+!category ||
+!category.children ||
 !category.children.length
 )
 {
@@ -248,18 +249,15 @@ ${child.name}
 });
 
 
+
 html +=
 '</ul>';
 
 
 
-submenu.innerHTML=html;
+submenu.innerHTML =
+html;
 
-
-
-/**
-Позиция относительно категории
-*/
 
 
 const rect =
@@ -284,6 +282,237 @@ parentRect.top
 
 submenu.hidden=false;
 
+
+}
+
+
+
+
+
+
+/**
+==================================================
+MOBILE ACCORDION
+==================================================
+*/
+
+
+function toggleMobileCategory(
+id,
+category,
+arrow
+)
+{
+
+
+const container =
+category.querySelector(
+'.imperia-catalog__mobile-children'
+);
+
+
+
+if(!container)
+{
+	return;
+}
+
+
+
+const opened =
+!container.hasAttribute(
+'hidden'
+);
+
+
+
+closeMobileAccordion();
+
+
+
+if(opened)
+{
+
+arrow.setAttribute(
+'aria-expanded',
+'false'
+);
+
+return;
+
+}
+
+
+
+const data =
+window.imperiaCatalogTree.find(
+item =>
+Number(item.id) === id
+);
+
+
+
+if(
+!data ||
+!data.children ||
+!data.children.length
+)
+{
+
+return;
+
+}
+
+
+
+let html =
+'<ul>';
+
+
+
+data.children.forEach(
+child=>{
+
+
+html +=
+`
+
+<li>
+
+<a href="${child.url}">
+
+${child.name}
+
+</a>
+
+</li>
+
+`;
+
+});
+
+
+
+html +=
+'</ul>';
+
+
+
+container.innerHTML =
+html;
+
+
+
+container.removeAttribute(
+'hidden'
+);
+
+
+
+category.classList.add(
+'is-active'
+);
+
+
+
+arrow.classList.add(
+'is-open'
+);
+
+
+
+arrow.setAttribute(
+'aria-expanded',
+'true'
+);
+
+
+}
+
+
+
+
+
+function closeMobileAccordion()
+{
+
+
+const opened =
+catalog.querySelector(
+'.imperia-catalog__mobile-children:not([hidden])'
+);
+
+
+
+if(opened)
+{
+
+opened.setAttribute(
+'hidden',
+''
+);
+
+opened.innerHTML='';
+
+}
+
+
+
+catalog
+.querySelectorAll(
+'.imperia-catalog__category'
+)
+.forEach(
+item=>{
+
+item.classList.remove(
+'is-active'
+);
+
+});
+
+
+
+catalog
+.querySelectorAll(
+'.imperia-catalog__toggle'
+)
+.forEach(
+arrow=>{
+
+
+arrow.classList.remove(
+'is-open'
+);
+
+
+arrow.setAttribute(
+'aria-expanded',
+'false'
+);
+
+
+});
+
+
+}
+
+
+
+
+/**
+==================================================
+CLOSE DESKTOP
+==================================================
+*/
+
+
+function closeDesktopSubmenu()
+{
+
+submenu.hidden=true;
+
+submenu.innerHTML='';
 
 }
 
@@ -315,7 +544,9 @@ catalog.classList.remove(
 );
 
 
-submenu.hidden=true;
+closeDesktopSubmenu();
+
+closeMobileAccordion();
 
 
 }
