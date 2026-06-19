@@ -1,76 +1,336 @@
 /**
- * ==========================================================
- * CATALOG MENU
- * ==========================================================
- */
+==================================================
+IMPERIA CATALOG MENU
+==================================================
+*/
+
 
 .imperia-catalog {
-    position: relative;
 
-    width: 900px;
+position:relative;
 
-    margin: 40px auto;
+width:100%;
 
-    font-family: inherit;
+max-width:1200px;
+
+margin:10px 0px 10px 20px;
+
+font-family:inherit;
+
 }
+
+
+
+/**
+==================================================
+BUTTON
+==================================================
+*/
+
 
 .imperia-catalog__button {
-    padding: 12px 20px;
 
-    border: none;
+padding:5px 10px;
 
-    cursor: pointer;
+cursor:pointer;
 
-    font-size: 16px;
+border-radius:5px;
+
+font-size:16px;
+border: 1px solid #1559ed;
+    background: #fff;
+	 color: #1559ed;
+
 }
+
+.imperia-catalog__button:hover {	
+background:#1559ed;
+box-shadow: 0 10px 20px 0 rgba(3, 19, 245, 0.15);
+color:#fff;
+}
+
+
+
+/**
+==================================================
+DROPDOWN
+==================================================
+*/
+
 
 .imperia-catalog__dropdown {
-    display: block;
 
-    margin-top: 15px;
+	position: absolute;
 
-    border: 1px solid #ddd;
+	display: none;
 
-    background: #fff;
+	top: calc(100% + 10px);
 
-    min-height: 350px;
+	left:0;
 
-    display: flex;
+	z-index:1000;
+
+	width:320px;
+
+	/* min-height:350px; */
+
+	background:#fff;
+
+	border:1px solid #ddd;
+
+	box-shadow:0 10px 30px rgba(0,0,0,.15);
+
 }
 
-.imperia-catalog__left {
-    width: 300px;
 
-    border-right: 1px solid #ddd;
+
+.imperia-catalog--open
+.imperia-catalog__dropdown {
+
+	display:block;
+
 }
 
-.imperia-catalog__right {
-    flex: 1;
+
+
+
+/*
+========================================
+FLOATING SUBMENU
+========================================
+*/
+
+
+.imperia-catalog__submenu {
+
+
+	position:absolute;
+
+
+	left:100%;
+
+
+	width:280px;
+
+
+	/* min-height:100%; */
+
+
+	background:#fff;
+
+
+	border:1px solid #ddd;
+
+
+	box-shadow:0 10px 25px rgba(0,0,0,.15);
+
+
+	padding:20px;
+
+
 }
 
-.imperia-catalog__categories,
-.imperia-catalog__children {
-    list-style: none;
 
-    margin: 0;
 
-    padding: 0;
+.imperia-catalog__submenu[hidden] {
+
+	display:none;
+
 }
+
+
+
+.imperia-catalog__submenu ul {
+
+
+	list-style:none;
+
+	margin:0;
+
+	padding:0;
+
+}
+
+
+
+.imperia-catalog__submenu li {
+
+	margin-bottom:12px;
+
+}
+
+
+.imperia-catalog__submenu a {
+
+	text-decoration:none;
+
+	color:#222;
+
+}
+
+
+/**
+==================================================
+CATEGORY LIST
+==================================================
+*/
+
+
+.imperia-catalog__categories {
+
+margin:0;
+
+padding:0;
+
+list-style:none;
+
+}
+
+
 
 .imperia-catalog__category {
-    padding: 12px 16px;
 
-    border-bottom: 1px solid #eee;
+position:relative;
 
-    cursor: pointer;
 }
 
-.imperia-catalog__category:hover {
-    background: #f5f5f5;
+
+
+.imperia-catalog__category a {
+
+
+display:flex;
+
+align-items:center;
+
+justify-content:space-between;
+
+padding:14px 16px;
+
+text-decoration:none;
+
+color:#222;
+
+border-bottom:1px solid #eee;
+
 }
 
-.imperia-catalog__children li {
-    padding: 12px 16px;
 
-    border-bottom: 1px solid #eee;
+
+.imperia-catalog__category a:hover {
+
+background:#f5f5f5;
+
+}
+
+
+
+
+/**
+==================================================
+SVG BUTTON
+==================================================
+*/
+
+
+.imperia-catalog__toggle {
+
+
+width:32px;
+
+height:32px;
+
+border-radius:50%;
+
+border:1px solid #ccc;
+
+background:#fff;
+
+display:flex;
+
+align-items:center;
+
+justify-content:center;
+
+cursor:pointer;
+
+padding:0;
+
+}
+
+
+
+.imperia-catalog__toggle svg {
+
+transition:.2s;
+
+}
+
+
+
+.imperia-catalog__toggle:hover {
+
+background:#222;
+
+color:#fff;
+
+}
+
+
+
+/**
+==================================================
+ACTIVE
+==================================================
+*/
+
+
+.imperia-catalog__category.is-active
+>a {
+
+background:#f0f0f0;
+
+}
+
+
+/**
+==================================================
+MOBILE
+==================================================
+*/
+
+
+@media(max-width:768px){
+
+	.imperia-catalog__button {
+		margin-bottom: 7px;
+	}
+
+
+.imperia-catalog__dropdown {
+
+
+position:static;
+
+max-width: 100%;
+
+}
+
+
+
+.imperia-catalog__submenu {
+
+
+position:static;
+
+width:auto;
+
+margin-top:10px;
+
+box-shadow:none;
+
+}
+
+
+
 }
