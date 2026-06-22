@@ -2,8 +2,6 @@
 
 namespace Imperia\Modules\Catalog\Hooks;
 
-use Imperia\Modules\Catalog\Services\CategoryCache;
-
 /**
  * ==========================================================
  * ASSETS LOADER

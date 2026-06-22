@@ -30,6 +30,9 @@ final class ModuleManager
 		'Imperia\\Modules\\Catalog\\Module' => [
 			'frontend',
 		],
+		'Imperia\\Modules\\Contacts\\Module' => [
+			'frontend',
+		],
 
 		/* 'Imperia\\Modules\\Checkout\\Module' => [
 			'frontend',
