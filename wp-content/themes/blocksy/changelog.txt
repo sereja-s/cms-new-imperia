@@ -1,3 +1,7 @@
+2.1.46: 2026-06-17
+- Improvement: Prevent Safari from cutting off the Customizer preview frame
+- Improvement: Search box - minor style improvement for the form submit button
+
 2.1.45: 2026-06-11
 - Improvement: Archive title label spacing issue in locales with no-break spaces
 - Improvement: Header search modal - correctly apply background value to input field

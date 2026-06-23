@@ -29,6 +29,8 @@ final class ModuleManager
 
 		'Imperia\\Modules\\Catalog\\Module' => [
 			'frontend',
+			'admin',
+			'ajax',
 		],
 		'Imperia\\Modules\\Contacts\\Module' => [
 			'frontend',

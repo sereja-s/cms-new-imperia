@@ -76,7 +76,9 @@ final class CategoryCache
 		// тест: принудительно чистит кеш дерева категорий
 		/* delete_transient(
 			self::CACHE_KEY
-		); */
+		);
+
+		imperia_log('Принудительно очистил кеш перед загрузкой страницы'); */
 
 		/**
 		 * Проверяем transient.
@@ -137,17 +139,15 @@ final class CategoryCache
 
 
 		// тест (вывод массива первой категории)
-		/* if (
-			defined('WP_DEBUG')
-			&& WP_DEBUG
-		) {
-			imperia_log(
-				print_r(
-					$tree[0] ?? [],
-					true
-				)
-			);
-		} */
+
+		imperia_log(
+			print_r(
+				$tree ?? [],
+				true
+			)
+		);
+
+
 
 
 
@@ -169,8 +169,6 @@ final class CategoryCache
 				self::CACHE_TTL
 			);
 		}
-
-
 
 		return $tree;
 	}

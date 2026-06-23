@@ -44,6 +44,10 @@ final class CategoryCacheInvalidator
 	 */
 	public function register(): void
 	{
+		imperia_log(
+			'CategoryCacheInvalidator registered'
+		);
+
 		add_action(
 			'created_product_cat',
 			[$this, 'clearCache']
@@ -83,18 +87,17 @@ final class CategoryCacheInvalidator
 	 */
 	public function clearCache(): void
 	{
+		imperia_log(
+			'CategoryCacheInvalidator fired'
+		);
+
 		$cache =
 			new CategoryCache();
 
 		$cache->clear();
 
-		if (
-			defined('WP_DEBUG')
-			&& WP_DEBUG
-		) {
-			imperia_log(
-				'Catalog cache cleared'
-			);
-		}
+		imperia_log(
+			'Catalog cache cleared'
+		);
 	}
 }

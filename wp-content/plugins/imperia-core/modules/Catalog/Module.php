@@ -2,6 +2,7 @@
 
 namespace Imperia\Modules\Catalog;
 
+use Imperia\Core\Context;
 use Imperia\Core\ModuleInterface;
 use Imperia\Modules\Catalog\Hooks\AssetsLoader;
 use Imperia\Modules\Catalog\Hooks\CategoryCacheInvalidator;
@@ -107,6 +108,14 @@ final class Module implements ModuleInterface
 		 */
 		(new CategoryCacheInvalidator())
 			->register();
+
+		/**
+		 * В админке сработает только функционал очистки кеша CategoryCacheInvalidator
+		 *  (при добавлении/удалении категорий)
+		 */
+		if (!Context::is_frontend()) {
+			return;
+		}
 
 		(new AssetsLoader())
 			->register();

@@ -17,6 +17,7 @@
 	}
 
 	.wp-element-button {
+		--theme-button-padding: 5px 20px;
 		--theme-button-min-height: var(--search-button-size, var(--theme-form-field-height, 40px));
 		--theme-button-border-radius: var(--theme-form-field-border-radius, 3px);
 		flex-shrink: 0;
@@ -85,6 +86,10 @@
 
 			.ct-select-taxonomy {
 				border-inline-width: 1px;
+			}
+
+			.wp-element-button {
+				border: none;
 			}
 		}
 	}
