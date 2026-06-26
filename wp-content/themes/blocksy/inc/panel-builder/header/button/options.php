@@ -95,11 +95,7 @@ $options = [
 
 				'header_button_open' => [
 					'label' => __('Click Behavior', 'blocksy'),
-					'type' => (
-						function_exists('blocksy_companion_site_has_feature')
-						&&
-						blocksy_companion_site_has_feature('base_pro')
-					) ? 'ct-select' : 'hidden',
+					'type' => (blocksy_manager()->companion->has('base_pro')) ? 'ct-select' : 'hidden',
 					'value' => 'link',
 					'view' => 'text',
 					'design' => 'inline',
@@ -146,34 +142,18 @@ $options = [
 				blocksy_rand_md5() => [
 					'type' => 'ct-condition',
 					'condition' => [ 'header_button_open' => 'popup' ],
-					'options' => (
-						function_exists('blocksy_companion_get_content_blocks')
-						&&
-						! empty(blocksy_companion_get_content_blocks([
-							'template_type' => 'popup'
-						]))
-					) ? [
-						'header_button_select_popup' => [
-							'label' => __('Popup Template', 'blocksy' ),
-							'type' => 'ct-select',
-							'design' => 'inline',
-							'value' => '',
-							'search' => true,
-							'defaultToFirstItem' => false,
-							'placeholder' => __('None', 'blocksy'),
-							'choices' => blocksy_ordered_keys(blocksy_companion_get_content_blocks([
-								'template_type' => 'popup'
-							])),
-						],
-					] : [
-						blocksy_rand_md5() => [
-							'type' => 'html',
-							'label' => __('Popup Template', 'blocksy'),
-							'value' => '',
-							'design' => 'inline',
-							'html' => '<a href="' . admin_url('/edit.php?post_type=ct_content_block') .'" target="_blank" class="button" style="width: 130px; text-align: center;">' . __('Create Popup', 'blocksy') . '</a>',
-						],
-					],
+					/**
+					 * Filters the extra option definitions for the header button
+					 * element shown when it opens a popup.
+					 *
+					 * @since 2.1.47
+					 *
+					 * @param array $options Extra option definitions. Default empty array.
+					 */
+					'options' => apply_filters(
+						'blocksy:options:header:button',
+						[]
+					)
 				],
 			],
 

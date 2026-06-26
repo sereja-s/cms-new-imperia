@@ -78,10 +78,6 @@ add_filter('comment_form_defaults', function ($defaults) {
 			'<label for="wp-comment-cookies-consent">' . $message . '</label></p>';
 	}
 
-	if (function_exists('blocksy_ext_cookies_checkbox')) {
-		$defaults['comment_notes_after'] .= blocksy_ext_cookies_checkbox('comment');
-	}
-
 	return $defaults;
 }, 5);
 

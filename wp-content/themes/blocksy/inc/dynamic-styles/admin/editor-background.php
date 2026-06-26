@@ -71,27 +71,21 @@ if ($post_type === 'ct_content_block') {
 	}
 }
 
-$maybe_matching_template = null;
-$content_block_atts = null;
 $strategy = [
 	'strategy' => 'customizer',
 	'prefix' => $prefix
 ];
 
-if (function_exists('blocksy_companion_get_content_block_that_matches')) {
-	$maybe_matching_template = blocksy_companion_get_content_block_that_matches([
-		'template_type' => 'single',
-		'template_subtype' => 'canvas',
-		'match_conditions_strategy' => $prefix
-	]);
+$maybe_matching_template = blocksy_manager()->companion->get_content_block_that_matches([
+	'template_type' => 'single',
+	'template_subtype' => 'canvas',
+	'match_conditions_strategy' => $prefix
+]);
 
-	if ($maybe_matching_template) {
-		$content_block_atts = blocksy_get_post_options($maybe_matching_template);
-
-		$strategy = [
-			'strategy' => $content_block_atts
-		];
-	}
+if ($maybe_matching_template) {
+	$strategy = [
+		'strategy' => blocksy_get_post_options($maybe_matching_template)
+	];
 }
 
 if (

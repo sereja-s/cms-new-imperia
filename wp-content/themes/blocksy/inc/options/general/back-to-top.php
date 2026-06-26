@@ -7,7 +7,7 @@
  * @package   Blocksy
  */
 
-$is_pro = function_exists('blocksy_companion_site_has_feature') && blocksy_companion_site_has_feature('base_pro');
+$has_custom_icons = blocksy_manager()->companion->has('custom_icons');
 
 $options = [
 
@@ -26,7 +26,7 @@ $options = [
 				'title' => __( 'General', 'blocksy' ),
 				'type' => 'tab',
 				'options' => [
-					$is_pro ? [
+					$has_custom_icons ? [
 						'top_button_icon_source' => [
 							'label' => __( 'Icon Source', 'blocksy' ),
 							'type' => 'ct-radio',
@@ -71,7 +71,7 @@ $options = [
 
 					blocksy_rand_md5() => [
 						'type' => 'ct-condition',
-						'condition' => $is_pro ? [
+						'condition' => $has_custom_icons ? [
 							'top_button_icon_source' => 'default'
 						] : [
 							'top_button_icon_source' => '! not_existing'

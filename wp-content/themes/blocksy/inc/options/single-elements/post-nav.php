@@ -72,6 +72,21 @@ $options = [
 						],
 					],
 
+					$prefix . 'post_nav_infinite' => [
+						'label' => __( 'Loop Post Navigation', 'blocksy' ),
+						'desc' => __( 'Lets readers keep navigating between posts without reaching an end.', 'blocksy' ),
+						'type' => 'ct-switch',
+						'value' => 'no',
+						'divider' => 'top',
+						'sync' => [
+							'prefix' => $prefix,
+							'selector' => '.post-navigation',
+							'render' => function () {
+								echo blocksy_post_navigation();
+							}
+						]
+					],
+
 					$prefix . 'post_nav_spacing' => [
 						'label' => __( 'Container Spacing', 'blocksy' ),
 						'type' => 'ct-slider',
@@ -234,4 +249,3 @@ $options = [
 	],
 
 ];
-

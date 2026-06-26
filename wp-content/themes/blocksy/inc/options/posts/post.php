@@ -133,36 +133,22 @@ $inner_options = [
 	$page_elements_options
 ];
 
-if (
-	function_exists('blocksy_companion_get_content_block_that_matches')
-	&&
-	blocksy_companion_get_content_block_that_matches([
-		'template_type' => 'single',
-		'template_subtype' => 'canvas',
-		'match_conditions_strategy' => 'single_blog_post'
-	])
-) {
-	$inner_options = [
-		blocksy_rand_md5() => [
-			'type' => 'ct-notification',
-			'attr' => [ 'data-type' => 'background:white' ],
-			'text' => blocksy_safe_sprintf(
-				__('This single page is overrided by a custom template, to edit it please access %sthis page%s.', 'blocksy'),
-				'<a href="' . get_edit_post_link(blocksy_companion_get_content_block_that_matches([
-					'template_type' => 'single',
-					'template_subtype' => 'canvas',
-					'match_conditions_strategy' => 'single_blog_post'
-				])) . '" target="_blank">',
-				'</a>'
-			)
-		],
-	];
-}
+/**
+ * Filters the inner options for the single post customizer section.
+ *
+ * @since 2.1.47
+ *
+ * @param array $inner_options List of option definitions for the section.
+ */
+$inner_options = apply_filters(
+	'blocksy:options:post',
+	$inner_options
+);
 
 $options = [
 	'single_section_options' => [
 		'type' => 'ct-options',
-		'setting' => [ 'transport' => 'postMessage' ],
+		'setting' => ['transport' => 'postMessage'],
 		'inner-options' => $inner_options
 	],
 ];

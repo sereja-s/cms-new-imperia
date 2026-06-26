@@ -72,6 +72,14 @@ function blocksy_woo_single_post_class($classes, $product) {
 		return $classes;
 	}
 
+	if (
+		! $product
+		||
+		(int) get_queried_object_id() !== (int) $product->get_id()
+	) {
+		return $classes;
+	}
+
 	$product_view_type = blocksy_get_product_view_type();
 
 	if (blocksy_woocommerce_has_flexy_view()) {
@@ -139,6 +147,13 @@ function blocksy_woo_single_post_class($classes, $product) {
 }
 
 function blocksy_get_product_view_type() {
+	/**
+	 * Filters the view type used for the main single product gallery layout.
+	 *
+	 * @since 2.0.1
+	 *
+	 * @param string $view_type Product gallery view type. Default 'default-gallery'.
+	 */
 	return apply_filters(
 		'blocksy:woocommerce:product-single:view-type',
 		'default-gallery'

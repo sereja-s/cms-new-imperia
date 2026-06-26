@@ -130,31 +130,17 @@ $inner_options = [
 	])
 ];
 
-if (
-	function_exists('blocksy_companion_get_content_block_that_matches')
-	&&
-	blocksy_companion_get_content_block_that_matches([
-		'template_type' => 'archive',
-		'template_subtype' => 'canvas',
-		'match_conditions_strategy' => 'search'
-	])
-) {
-	$inner_options = [
-		blocksy_rand_md5() => [
-			'type' => 'ct-notification',
-			'attr' => [ 'data-type' => 'background:white' ],
-			'text' => blocksy_safe_sprintf(
-				__('This archive page is overrided by a custom template, to edit it please access %sthis page%s.', 'blocksy'),
-				'<a href="' . get_edit_post_link(blocksy_companion_get_content_block_that_matches([
-					'template_type' => 'archive',
-					'template_subtype' => 'canvas',
-					'match_conditions_strategy' => 'search'
-				])) . '" target="_blank">',
-				'</a>'
-			)
-		],
-	];
-}
+/**
+ * Filters the inner options for the search results customizer section.
+ *
+ * @since 2.1.47
+ *
+ * @param array $inner_options List of option definitions for the section.
+ */
+$inner_options = apply_filters(
+	'blocksy:options:search-page',
+	$inner_options
+);
 
 $options = [
 	'search_section_options' => [

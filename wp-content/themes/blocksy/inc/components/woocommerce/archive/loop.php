@@ -50,12 +50,20 @@ add_filter(
 				$other_attr['data-hover'] = $hover_value;
 			}
 
-			if (function_exists('blocksy_quick_view_attr')) {
-				$other_attr = array_merge(
-					blocksy_quick_view_attr(),
-					$other_attr
-				);
-			}
+			/**
+			 * Filters the attributes of the products container (the `<ul>`).
+			 *
+			 * Companion features (e.g. quick view) merge their own `data-*`
+			 * attributes in here.
+			 *
+			 * @since 2.1.47
+			 *
+			 * @param array $other_attr Attribute name/value pairs for the products list.
+			 */
+			$other_attr = apply_filters(
+				'blocksy:woocommerce:products-container:attr',
+				$other_attr
+			);
 
 			if (is_archive() && is_customize_preview()) {
 				$other_attr['data-shortcut'] = 'border:outside';

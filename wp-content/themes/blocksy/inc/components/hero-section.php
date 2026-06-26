@@ -38,26 +38,6 @@ if (! function_exists('blocksy_get_page_title_source')) {
 
 		$prefix = blocksy_manager()->screen->get_prefix();
 
-		if ($prefix === 'ct_content_block_single') {
-			$result = false;
-			return $result;
-		}
-
-		if ($prefix === 'ct_product_tab_single') {
-			$result = false;
-			return $result;
-		}
-
-		if ($prefix === 'ct_size_guide_single') {
-			$result = false;
-			return $result;
-		}
-
-		if ($prefix === 'ct_thank_you_page_single') {
-			$result = false;
-			return $result;
-		}
-
 		if ($prefix === 'jet-woo-builder_single') {
 			$result = false;
 			return $result;

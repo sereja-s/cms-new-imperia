@@ -13,7 +13,7 @@ $source_options = [
 ];
 
 $is_shop = class_exists( 'woocommerce' );
-$is_pro = function_exists('blocksy_companion_site_has_feature') && blocksy_companion_site_has_feature();
+$has_custom_icons = blocksy_manager()->companion->has('custom_icons');
 
 if (function_exists('rank_math_the_breadcrumbs')) {
 	ob_start();
@@ -53,7 +53,7 @@ $breadcrumbs_options = [
 		'type' => 'tab',
 		'options' => [
 
-			$is_pro ? [
+			$has_custom_icons ? [
 				'breadcrumb_separator_icon_source' => [
 					'label' => __('Separator Icon Source', 'blocksy'),
 					'type' => 'ct-radio',
@@ -73,7 +73,7 @@ $breadcrumbs_options = [
 
 			blocksy_rand_md5() => [
 				'type' => 'ct-condition',
-				'condition' => $is_pro
+				'condition' => $has_custom_icons
 					? [
 						'breadcrumb_separator_icon_source' => 'default',
 					]
@@ -109,7 +109,7 @@ $breadcrumbs_options = [
 				],
 			],
 
-			$is_pro ? [
+			$has_custom_icons ? [
 				blocksy_rand_md5() => [
 					'type' => 'ct-condition',
 					'condition' => ['breadcrumb_separator_icon_source' => 'custom'],
@@ -177,7 +177,7 @@ $breadcrumbs_options = [
 			blocksy_rand_md5() => [
 				'type' => 'ct-condition',
 				'condition' => [ 'breadcrumb_home_item' => 'icon' ],
-				'options' => $is_pro ? [
+				'options' => $has_custom_icons ? [
 
 					'breadcrumb_home_icon' => [
 						'type' => 'icon-picker',

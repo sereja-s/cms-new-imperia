@@ -135,6 +135,13 @@ class WooCommerceAddToCart {
 			return;
 		}
 
+		/**
+		 * Filters the HTML attributes applied to the single product cart actions wrapper.
+		 *
+		 * @since 1.8.3.4
+		 *
+		 * @param array $attr Key-value pairs of HTML attributes applied to the cart actions wrapper.
+		 */
 		$attr = apply_filters('blocksy:woocommerce:cart-actions:attr', [
 			'class' => 'ct-cart-actions'
 		]);
@@ -310,6 +317,16 @@ class WooCommerceAddToCart {
 			return $classes;
 		}
 
+		/**
+		 * Filters the CSS classes applied to the main single product wrapper.
+		 *
+		 * This hook lets Blocksy and third-party integrations add classes that
+		 * are specific to the currently queried single product.
+		 *
+		 * @since 2.0.72
+		 *
+		 * @param string[] $classes List of CSS classes applied to the product wrapper.
+		 */
 		$classes = apply_filters(
 			'blocksy:woocommerce:single-product:post-class',
 			$classes
@@ -385,4 +402,3 @@ class WooCommerceAddToCart {
 		return in_array($product->get_type(), $allowed_custom_product_types);
 	}
 }
-

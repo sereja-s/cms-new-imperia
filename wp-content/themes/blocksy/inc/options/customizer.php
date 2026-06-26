@@ -25,7 +25,7 @@ $pro_title = [
 	]
 ];
 
-if (function_exists('blocksy_companion_site_has_feature') && blocksy_companion_site_has_feature('base_pro')) {
+if (blocksy_manager()->companion->has('base_pro')) {
 	$pro_title = [];
 }
 

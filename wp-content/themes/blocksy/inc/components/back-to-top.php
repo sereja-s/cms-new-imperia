@@ -31,18 +31,20 @@ function blocksy_output_back_to_top_link() {
 
 	$icon = $svgs[$type];
 
-	if (function_exists('blocksy_companion_get_icon')) {
-		if ($icon_source === 'custom') {
-			$icon = blocksy_companion_get_icon([
-				'icon_descriptor' => blocksy_get_theme_mod(
-					'top_button_icon',
-					['icon' => 'blc blc-arrow-up-circle']
-				),
-				'icon_container' => false,
-				'icon_html_atts' => [
-					'class' => 'ct-icon',
-				]
-			]);
+	if ($icon_source === 'custom') {
+		$custom_icon = blocksy_manager()->companion->get_icon([
+			'icon_descriptor' => blocksy_get_theme_mod(
+				'top_button_icon',
+				['icon' => 'blc blc-arrow-up-circle']
+			),
+			'icon_container' => false,
+			'icon_html_atts' => [
+				'class' => 'ct-icon',
+			]
+		]);
+
+		if ($custom_icon) {
+			$icon = $custom_icon;
 		}
 	}
 

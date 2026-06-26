@@ -1,3 +1,8 @@
+2.1.47: 2026-06-24
+- Improvement: Make communication between theme and companion more resilient and optimized
+- Improvement: Posts navigation - added option to loop between first and last posts
+- Improvement: Scope single-product WooCommerce classes correctly
+
 2.1.46: 2026-06-17
 - Improvement: Prevent Safari from cutting off the Customizer preview frame
 - Improvement: Search box - minor style improvement for the form submit button

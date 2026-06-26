@@ -1,6 +1,6 @@
 <?php
 
-$is_pro = function_exists('blocksy_companion_site_has_feature') && blocksy_companion_site_has_feature('base_pro');
+$is_pro = blocksy_manager()->companion->has('base_pro');
 
 $cpt_choices = [
 	'post' => __('Posts', 'blocksy'),

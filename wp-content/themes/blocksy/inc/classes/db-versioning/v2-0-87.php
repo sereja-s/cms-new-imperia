@@ -21,12 +21,11 @@ class V2087 {
 			return;
 		}
 
-		if (! class_exists('\Blocksy\Extensions\WoocommerceExtra\Storage')) {
+		$settings = get_option('blocksy_ext_woocommerce_extra_settings', []);
+
+		if (! is_array($settings)) {
 			return;
 		}
-
-		$storage = new \Blocksy\Extensions\WoocommerceExtra\Storage();
-		$settings = $storage->get_settings();
 
 		if (
 			! isset($settings['features']['added-to-cart-popup'])

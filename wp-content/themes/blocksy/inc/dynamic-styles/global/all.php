@@ -1,6 +1,6 @@
 <?php
 
-$is_pro = function_exists('blocksy_companion_site_has_feature') && blocksy_companion_site_has_feature();
+$has_custom_icons = blocksy_manager()->companion->has('custom_icons');
 
 // Color palette
 $paletteDefaults = [];
@@ -751,7 +751,7 @@ blocksy_output_colors([
 	],
 ]);
 
-if($is_pro) {
+if ($has_custom_icons) {
 
 	$breadcrumbs_home_icon_size = blocksy_get_theme_mod('breadcrumbs_home_icon_size', 15);
 

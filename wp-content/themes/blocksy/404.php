@@ -9,28 +9,35 @@
 
 get_header();
 
+/**
+ * Filters the rendered output displayed instead of the default 404 template.
+ *
+ * Returning a non-empty string short-circuits the `template-parts/404` markup
+ * (e.g. a content block assigned to the 404 location).
+ *
+ * @since 2.1.47
+ *
+ * @param string $content Rendered output. Default empty string.
+ */
+$content = apply_filters(
+	'blocksy:404:custom-output',
+	''
+);
+
 if (
-	function_exists('blocksy_companion_get_content_block_that_matches')
-	&&
-	blocksy_companion_get_content_block_that_matches([
-		'template_type' => '404',
-		'match_conditions' => false
-	])
-) {
-	echo blocksy_companion_render_content_block(
-		blocksy_companion_get_content_block_that_matches([
-			'template_type' => '404',
-			'match_conditions' => false
-		])
-	);
-} else {
-	if (
+	(
 		! function_exists('elementor_theme_do_location')
 		||
 		! elementor_theme_do_location('single')
-	) {
-		get_template_part('template-parts/404');
-	}
+	)
+	&&
+	empty($content)
+) {
+	ob_start();
+	get_template_part('template-parts/404');
+	$content = ob_get_clean();
 }
+
+echo $content;
 
 get_footer();

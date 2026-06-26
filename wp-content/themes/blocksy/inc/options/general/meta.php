@@ -416,21 +416,18 @@ $options = [
 						],
 					],
 
-					(
-						function_exists('blocksy_companion_get_ext')
-						&&
-						blocksy_companion_get_ext('post-types-extra')
-						&&
-						isset(blocksy_companion_get_ext('post-types-extra')->taxonomies_customization)
-						&&
-						blocksy_companion_get_ext('post-types-extra')->taxonomies_customization
-					) ? [
-						'has_term_accent_color' => [
-							'type'  => 'ct-switch',
-							'label' => __('Terms accent color', 'blocksy'),
-							'value' => 'yes',
-						]
-					] : []
+					/**
+					 * Filters the extra option definitions appended to the taxonomy
+					 * meta layer in the post meta builder.
+					 *
+					 * @since 2.1.47
+					 *
+					 * @param array $options Extra option definitions. Default empty array.
+					 */
+					apply_filters(
+						'blocksy:options:meta:taxonomy_options',
+						[],
+					)
 				],
 			]
 		] : [], apply_filters(

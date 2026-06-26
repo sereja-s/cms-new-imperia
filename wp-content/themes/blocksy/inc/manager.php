@@ -21,6 +21,8 @@ class Blocksy_Manager {
 	public $colors = null;
 	public $entity_id_picker = null;
 
+	public $companion = null;
+
 	public $archive = null;
 
 	private $hooks = null;
@@ -52,6 +54,8 @@ class Blocksy_Manager {
 
 	private function early_init() {
 		$this->register_autoloader();
+
+		$this->companion = new \Blocksy\CompanionBridge();
 
 		$this->db = new \Blocksy\Database();
 		$this->db_versioning = new \Blocksy\DbVersioning();

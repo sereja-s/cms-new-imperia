@@ -175,6 +175,19 @@ function blocksy_get_options($path, $pass_inside = [], $relative = true) {
 		return null;
 	}
 
+	/**
+	 * Filters the options array loaded from an options file.
+	 *
+	 * PARITY: the companion fires the same filter from
+	 * blocksy_companion_get_options() (framework/helpers/helpers.php) — keep
+	 * both in sync.
+	 *
+	 * @since 1.7.30
+	 *
+	 * @param array  $options     The resolved options array from the file.
+	 * @param string $path        Absolute path to the loaded options file.
+	 * @param array  $pass_inside Variables passed into the file scope.
+	 */
 	return apply_filters('blocksy:options:retrieve', blocksy_akg(
 		'options',
 		blocksy_get_variables_from_file(

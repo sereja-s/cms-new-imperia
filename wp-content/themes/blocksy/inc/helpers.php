@@ -97,6 +97,9 @@ if (! function_exists('blocksy_link_to_menu_editor')) {
 /**
  * Extract variable from a file.
  *
+ * PARITY: mirrored by the companion's blocksy_companion_get_variables_from_file()
+ * (framework/helpers/helpers.php) — keep both in sync.
+ *
  * @param string $file_path path to file.
  * @param array  $_extract_variables variables to return.
  * @param array  $_set_variables variables to pass into the file.
@@ -111,7 +114,11 @@ function blocksy_get_variables_from_file(
 	unset($_set_variables);
 
 	if (is_file($file_path)) {
-		require $file_path;
+		try {
+			require $file_path;
+		} catch (\Throwable $e) {
+			blocksy_handle_contained_fatal($e, $file_path);
+		}
 	}
 
 	foreach ($_extract_variables as $variable_name => $default_value) {
@@ -127,6 +134,9 @@ function blocksy_get_variables_from_file(
  * Safe render a view and return html
  * In view will be accessible only passed variables
  * Use this function to not include files directly and to not give access to current context variables (like $this)
+ *
+ * PARITY: mirrored by the companion's blocksy_companion_render_view()
+ * (framework/helpers/helpers.php) — keep both in sync.
  *
  * @param string $file_path File path.
  * @param array  $view_variables Variables to pass into the view.
@@ -148,15 +158,87 @@ if (! function_exists('blocksy_render_view')) {
 		unset($view_variables);
 
 		ob_start();
-		require $file_path;
+
+		try {
+			require $file_path;
+		} catch (\Throwable $e) {
+			ob_end_clean();
+			blocksy_handle_contained_fatal($e, $file_path);
+			return $default_value;
+		}
 
 		return ob_get_clean();
 	}
 }
 
+/**
+ * Echo the result of blocksy_render_view().
+ *
+ * PARITY: mirrored by the companion's blocksy_companion_render_view_e()
+ * (framework/helpers/helpers.php) — keep both in sync.
+ *
+ * @param string $file_path File path.
+ * @param array  $view_variables Variables to pass into the view.
+ * @param string $default_value Echoed when the file is missing.
+ *
+ * @return void
+ */
 function blocksy_render_view_e($file_path, $view_variables = [], $default_value = '') {
 	// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 	echo blocksy_render_view($file_path, $view_variables, $default_value);
+}
+
+/**
+ * Contain a fatal thrown while a view/options file is being `require`d. A missing
+ * function/class throws \Error (a \Throwable) since PHP 7, so the require can be
+ * wrapped to keep one broken file from white-screening the whole request — the
+ * #5212 "theme/companion mid-swap" failure mode.
+ *
+ * Logs through blocksy_debug_log(), passing the \Throwable itself as the object so
+ * the full detail — message, file:line and the backtrace — is captured: print_r'd
+ * into the error_log, and handed live to the `blocksy:theme:debug-log` action for
+ * any listener. In development it re-throws so the bug isn't silently swallowed;
+ * the re-throw is filterable via `blocksy:theme:contained-fatal:rethrow`.
+ *
+ * PARITY: mirrored by the companion's blocksy_companion_handle_contained_fatal()
+ * (framework/helpers/helpers.php) — keep both in sync.
+ *
+ * @param \Throwable $e       The contained error (carries the backtrace).
+ * @param string     $context The file being loaded when it threw.
+ */
+if (! function_exists('blocksy_handle_contained_fatal')) {
+	function blocksy_handle_contained_fatal(\Throwable $e, $context = '') {
+		blocksy_debug_log(
+			sprintf(
+				'[Blocksy] Contained fatal while loading %s: %s in %s:%d',
+				$context,
+				$e->getMessage(),
+				$e->getFile(),
+				$e->getLine()
+			),
+			$e
+		);
+
+		/**
+		 * Filters whether a contained fatal is re-thrown after being logged.
+		 *
+		 * Defaults to true under WP_DEBUG so bugs surface in development, and
+		 * false otherwise so production stays contained. Return true to always
+		 * re-throw, or false to always swallow.
+		 *
+		 * @since 2.1.47
+		 *
+		 * @param bool $should_rethrow Whether to re-throw the contained error.
+		 */
+		$should_rethrow = apply_filters(
+			'blocksy:theme:contained-fatal:rethrow',
+			defined('WP_DEBUG') && WP_DEBUG
+		);
+
+		if ($should_rethrow) {
+			throw $e;
+		}
+	}
 }
 
 function blocksy_get_wp_theme() {
@@ -243,21 +325,37 @@ if (! function_exists('blocksy_get_all_image_sizes')) {
 	}
 }
 
-if (! function_exists('blocksy_debug')) {
-	function blocksy_debug_log($message, $object = null) {
-		if (
-			! defined('WP_DEBUG')
-			||
-			! WP_DEBUG
-		) {
-			return;
-		}
+/**
+ * Log a debug message (always — not gated by WP_DEBUG) and fire the
+ * `blocksy:theme:debug-log` action so anything can observe the theme's debug logs
+ * (e.g. a companion feature).
+ *
+ * PARITY: mirrored by the companion's blocksy_companion_debug_log() (which fires
+ * blocksy:companion:debug-log) — keep both in sync.
+ *
+ * @param string $message The log message.
+ * @param mixed  $object  Optional context appended via print_r (e.g. a \Throwable).
+ *
+ * @return void
+ */
+function blocksy_debug_log($message, $object = null) {
+	/**
+	 * Fires for every theme debug log message.
+	 *
+	 * Lets anything (e.g. a companion feature) observe the theme's debug logs
+	 * without the theme persisting them itself.
+	 *
+	 * @since 2.1.47
+	 *
+	 * @param string $message The log message.
+	 * @param mixed  $object  Optional context (e.g. a \Throwable). Default null.
+	 */
+	do_action('blocksy:theme:debug-log', $message, $object);
 
-		if (is_null($object)) {
-			error_log($message);
-		} else {
-			error_log($message . ': ' . print_r($object, true));
-		}
+	if (is_null($object)) {
+		error_log($message);
+	} else {
+		error_log($message . ': ' . print_r($object, true));
 	}
 }
 

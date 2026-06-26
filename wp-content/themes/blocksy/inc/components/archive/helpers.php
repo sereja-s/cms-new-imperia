@@ -42,8 +42,8 @@ if (! function_exists('blocksy_render_archive_cards')) {
 
 			$has_cards_type = true;
 
-			if ($container_output && function_exists('blocksy_companion_get_content_block_that_matches')) {
-				$hook_id = blocksy_companion_get_content_block_that_matches([
+			if ($container_output) {
+				$hook_id = blocksy_manager()->companion->get_content_block_that_matches([
 					'template_type' => 'archive'
 				]);
 

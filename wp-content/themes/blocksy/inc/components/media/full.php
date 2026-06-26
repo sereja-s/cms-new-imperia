@@ -204,9 +204,7 @@ if (! function_exists('blocksy_media')) {
 		if (
 			$args['display_video']
 			&&
-			class_exists('\Blocksy\Plugin')
-			&&
-			\Blocksy\Plugin::instance()->premium
+			blocksy_manager()->companion->has('base_pro')
 		) {
 			$maybe_video_result = blocksy_has_video_element($args);
 

@@ -190,34 +190,20 @@ function blocksy_template_loop_product_thumbnail($attr) {
 function blocksy_output_product_toolbar() {
 	$shop_cards_type = blocksy_get_theme_mod('shop_cards_type', 'type-1');
 
+	/**
+	 * Filters the product card toolbar components (an array of HTML strings).
+	 *
+	 * Companion features append their own controls here, ordered by hook
+	 * priority: add to cart (10), wishlist (20), compare (30), quick view (40).
+	 *
+	 * @since 2.0.1
+	 *
+	 * @param string[] $components Rendered toolbar component HTML. Default empty array.
+	 */
 	$components = apply_filters(
 		'blocksy:options:woocommerce:archive:card-type:output_product_toolbar',
 		[]
 	);
-
-	if (function_exists('blocksy_output_add_to_wish_list')) {
-		$maybe_wish_list = blocksy_output_add_to_wish_list('archive');
-
-		if (! empty($maybe_wish_list)) {
-			$components[] = $maybe_wish_list;
-		}
-	}
-
-	if (function_exists('blocksy_output_add_to_compare')) {
-		$maybe_compare = blocksy_output_add_to_compare('archive');
-
-		if (! empty($maybe_compare)) {
-			$components[] = $maybe_compare;
-		}
-	}
-
-	if (function_exists('blocksy_output_quick_view_link')) {
-		$maybe_quick_view = blocksy_output_quick_view_link();
-
-		if (! empty($maybe_quick_view)) {
-			$components[] = $maybe_quick_view;
-		}
-	}
 
 	if (! empty($components)) {
 		return blocksy_html_tag(

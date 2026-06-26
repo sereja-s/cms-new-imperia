@@ -197,23 +197,105 @@ if (! function_exists('blocksy_entry_excerpt')) {
 /**
  * Output post navigation.
  */
+if (! function_exists('blocksy_get_post_navigation_boundary_post')) {
+function blocksy_get_post_navigation_boundary_post($args = []) {
+	$args = wp_parse_args($args, [
+		'previous' => true,
+		'in_same_term' => false,
+		'taxonomy' => 'category',
+	]);
+
+	$post = get_post();
+
+	if (! $post) {
+		return null;
+	}
+
+	$order = $args['previous'] ? 'DESC' : 'ASC';
+
+	$query_args = [
+		'fields' => 'ids',
+		'ignore_sticky_posts' => true,
+		'no_found_rows' => true,
+		'orderby' => [
+			'post_date' => $order,
+			'ID' => $order,
+		],
+		'post__not_in' => [$post->ID],
+		'post_status' => ['publish'],
+		'post_type' => $post->post_type,
+		'posts_per_page' => 1,
+	];
+
+	if (is_user_logged_in()) {
+		$query_args['perm'] = 'readable';
+		$query_args['post_status'] = array_merge(
+			$query_args['post_status'],
+			get_post_stati(['private' => true])
+		);
+	}
+
+	if ($args['in_same_term']) {
+		if (
+			! taxonomy_exists($args['taxonomy'])
+			||
+			! is_object_in_taxonomy($post->post_type, $args['taxonomy'])
+		) {
+			return null;
+		}
+
+		$term_ids = wp_get_object_terms($post->ID, $args['taxonomy'], [
+			'fields' => 'ids'
+		]);
+
+		if (is_wp_error($term_ids) || empty($term_ids)) {
+			return null;
+		}
+
+		$query_args['tax_query'] = [
+			[
+				'field' => 'term_id',
+				'taxonomy' => $args['taxonomy'],
+				'terms' => $term_ids,
+			]
+		];
+	}
+
+	$boundary_posts = get_posts($query_args);
+
+	if (empty($boundary_posts)) {
+		return null;
+	}
+
+	return get_post($boundary_posts[0]);
+}
+}
+
 if (! function_exists('blocksy_post_navigation')) {
 function blocksy_post_navigation() {
 	$prefix = blocksy_manager()->screen->get_prefix();
 
+	$in_same_term = false;
+	$post_nav_taxonomy = 'category';
+
+	$next_adjacent_post = get_adjacent_post(false, '', true);
+
 	$next_post = apply_filters(
 		'blocksy:post-navigation:next-post',
-		get_adjacent_post(false, '', true)
+		$next_adjacent_post
 	);
+
+	$previous_adjacent_post = get_adjacent_post(false, '', false);
 
 	$previous_post = apply_filters(
 		'blocksy:post-navigation:previous-post',
-		get_adjacent_post(false, '', false)
+		$previous_adjacent_post
 	);
 
 	$post_nav_criteria = blocksy_get_theme_mod($prefix . '_post_nav_criteria', 'default');
 
 	if ($post_nav_criteria !== 'default') {
+		$in_same_term = true;
 		$post_type = get_post_type();
 		$post_nav_taxonomy_default = array_keys(blocksy_get_taxonomies_for_cpt(
 			$post_type
@@ -224,15 +306,45 @@ function blocksy_post_navigation() {
 			$post_nav_taxonomy_default
 		);
 
+		$next_adjacent_post = get_adjacent_post(true, '', true, $post_nav_taxonomy);
+
 		$next_post = apply_filters(
 			'blocksy:post-navigation:next-post',
-			get_adjacent_post(true, '', true, $post_nav_taxonomy)
+			$next_adjacent_post
 		);
+
+		$previous_adjacent_post = get_adjacent_post(true, '', false, $post_nav_taxonomy);
 
 		$previous_post = apply_filters(
 			'blocksy:post-navigation:previous-post',
-			get_adjacent_post(true, '', false, $post_nav_taxonomy)
+			$previous_adjacent_post
 		);
+	}
+
+	$post_nav_infinite = blocksy_get_theme_mod($prefix . '_post_nav_infinite', 'no');
+
+	if ($post_nav_infinite === 'yes') {
+		if (! $next_adjacent_post && ! $next_post) {
+			$next_post = apply_filters(
+				'blocksy:post-navigation:next-post',
+				blocksy_get_post_navigation_boundary_post([
+					'in_same_term' => $in_same_term,
+					'previous' => true,
+					'taxonomy' => $post_nav_taxonomy,
+				])
+			);
+		}
+
+		if (! $previous_adjacent_post && ! $previous_post) {
+			$previous_post = apply_filters(
+				'blocksy:post-navigation:previous-post',
+				blocksy_get_post_navigation_boundary_post([
+					'in_same_term' => $in_same_term,
+					'previous' => false,
+					'taxonomy' => $post_nav_taxonomy,
+				])
+			);
+		}
 	}
 
 	if (! $next_post && ! $previous_post) {

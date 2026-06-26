@@ -10,13 +10,22 @@ if (! function_exists('blocksy_output_header')) {
 			return;
 		}
 
-		if (
-			function_exists('blocksy_companion_get_content_block_that_matches')
-			&&
-			blocksy_companion_get_content_block_that_matches([
-				'template_type' => 'header'
-			])
-		) {
+		/**
+		 * Filters the rendered output for the site header.
+		 *
+		 * Returning a non-empty string short-circuits the default header builder
+		 * and third-party header integrations (e.g. a custom header content block).
+		 *
+		 * @since 2.1.47
+		 *
+		 * @param string $maybe_custom_header_content Rendered header HTML. Default empty string.
+		 */
+		$maybe_custom_header_content = apply_filters(
+			'blocksy:builder:header:custom-output',
+			''
+		);
+
+		if (! empty($maybe_custom_header_content)) {
 			echo blocksy_html_tag(
 				'header',
 				array_merge(
@@ -25,11 +34,7 @@ if (! function_exists('blocksy_output_header')) {
 					],
 					blocksy_schema_org_definitions('header', ['array' => true])
 				),
-				blocksy_companion_render_content_block(
-					blocksy_companion_get_content_block_that_matches([
-						'template_type' => 'header'
-					])
-				)
+				$maybe_custom_header_content
 			);
 
 			return;
@@ -82,25 +87,33 @@ if (! function_exists('blocksy_output_footer')) {
 			return;
 		}
 
-		if (
-			function_exists('blocksy_companion_get_content_block_that_matches')
-			&&
-			blocksy_companion_get_content_block_that_matches([
-				'template_type' => 'footer'
-			])
-		) {
+		/**
+		 * Filters the rendered output for the site footer.
+		 *
+		 * Returning a non-empty string short-circuits the default footer builder
+		 * and third-party footer integrations (e.g. a custom footer content block).
+		 *
+		 * @since 2.1.47
+		 *
+		 * @param string $maybe_custom_footer_content Rendered footer HTML. Default empty string.
+		 */
+		$maybe_custom_footer_content = apply_filters(
+			'blocksy:builder:footer:custom-output',
+			''
+		);
+
+		if (! empty($maybe_custom_footer_content)) {
 			echo blocksy_html_tag(
 				'footer',
-				array_merge([
-					'id' => 'footer'
-				], blocksy_schema_org_definitions('footer', [
-					'array' => true
-				])),
-				blocksy_companion_render_content_block(
-					blocksy_companion_get_content_block_that_matches([
-						'template_type' => 'footer'
+				array_merge(
+					[
+						'id' => 'footer'
+					],
+					blocksy_schema_org_definitions('footer', [
+						'array' => true
 					])
-				)
+				),
+				$maybe_custom_footer_content
 			);
 			return;
 		}

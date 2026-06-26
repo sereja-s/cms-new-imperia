@@ -75,22 +75,19 @@ if (! function_exists('blocksy_get_listing_card_type')) {
 		$card_type = blocksy_get_theme_mod($args['prefix'] . '_card_type', 'boxed');
 
 		if ($card_type === 'cover') {
-			if (
-				$blog_post_structure === 'simple'
-				||
-				(
-					function_exists('blocksy_companion_get_content_block_that_matches')
-					&&
-					blocksy_companion_get_content_block_that_matches([
-						'template_type' => 'archive'
-					])
-				)
-			) {
+			if ($blog_post_structure === 'simple') {
 				$card_type = 'boxed';
 			}
 		}
 
-		return $card_type;
+		/**
+		 * Filters the resolved card type for a posts listing.
+		 *
+		 * @since 2.1.47
+		 *
+		 * @param string $card_type Card type (e.g. 'boxed', 'cover', 'simple').
+		 */
+		return apply_filters('blocksy:posts-listing:card_type', $card_type);
 	}
 }
 
@@ -109,26 +106,19 @@ if (! function_exists('blocksy_listing_page_structure')) {
 			'grid'
 		);
 
-		if (
-			$blog_post_structure === 'gutenberg'
-			||
-			$blog_post_structure === 'simple'
-		) {
-			$has_matching_template = (
-				function_exists('blocksy_companion_get_content_block_that_matches')
-				&&
-				blocksy_companion_get_content_block_that_matches([
-					'template_type' => 'archive',
-					'match_conditions_strategy' => rtrim($args['prefix'], '_')
-				])
-			);
-
-			if ($has_matching_template) {
-				return 'grid';
-			}
-		}
-
-		return $blog_post_structure;
+		/**
+		 * Filters the resolved page structure for a posts listing.
+		 *
+		 * @since 2.1.47
+		 *
+		 * @param string $blog_post_structure Listing structure (e.g. 'grid', 'simple', 'gutenberg').
+		 * @param string $prefix              The current listing prefix.
+		 */
+		return apply_filters(
+			'blocksy:posts-listing:structure',
+			$blog_post_structure,
+			$args['prefix']
+		);
 	}
 }
 

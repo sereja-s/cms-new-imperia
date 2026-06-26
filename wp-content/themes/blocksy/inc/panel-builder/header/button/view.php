@@ -53,16 +53,10 @@ if ($header_button_open === 'popup') {
 	if (
 		$popup_id
 		&&
-		class_exists('\Blocksy\Plugin')
-		&&
-		\Blocksy\Plugin::instance()->premium
-		&&
-		\Blocksy\Plugin::instance()
-			->premium
-			->content_blocks
-			->is_hook_eligible_for_display($popup_id, [
-				'match_conditions' => false
-			])
+		blocksy_manager()->companion->is_hook_eligible_for_display([
+			'hook_id' => $popup_id,
+			'match_conditions' => false
+		])
 	) {
 		$values = blocksy_get_post_options($popup_id);
 
@@ -153,22 +147,17 @@ $button_class = trim($button_class . ' ' . blocksy_default_akg(
 	''
 ));
 
-
-$icon = '';
-
 $icon_position = blocksy_akg('icon_position', $atts, 'left');
 
-if (function_exists('blocksy_companion_get_icon')) {
-	$icon = blocksy_companion_get_icon([
-		'icon_descriptor' => blocksy_akg('icon', $atts, [
-			'icon' => ''
-		]),
-		'icon_container' => false,
-		'icon_html_atts' => [
-			'class' => 'ct-icon',
-		]
-	]);
-}
+$icon = blocksy_manager()->companion->get_icon([
+	'icon_descriptor' => blocksy_akg('icon', $atts, [
+		'icon' => ''
+	]),
+	'icon_container' => false,
+	'icon_html_atts' => [
+		'class' => 'ct-icon',
+	]
+]);
 
 if (
 	blocksy_akg('has_header_button_secondary_text', $atts, 'no') === 'yes'

@@ -356,16 +356,16 @@ class WooCommerceSingle {
 					isset($item['icon_source'])
 					&&
 					$item['icon_source'] === 'custom'
-					&&
-					function_exists('blocksy_companion_get_icon')
 				) {
-					$icon = blocksy_companion_get_icon(
-						[
-							'icon_descriptor' => blocksy_akg('icon', $item, [
-								'icon' => "blc blc-user" // TODO: get defaults from item ID
-							])
-						]
-					);
+					$custom_icon = blocksy_manager()->companion->get_icon([
+						'icon_descriptor' => blocksy_akg('icon', $item, [
+							'icon' => "blc blc-user" // TODO: get defaults from item ID
+						])
+					]);
+
+					if ($custom_icon) {
+						$icon = $custom_icon;
+					}
 				}
 
 				$out .= $icon;
@@ -453,19 +453,19 @@ class WooCommerceSingle {
 			);
 
 			if (
-				function_exists('blocksy_companion_get_icon')
-				&&
 				isset($item['icon_source'])
 				&&
 				$item['icon_source'] === 'custom'
 			) {
-				$icon = blocksy_companion_get_icon(
-					[
-						'icon_descriptor' => blocksy_akg('icon', $item, [
-							'icon' => "fas fa-check"
-						])
-					]
-				);
+				$custom_icon = blocksy_manager()->companion->get_icon([
+					'icon_descriptor' => blocksy_akg('icon', $item, [
+						'icon' => "fas fa-check"
+					])
+				]);
+
+				if ($custom_icon) {
+					$icon = $custom_icon;
+				}
 			}
 
 			$item_i18n_id_prefix = 'single_product:additional_info_item:' . $item['id'];

@@ -1,6 +1,6 @@
 <?php
 
-$is_pro = function_exists('blocksy_companion_site_has_feature') && blocksy_companion_site_has_feature('base_pro');
+$has_custom_icons = blocksy_manager()->companion->has('custom_icons');
 
 $payment_method_options = [
 	'item_visa' => [
@@ -34,15 +34,18 @@ $payment_method_options = [
 
 $payment_method_options = array_merge(
 	$payment_method_options,
-	$is_pro ? [
-		'custom_link' => [
-			'label' => blocksy_safe_sprintf(
-				__('%s', 'blocksy'),
-				__('Custom', 'blocksy')
-			),
-			'clone' => 4,
-		]
-	] : []
+	/**
+	 * Filters the extra payment method options listed in the single product
+	 * payment methods layer.
+	 *
+	 * @since 2.1.47
+	 *
+	 * @param array $payment_methods Extra payment method option definitions. Default empty array.
+	 */
+	apply_filters(
+		'blocksy:options:woocommerce:single-product:custom-payment-methods',
+		[]
+	)
 );
 
 $additional_info_options = [
@@ -50,7 +53,7 @@ $additional_info_options = [
 		'label' => blocksy_safe_sprintf('<%%= item_title || "%s" %%>', __('Item Label', 'blocksy')),
 		'clone' => 10,
 		'options' => [
-			$is_pro ? [
+			$has_custom_icons ? [
 				'icon_source' => [
 					'label' => __( 'Icon Source', 'blocksy' ),
 					'type' => 'ct-radio',
@@ -93,7 +96,7 @@ $additional_info_options = [
 	]
 ];
 
-if ($is_pro) {
+if ($has_custom_icons) {
 	foreach ($payment_method_options as $key => $method) {
 		$payment_method_options[$key]['options'] = [
 			'icon_source' => [
@@ -472,4 +475,3 @@ $options = apply_filters(
 		],
 	]
 );
-

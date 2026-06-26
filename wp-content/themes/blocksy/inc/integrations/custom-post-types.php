@@ -37,13 +37,6 @@ class CustomPostTypes {
 			]));
 
 			$exclude_post_types = [
-
-				// theme
-				'ct_content_block',
-				'ct_thank_you_page',
-				'ct_product_tab',
-				'ct_size_guide',
-
 				// elements kit
 				'elementskit_content',
 				'elementskit_template',
@@ -326,4 +319,3 @@ class CustomPostTypes {
 		);
 	}
 }
-

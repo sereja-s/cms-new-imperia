@@ -46,6 +46,13 @@ if (! function_exists('blocksy_has_share_box')) {
 			$has_share_box = false;
 		}
 
+		/**
+		 * Filters whether the share box is displayed on a single post.
+		 *
+		 * @since 2.0.1
+		 *
+		 * @param bool $has_share_box Whether the share box is shown.
+		 */
 		return apply_filters(
 			'blocksy:single:has-share-box',
 			$has_share_box
@@ -75,6 +82,13 @@ if (! function_exists('blocksy_has_author_box')) {
 			$has_author_box = false;
 		}
 
+		/**
+		 * Filters whether the author box is displayed on a single post.
+		 *
+		 * @since 1.8.3.4
+		 *
+		 * @param bool $has_author_box Whether the author box is shown.
+		 */
 		$has_author_box = apply_filters(
 			'blocksy:single:has-author-box',
 			$has_author_box
@@ -154,6 +168,11 @@ function blocksy_single_content($content = null) {
 		<?php post_class(); ?>>
 
 		<?php
+			/**
+			 * Fires at the top of the single post article, before the featured image.
+			 *
+			 * @since 1.8.0
+			 */
 			do_action('blocksy:single:top');
 
 			if ($featured_image_location === 'above') {
@@ -163,6 +182,13 @@ function blocksy_single_content($content = null) {
 			if (
 				! is_singular([ 'product' ])
 				&&
+				/**
+				 * Filters whether the default hero section renders on a single post.
+				 *
+				 * @since 1.7.60
+				 *
+				 * @param bool $has_default_hero Whether the default hero is shown.
+				 */
 				apply_filters('blocksy:single:has-default-hero', true)
 			) {
 				/**
@@ -202,29 +228,31 @@ function blocksy_single_content($content = null) {
 			?>
 		<?php } ?>
 
-		<?php do_action('blocksy:single:content:top'); ?>
+		<?php
+		/**
+		 * Fires inside the single post content wrapper, before the post content.
+		 *
+		 * @since 1.8.0
+		 */
+		do_action('blocksy:single:content:top'); ?>
 
 		<div class="<?php echo $content_class ?>">
 			<?php
 
 			if (! is_attachment()) {
-				if (
-					function_exists('blocksy_companion_get_content_block_that_matches')
-					&&
-					blocksy_companion_get_content_block_that_matches([
-						'template_type' => 'single',
-						'template_subtype' => 'content'
-					])
-				) {
-					$content = blocksy_companion_render_content_block(
-						blocksy_companion_get_content_block_that_matches([
-							'template_type' => 'single',
-							'template_subtype' => 'content'
-						])
-					);
-				}
+				/**
+				 * Filters the rendered output that replaces the post content area.
+				 *
+				 * Returning a non-empty string is echoed in place of `the_content()`
+				 * (e.g. a content block providing the single post body).
+				 *
+				 * @since 2.1.47
+				 *
+				 * @param string $content Rendered output. Default empty string.
+				 */
+				$content = apply_filters('blocksy:single:content:custom-output', '');
 
-				if ($content) {
+				if (! empty($content)) {
 					echo $content;
 				} else {
 					the_content(
@@ -257,19 +285,19 @@ function blocksy_single_content($content = null) {
 								'size' => 'full',
 								'tag_name' => 'figure',
 								'ratio' => 'original',
-							]);							
+							]);
 						?>
 
 						<figcaption class="wp-caption-text">
 							<?php
 								echo wp_kses_post(wp_get_attachment_caption(get_post_thumbnail_id()));
-								
+
 							?>
 						</figcaption>
 					</figure>
 				<?php
 					remove_filter('the_content', 'prepend_attachment');
-					the_content(); 
+					the_content();
 					add_filter('the_content', 'prepend_attachment');
 			}
 
@@ -300,6 +328,11 @@ function blocksy_single_content($content = null) {
 				]
 			);
 
+			/**
+			 * Fires inside the single post content wrapper, after the post content.
+			 *
+			 * @since 1.7.56
+			 */
 			do_action('blocksy:single:content:bottom');
 		?>
 
@@ -461,18 +494,27 @@ function blocksy_single_content($content = null) {
 			echo blocksy_post_navigation();
 		}
 
-		if (function_exists('blocksy_companion_ext_newsletter_subscribe_form')) {
-			if (get_post_type() === 'post') {
-				/**
-				 * Note to code reviewers: This line doesn't need to be escaped.
-				 * Function blocksy_companion_ext_newsletter_subscribe_form() used here escapes the value properly.
-				 */
-				echo blocksy_companion_ext_newsletter_subscribe_form();
-			}
-		}
+		/**
+		 * Fires before the contained page elements are rendered on a single post.
+		 *
+		 * @since 2.1.47
+		 */
+		do_action('blocksy:single:page-elements:contained:before');
 
 		blocksy_display_page_elements('contained');
 
+		/**
+		 * Fires after the contained page elements are rendered on a single post.
+		 *
+		 * @since 2.1.47
+		 */
+		do_action('blocksy:single:page-elements:contained:after');
+
+		/**
+		 * Fires at the bottom of the single post article, after all page elements.
+		 *
+		 * @since 1.8.0
+		 */
 		do_action('blocksy:single:bottom');
 
 		?>
@@ -484,4 +526,3 @@ function blocksy_single_content($content = null) {
 	return ob_get_clean();
 }
 }
-

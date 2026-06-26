@@ -111,6 +111,13 @@ if (! function_exists('blocksy_eventkoi_content_open')) {
 			'array' => true
 		]));
 
+		/**
+		 * Filters whether the default hero section renders on a single post.
+		 *
+		 * @since 1.7.60
+		 *
+		 * @param bool $has_default_hero Whether the default hero is shown.
+		 */
 		if (apply_filters('blocksy:single:has-default-hero', true)) {
 			$resulting_hero = blocksy_output_hero_section([
 				'type' => 'type-2'

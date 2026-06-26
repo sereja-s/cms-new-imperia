@@ -1,6 +1,6 @@
 {
 	"name": "small-ct",
-	"version": "2.1.46",
+	"version": "2.1.47",
 	"title": "Blocksy",
 	"browserslist": "> 1%, not opera > 0, not op_mini all",
 	"devDependencies": {
@@ -11,7 +11,8 @@
 		"gulp-remove-code": "3.0.4",
 		"jest": "29.7.0",
 		"negotiator": "0.6.3",
-		"openai": "6.3.0"
+		"openai": "6.3.0",
+		"php-parser": "3.7.0"
 	},
 	"scripts": {
 		"dev": "gulp dev",
@@ -23,6 +24,8 @@
 		"make-release": "env-cmd --silent node scripts/make-release.js",
 		"sync-google-fonts": "env-cmd --silent node scripts/sync-google-fonts.js",
 		"test": "NODE_ENV=test jest",
+		"guard": "node scripts/check-companion-guarding.js",
+		"guard:hooks": "node scripts/check-undocumented-hooks.js",
 		"create-issues-changelogs": "env-cmd --silent node scripts/create-issues-changelogs.js",
 		"set-issue-data": "env-cmd --silent node scripts/set-issue-data.js",
 		"make-theme-zip": "cross-env NODE_ENV=production gulp build_zips --silent && rm -rf build_tmp/blocksy && cp -R build_tmp/build build_tmp/blocksy",

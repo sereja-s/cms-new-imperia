@@ -14,15 +14,11 @@ if (! isset($title)) {
 	$title = __('Blog', 'blocksy');
 }
 
-$has_card_matching_template = (
-	function_exists('blocksy_companion_get_content_block_that_matches')
-	&&
-	blocksy_companion_get_content_block_that_matches([
-		'template_type' => 'archive',
-		'template_subtype' => 'card',
-		'match_conditions_strategy' => rtrim($prefix, '_')
-	])
-);
+$has_card_matching_template = !! blocksy_manager()->companion->get_content_block_that_matches([
+	'template_type' => 'archive',
+	'template_subtype' => 'card',
+	'match_conditions_strategy' => rtrim($prefix, '_')
+]);
 
 $overridable_card_options = [
 	blocksy_rand_md5() => [
@@ -360,11 +356,7 @@ $overridable_card_options = [
 								],
 
 								[
-									(
-										function_exists('blocksy_companion_site_has_feature')
-										&&
-										blocksy_companion_site_has_feature('base_pro')
-									) ? [
+									(blocksy_manager()->companion->has('base_pro')) ? [
 										'has_archive_video_thumbnail' => [
 											'label' => __( 'Video Thumbnail', 'blocksy' ),
 											'type' => 'ct-switch',

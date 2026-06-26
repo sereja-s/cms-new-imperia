@@ -110,29 +110,23 @@ add_action(
 
 		$prefix = blocksy_manager()->screen->get_admin_prefix($post_type);
 
-		$strategy = [
-			'strategy' => 'customizer',
-			'prefix' => $prefix
-		];
-
+		$strategy = 'customizer';
 		$page_structure_key = 'structure';
 
-		if (function_exists('blocksy_companion_get_content_block_that_matches')) {
-			$single_cb = blocksy_companion_get_content_block_that_matches([
-				'template_type' => 'single',
-				'template_subtype' => 'canvas',
-				'match_conditions_strategy' => $prefix
-			]);
+		$single_cb = blocksy_manager()->companion->get_content_block_that_matches([
+			'template_type' => 'single',
+			'template_subtype' => 'canvas',
+			'match_conditions_strategy' => $prefix
+		]);
 
-			if ($single_cb) {
-				$content_block_atts = blocksy_get_post_options($single_cb);
+		if ($single_cb) {
+			$content_block_atts = blocksy_get_post_options($single_cb);
 
-				$strategy = [
-					'strategy' => $content_block_atts
-				];
+			$strategy = [
+				'strategy' => $content_block_atts
+			];
 
-				$page_structure_key = 'content_block_structure';
-			}
+			$page_structure_key = 'content_block_structure';
 		}
 
 		$page_structure = blocksy_akg_or_customizer(

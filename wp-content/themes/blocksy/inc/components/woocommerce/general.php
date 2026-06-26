@@ -94,25 +94,34 @@ add_action(
 		$prefix = blocksy_manager()->screen->get_prefix();
 
 		if (
-			function_exists('blocksy_companion_get_content_block_that_matches')
-			&&
-			blocksy_companion_get_content_block_that_matches([
-				'template_type' => 'nothing_found',
-				'match_conditions' => false
-			])
-			&&
 			is_search()
 			&&
 			! have_posts()
 		) {
-			echo blocksy_companion_render_content_block(
-				blocksy_companion_get_content_block_that_matches([
-					'template_type' => 'nothing_found',
-					'match_conditions' => false
-				])
+			/**
+			 * Filters the rendered output for the WooCommerce "nothing found" state.
+			 *
+			 * Returning a non-empty string is echoed in place of the default
+			 * no-results content on an empty product search results page.
+			 *
+			 * @since 2.1.47
+			 *
+			 * @param string $content Rendered output. Default empty string.
+			 */
+			$content = apply_filters(
+				'blocksy:woocommerce:nothing-found:custom-output',
+				''
 			);
-			ob_start();
-			return;
+
+			if (! empty($content)) {
+				// TODO: refactor into a class so this becomes instance state, not a global.
+				global $blocksy_woo_has_nothing_found;
+				$blocksy_woo_has_nothing_found = true;
+
+				echo $content;
+				ob_start();
+				return;
+			}
 		}
 
 		if ($prefix === 'woo_categories' || $prefix === 'search') {
@@ -179,18 +188,10 @@ add_action(
 add_action(
 	'woocommerce_after_main_content',
 	function () {
-		if (
-			function_exists('blocksy_companion_get_content_block_that_matches')
-			&&
-			blocksy_companion_get_content_block_that_matches([
-				'template_type' => 'nothing_found',
-				'match_conditions' => false
-			])
-			&&
-			is_search()
-			&&
-			! have_posts()
-		) {
+		global $blocksy_woo_has_nothing_found;
+
+		if ($blocksy_woo_has_nothing_found) {
+			$blocksy_woo_has_nothing_found = false;
 			ob_get_clean();
 			return;
 		}
@@ -475,4 +476,3 @@ if (! function_exists('blocksy_product_get_gallery_images')) {
 		return $gallery_images;
 	}
 }
-

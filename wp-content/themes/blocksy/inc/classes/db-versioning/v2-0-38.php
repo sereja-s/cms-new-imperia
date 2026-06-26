@@ -7,8 +7,6 @@ class V2038 {
 		if (
 			! function_exists('wc_get_attribute_taxonomies')
 			||
-			! function_exists('blocksy_companion_get_terms')
-			||
 			! class_exists('\Blocksy\Plugin')
 			||
 			! in_array(
@@ -19,12 +17,11 @@ class V2038 {
 			return;
 		}
 
-		if (! class_exists('\Blocksy\Extensions\WoocommerceExtra\Storage')) {
+		$settings = get_option('blocksy_ext_woocommerce_extra_settings', []);
+
+		if (! is_array($settings)) {
 			return;
 		}
-
-		$storage = new \Blocksy\Extensions\WoocommerceExtra\Storage();
-		$settings = $storage->get_settings();
 
 		if (
 			! isset($settings['features']['variation-swatches'])
@@ -35,7 +32,7 @@ class V2038 {
 		}
 
 		foreach (array_values(wc_get_attribute_taxonomies()) as $tax) {
-			$all_terms = blocksy_companion_get_terms(
+			$all_terms = get_terms(
 				[
 					'taxonomy' => 'pa_' . $tax->attribute_name,
 					'update_term_meta_cache' => false,

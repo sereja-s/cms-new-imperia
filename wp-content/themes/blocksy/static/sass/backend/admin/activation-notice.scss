@@ -55,10 +55,11 @@
 			}
 		}
 
-		i {
+		i.dashicons {
 			width: 18px;
 			height: 18px;
 			font-size: 18px;
+			line-height: 1;
 			margin-left: 7px;
 			animation: spin 1.5s infinite linear;
 		}

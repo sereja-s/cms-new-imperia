@@ -28,6 +28,7 @@ class ThemeAutoloader {
 
 			'StringHelpers' => 'inc/classes/StringHelpers.php',
 
+			'CompanionBridge' => 'inc/classes/companion-bridge.php',
 			'Database' => 'inc/classes/database.php',
 			'DbVersioning' => 'inc/classes/theme-db-versioning.php',
 

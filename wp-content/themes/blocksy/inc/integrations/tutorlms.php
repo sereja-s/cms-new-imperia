@@ -63,6 +63,13 @@ if (! function_exists('blocksy_tutor_lms_course_content_open')) {
 		 * Note to code reviewers: This line doesn't need to be escaped.
 		 * Function blocksy_output_hero_section() used here escapes the value properly.
 		 */
+		/**
+		 * Filters whether the default hero section renders on a single post.
+		 *
+		 * @since 1.7.60
+		 *
+		 * @param bool $has_default_hero Whether the default hero is shown.
+		 */
 		if (apply_filters('blocksy:single:has-default-hero', true)) {
 			$resulting_hero = blocksy_output_hero_section([
 				'type' => 'type-2'
@@ -121,6 +128,13 @@ if (! function_exists('blocksy_tutor_lms_content_open')) {
 			'array' => true
 		]));
 
+		/**
+		 * Filters whether the default hero section renders on a single post.
+		 *
+		 * @since 1.7.60
+		 *
+		 * @param bool $has_default_hero Whether the default hero is shown.
+		 */
 		if (apply_filters('blocksy:single:has-default-hero', true)) {
 			echo blocksy_output_hero_section([
 				'type' => 'type-2'

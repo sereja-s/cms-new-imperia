@@ -315,13 +315,15 @@ if (! function_exists('blocksy_post_meta')) {
 				) {
 					$icon = '<svg width="13" height="13" viewBox="0 0 15 15"><path d="M13.6,1.4c-1.9-1.9-4.9-1.9-6.8,0L2.2,6C2.1,6.1,2,6.3,2,6.5V12l-1.8,1.8c-0.3,0.3-0.3,0.7,0,1C0.3,14.9,0.5,15,0.7,15s0.3-0.1,0.5-0.2L3,13h5.5c0.2,0,0.4-0.1,0.5-0.2l2.7-2.7c0,0,0,0,0,0l1.9-1.9C15.5,6.3,15.5,3.3,13.6,1.4z M8.2,11.6H4.4l1.4-1.4h3.9L8.2,11.6z M12.6,7.2L11,8.9H7.1l3.6-3.6c0.3-0.3,0.3-0.7,0-1C10.4,4,10,4,9.7,4.3L5,9.1c0,0,0,0,0,0l-1.6,1.6V6.8l4.4-4.4c1.3-1.3,3.5-1.3,4.8,0C14,3.7,14,5.9,12.6,7.2C12.6,7.2,12.6,7.2,12.6,7.2z"/></svg>';
 
-					if (function_exists('blocksy_companion_get_icon')) {
-						$icon = blocksy_companion_get_icon([
-							'icon_descriptor' => blocksy_akg('icon', $single_meta, [
-								'icon' => 'blc blc-feather'
-							]),
-							'icon_container' => false
-						]);
+					$custom_icon = blocksy_manager()->companion->get_icon([
+						'icon_descriptor' => blocksy_akg('icon', $single_meta, [
+							'icon' => 'blc blc-feather'
+						]),
+						'icon_container' => false
+					]);
+
+					if ($custom_icon) {
+						$icon = $custom_icon;
 					}
 
 					if (! empty($icon)) {
@@ -358,13 +360,15 @@ if (! function_exists('blocksy_post_meta')) {
 						if ($args['meta_type'] === 'icons' || $args['force_icons']) {
 							$icon = '<svg width="13" height="13" viewBox="0 0 15 15"><path d="M7.5,0C3.4,0,0,3.4,0,7.5S3.4,15,7.5,15S15,11.6,15,7.5S11.6,0,7.5,0z M7.5,13.6c-3.4,0-6.1-2.8-6.1-6.1c0-3.4,2.8-6.1,6.1-6.1c3.4,0,6.1,2.8,6.1,6.1C13.6,10.9,10.9,13.6,7.5,13.6z M10.8,9.2c-0.1,0.2-0.4,0.4-0.6,0.4c-0.1,0-0.2,0-0.3-0.1L7.2,8.1C7,8,6.8,7.8,6.8,7.5V4c0-0.4,0.3-0.7,0.7-0.7S8.2,3.6,8.2,4v3.1l2.4,1.2C10.9,8.4,11,8.8,10.8,9.2z"/></svg>';
 
-							if (function_exists('blocksy_companion_get_icon')) {
-								$icon = blocksy_companion_get_icon([
-									'icon_descriptor' => blocksy_akg('icon', $single_meta, [
-										'icon' => 'blc blc-clock'
-									]),
-									'icon_container' => false
-								]);
+							$custom_icon = blocksy_manager()->companion->get_icon([
+								'icon_descriptor' => blocksy_akg('icon', $single_meta, [
+									'icon' => 'blc blc-clock'
+								]),
+								'icon_container' => false
+							]);
+
+							if ($custom_icon) {
+								$icon = $custom_icon;
 							}
 
 							echo trim($icon);
@@ -424,13 +428,15 @@ if (! function_exists('blocksy_post_meta')) {
 						if ($args['meta_type'] === 'icons' || $args['force_icons']) {
 							$icon = '<svg width="13" height="13" viewBox="0 0 15 15"><path d="M7.5,0C3.4,0,0,3.4,0,7.5S3.4,15,7.5,15S15,11.6,15,7.5S11.6,0,7.5,0z M7.5,13.6c-3.4,0-6.1-2.8-6.1-6.1c0-3.4,2.8-6.1,6.1-6.1c3.4,0,6.1,2.8,6.1,6.1C13.6,10.9,10.9,13.6,7.5,13.6z M8.2,4v3.5C8.2,7.8,8,8,7.8,8.1L5.1,9.5C5,9.5,4.9,9.5,4.8,9.5c-0.3,0-0.5-0.1-0.6-0.4C4,8.8,4.1,8.4,4.5,8.3l2.4-1.2V4c0-0.4,0.3-0.7,0.7-0.7S8.2,3.6,8.2,4z"/></svg>';
 
-							if (function_exists('blocksy_companion_get_icon')) {
-								$icon = blocksy_companion_get_icon([
-									'icon_descriptor' => blocksy_akg('icon', $single_meta, [
-										'icon' => 'blc blc-clock'
-									]),
-									'icon_container' => false
-								]);
+							$custom_icon = blocksy_manager()->companion->get_icon([
+								'icon_descriptor' => blocksy_akg('icon', $single_meta, [
+									'icon' => 'blc blc-clock'
+								]),
+								'icon_container' => false
+							]);
+
+							if ($custom_icon) {
+								$icon = $custom_icon;
 							}
 
 							echo trim($icon);
@@ -502,13 +508,15 @@ if (! function_exists('blocksy_post_meta')) {
 					if ($args['meta_type'] === 'icons' || $args['force_icons']) {
 						$icon = '<svg width="13" height="13" viewBox="0 0 15 15"><path d="M13.7,14.8L10.9,12H2.2C1,12,0,11,0,9.8l0-7.5C0,1,1,0,2.2,0l10.5,0C14,0,15,1,15,2.2v12c0,0.3-0.2,0.6-0.5,0.7c-0.1,0-0.2,0.1-0.3,0.1C14.1,15,13.9,14.9,13.7,14.8zM2.2,1.5c-0.4,0-0.8,0.3-0.8,0.8v7.5c0,0.4,0.3,0.8,0.8,0.8h9c0.2,0,0.4,0.1,0.5,0.2l1.7,1.7V2.2c0-0.4-0.3-0.8-0.8-0.8H2.2z"/></svg>';
 
-						if (function_exists('blocksy_companion_get_icon')) {
-							$icon = blocksy_companion_get_icon([
-								'icon_descriptor' => blocksy_akg('icon', $single_meta, [
-									'icon' => 'blc blc-comments'
-								]),
-								'icon_container' => false
-							]);
+						$custom_icon = blocksy_manager()->companion->get_icon([
+							'icon_descriptor' => blocksy_akg('icon', $single_meta, [
+								'icon' => 'blc blc-comments'
+							]),
+							'icon_container' => false
+						]);
+
+						if ($custom_icon) {
+							$icon = $custom_icon;
 						}
 
 						echo trim($icon);
@@ -595,13 +603,15 @@ if (! function_exists('blocksy_post_meta')) {
 				if ($args['meta_type'] === 'icons' || $args['force_icons']) {
 					$icon = '<svg width="13" height="13" viewBox="0 0 15 15"><path d="M14.4,1.2H0.6C0.3,1.2,0,1.5,0,1.9V5c0,0.3,0.3,0.6,0.6,0.6h0.6v7.5c0,0.3,0.3,0.6,0.6,0.6h11.2c0.3,0,0.6-0.3,0.6-0.6V5.6h0.6C14.7,5.6,15,5.3,15,5V1.9C15,1.5,14.7,1.2,14.4,1.2z M12.5,12.5h-10V5.6h10V12.5z M13.8,4.4H1.2V2.5h12.5V4.4z M5.6,7.5c0-0.3,0.3-0.6,0.6-0.6h2.5c0.3,0,0.6,0.3,0.6,0.6S9.1,8.1,8.8,8.1H6.2C5.9,8.1,5.6,7.8,5.6,7.5z"/></svg>';
 
-					if (function_exists('blocksy_companion_get_icon')) {
-						$icon = blocksy_companion_get_icon([
-							'icon_descriptor' => blocksy_akg('icon', $single_meta, [
-								'icon' => 'blc blc-box'
-							]),
-							'icon_container' => false
-						]);
+					$custom_icon = blocksy_manager()->companion->get_icon([
+						'icon_descriptor' => blocksy_akg('icon', $single_meta, [
+							'icon' => 'blc blc-box'
+						]),
+						'icon_container' => false
+					]);
+
+					if ($custom_icon) {
+						$icon = $custom_icon;
 					}
 
 					echo trim($icon);

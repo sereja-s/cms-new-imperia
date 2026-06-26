@@ -116,19 +116,19 @@ if (empty($icon_type)) {
 }
 
 $icon = $icon[$icon_type];
+$icon_source = blocksy_default_akg('icon_source', $atts, 'default');
 
-if (function_exists('blocksy_companion_get_icon')) {
-	$icon_source = blocksy_default_akg('icon_source', $atts, 'default');
+if ($icon_source === 'custom') {
+	$custom_icon = blocksy_manager()->companion->get_icon([
+		'icon_descriptor' => blocksy_akg('icon', $atts, [
+			'icon' => 'blc blc-cart'
+		]),
+		'icon_container' => false
+	]);
 
-	if ( $icon_source === 'custom' ) {
-		$icon = blocksy_companion_get_icon([
-			'icon_descriptor' => blocksy_akg('icon', $atts, [
-				'icon' => 'blc blc-cart'
-			]),
-			'icon_container' => false
-		]);
+	if ($custom_icon) {
+		$icon = $custom_icon;
 	}
-
 }
 
 $item_class = 'ct-cart-item';

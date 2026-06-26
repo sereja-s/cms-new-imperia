@@ -11,20 +11,23 @@ if (have_posts()) {
 	the_post();
 }
 
-if (
-	function_exists('blocksy_companion_get_content_block_that_matches')
-	&&
-	blocksy_companion_get_content_block_that_matches([
-		'template_type' => 'single',
-		'template_subtype' => 'canvas'
-	])
-) {
-	echo blocksy_companion_render_content_block(
-		blocksy_companion_get_content_block_that_matches([
-			'template_type' => 'single',
-			'template_subtype' => 'canvas'
-		])
-	);
+/**
+ * Filters the rendered output for the single post canvas.
+ *
+ * Returning a non-empty string short-circuits the entire default single
+ * template, including the hero section (e.g. a content block in canvas mode).
+ *
+ * @since 2.1.47
+ *
+ * @param string $content Rendered output. Default empty string.
+ */
+$content = apply_filters(
+	'blocksy:single:canvas:custom-output',
+	''
+);
+
+if (! empty($content)) {
+	echo $content;
 	have_posts();
 	wp_reset_query();
 	return;
@@ -33,6 +36,13 @@ if (
 /**
  * Note to code reviewers: This line doesn't need to be escaped.
  * Function blocksy_output_hero_section() used here escapes the value properly.
+ */
+/**
+ * Filters whether the default hero section renders on a single post.
+ *
+ * @since 1.7.60
+ *
+ * @param bool $has_default_hero Whether the default hero is shown.
  */
 if (apply_filters('blocksy:single:has-default-hero', true)) {
 	echo blocksy_output_hero_section([
@@ -85,4 +95,3 @@ blocksy_display_page_elements('separated');
 
 have_posts();
 wp_reset_query();
-
