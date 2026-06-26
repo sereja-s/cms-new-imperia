@@ -1,6 +1,30 @@
 /**
 ==================================================
-IMPERIA CONTACTS
+IMPERIA FLOATING CONTACTS
+==================================================
+
+Плавающая кнопка:
+"Связаться с нами"
+
+Особенности:
+
+- фиксированное положение;
+- раскрытие вверх;
+- плавная анимация;
+- безопасная работа рядом с:
+    - Blocksy;
+    - WooCommerce;
+    - всплывающими сообщениями;
+    - мобильным меню.
+
+ВАЖНО:
+
+Скрытые элементы не должны блокировать
+клики по другим элементам сайта.
+
+Используется:
+pointer-events
+
 ==================================================
 */
 
@@ -9,65 +33,208 @@ IMPERIA CONTACTS
 {
 	position: fixed;
 
+
 	right: 20px;
+
 	bottom: 20px;
+
 
 	z-index: 9999;
 
+
 	display: flex;
+
+
 	flex-direction: column;
+
+
 	align-items: center;
+
+
+
+	/*
+	==================================================
+	ВАЖНО
+
+	Контейнер сам не принимает клики.
+
+	Это предотвращает ситуацию:
+
+	невидимый блок
+	        ↓
+	перехватывает клик
+	        ↓
+	другой элемент сайта не работает
+
+
+	Активными будут только реальные кнопки.
+	==================================================
+	*/
+
+	pointer-events: none;
 }
+
+
 
 
 
 /**
 ==================================================
 CONTACT LIST
+
+Список ссылок:
+
+- телефон;
+- Telegram;
+- MAX;
+- дополнительные контакты.
+
 ==================================================
 */
+
 
 .imperia-contact-list
 {
 	display: flex;
 
+
 	flex-direction: column;
+
 
 	gap: 12px;
 
+
 	margin-bottom: 12px;
+
+
+
+	/*
+	Начальное состояние.
+
+	Контакты существуют,
+	но скрыты визуально.
+	*/
+
+
+	opacity: 0;
+
+
+	transform:
+		translateY(30px);
+
+
+
+	/*
+	Закрытое состояние:
+
+	нельзя нажать;
+	не мешает сайту.
+	*/
+
+
+	pointer-events: none;
+
+
+
+	transition:
+
+		opacity .3s ease,
+
+		transform .3s ease;
 }
+
+
 
 
 
 /**
 ==================================================
-BUTTONS
+OPEN STATE
+
+После клика:
+
+Связаться
+        ↓
+
+контакты появляются вверх
+
 ==================================================
 */
 
+
+.imperia-floating-contacts.open
+.imperia-contact-list
+{
+	opacity: 1;
+
+
+	transform:
+		translateY(0);
+
+
+
+	/*
+	Теперь ссылки активны.
+	*/
+
+	pointer-events: auto;
+}
+
+
+
+
+
+/**
+==================================================
+CONTACT BUTTONS
+
+Общие стили:
+
+главная кнопка
+и кнопки контактов
+
+==================================================
+*/
+
+
 .imperia-contact-button,
+
 .imperia-contact-item
 {
 	width: 60px;
 
+
 	height: 60px;
+
+
 
 	border: none;
 
+
 	border-radius: 50%;
+
+
 
 	display: flex;
 
+
 	align-items: center;
+
 
 	justify-content: center;
 
+
+
 	text-decoration: none;
+
+
 
 	cursor: pointer;
 
+
+
 	box-shadow:
+
 		0 4px 12px rgba(
 			0,
 			0,
@@ -75,19 +242,87 @@ BUTTONS
 			0.18
 		);
 
+
+
 	transition:
+
 		transform .25s ease,
+
 		box-shadow .25s ease;
 }
 
 
 
+
+
+/**
+==================================================
+MAIN BUTTON
+
+Главная кнопка:
+
+"Связаться с нами"
+
+==================================================
+*/
+
+
+.imperia-contact-button
+{
+
+	/*
+	Так как родитель отключает
+	pointer-events,
+	главная кнопка должна
+	оставаться активной.
+	*/
+
+	pointer-events: auto;
+
+
+
+	position: relative;
+
+
+	z-index: 2;
+
+
+
+	background:
+
+		#04f153;
+
+
+
+	color:
+
+		#ffffff;
+}
+
+
+
+
+
+/**
+==================================================
+HOVER EFFECT
+
+==================================================
+*/
+
+
 .imperia-contact-button:hover,
+
 .imperia-contact-item:hover
 {
-	transform: translateY(-4px);
+	transform:
+
+		translateY(-4px);
+
+
 
 	box-shadow:
+
 		0 8px 18px rgba(
 			0,
 			0,
@@ -98,90 +333,242 @@ BUTTONS
 
 
 
-/**
-==================================================
-MAIN BUTTON
-==================================================
-*/
-
-.imperia-contact-button
-{
-	background: #04f153;
-
-	color: #ffffff;
-}
-
 
 
 /**
 ==================================================
 CONTACT COLORS
+
 ==================================================
 */
 
+
 .imperia-contact-phone
 {
-	background: #27ae60;
-	color: #ffffff;
+	background:
+
+		#27ae60;
+
+
+	color:
+
+		#ffffff;
 }
 
 
 
 .imperia-contact-telegram
 {
-	background: #229ed9;
-	color: #ffffff;
+	background:
+
+		#229ed9;
+
+
+	color:
+
+		#ffffff;
 }
 
 
 
 .imperia-contact-max
 {
-	background: #7c3aed;
-	color: #ffffff;
+	background:
+
+		#7c3aed;
+
+
+	color:
+
+		#ffffff;
 }
+
+
 
 
 
 /**
 ==================================================
-SVG
+CONTACT ITEMS ANIMATION
+
+Дополнительная анимация:
+
+каждая кнопка появляется
+снизу вверх.
+
 ==================================================
 */
 
+
+.imperia-contact-item
+{
+	opacity: 0;
+
+
+	transform:
+
+		translateY(15px);
+
+
+
+	transition:
+
+		opacity .25s ease,
+
+		transform .25s ease;
+}
+
+
+
+
+
+.imperia-floating-contacts.open
+
+.imperia-contact-item
+{
+	opacity: 1;
+
+
+	transform:
+
+		translateY(0);
+}
+
+
+
+
+
+/**
+==================================================
+STAGGER EFFECT
+
+Последовательное появление:
+
+1
+2
+3
+4
+5
+
+==================================================
+*/
+
+
+.imperia-contact-item:nth-child(1)
+{
+	transition-delay:
+
+		0s;
+}
+
+
+
+.imperia-contact-item:nth-child(2)
+{
+	transition-delay:
+
+		.05s;
+}
+
+
+
+.imperia-contact-item:nth-child(3)
+{
+	transition-delay:
+
+		.10s;
+}
+
+
+
+.imperia-contact-item:nth-child(4)
+{
+	transition-delay:
+
+		.15s;
+}
+
+
+
+.imperia-contact-item:nth-child(5)
+{
+	transition-delay:
+
+		.20s;
+}
+
+
+
+
+
+/**
+==================================================
+SVG ICONS
+
+==================================================
+*/
+
+
 .imperia-contact-button svg,
+
 .imperia-contact-item svg
 {
 	width: 28px;
 
+
 	height: 28px;
 
-	fill: currentColor;
+
+
+	fill:
+
+		currentColor;
+
+
 
 	display: block;
 }
 
 
 
+
+
 /**
 ==================================================
 TOGGLE ICONS
+
+Главная кнопка:
+
+закрыта:
+иконка контакта
+
+открыта:
+крестик/стрелка
+
 ==================================================
 */
 
+
 .icon-contact,
+
 .icon-arrow
 {
 	display: flex;
 
+
 	align-items: center;
+
 
 	justify-content: center;
 
+
+
 	width: 100%;
+
 
 	height: 100%;
 }
+
 
 
 
@@ -192,13 +579,18 @@ TOGGLE ICONS
 
 
 
+
+
 /**
 ==================================================
-OPEN STATE
+OPEN ICON STATE
+
 ==================================================
 */
 
+
 .imperia-floating-contacts.open
+
 .icon-contact
 {
 	display: none;
@@ -207,6 +599,7 @@ OPEN STATE
 
 
 .imperia-floating-contacts.open
+
 .icon-arrow
 {
 	display: flex;
@@ -214,125 +607,91 @@ OPEN STATE
 
 
 
+
+
 /**
 ==================================================
 ARROW ROTATION
+
 ==================================================
 */
 
+
 .icon-arrow svg
 {
-	transition: transform .25s ease;
-}
-
-
-
-.imperia-floating-contacts.open
-.icon-arrow svg
-{
-	transform: rotate(0deg);
-}
-
-
-
-/**
-==================================================
-CONTACT ANIMATION
-==================================================
-*/
-
-.imperia-contact-item
-{
-	opacity: 0;
-
-	visibility: hidden;
-
-	pointer-events: none;
-
-	transform: translateY(20px);
-
 	transition:
-		opacity .3s ease,
-		transform .3s ease,
-		visibility .3s ease;
+
+		transform .25s ease;
 }
 
 
 
 .imperia-floating-contacts.open
-.imperia-contact-item
+
+.icon-arrow svg
 {
-	opacity: 1;
+	transform:
 
-	visibility: visible;
-
-	pointer-events: auto;
-
-	transform: translateY(0);
+		rotate(0deg);
 }
 
 
-
-/**
-==================================================
-STAGGER EFFECT
-==================================================
-*/
-
-.imperia-contact-item:nth-child(1)
-{
-	transition-delay: 0s;
-}
-
-.imperia-contact-item:nth-child(2)
-{
-	transition-delay: .05s;
-}
-
-.imperia-contact-item:nth-child(3)
-{
-	transition-delay: .10s;
-}
-
-.imperia-contact-item:nth-child(4)
-{
-	transition-delay: .15s;
-}
-
-.imperia-contact-item:nth-child(5)
-{
-	transition-delay: .20s;
-}
 
 
 
 /**
 ==================================================
 MOBILE
+
 ==================================================
 */
 
-@media (max-width: 768px)
+
+@media (max-width:768px)
 {
+
 	.imperia-floating-contacts
 	{
-		right: 16px;
-		bottom: 16px;
+		right:
+
+			16px;
+
+
+		bottom:
+
+			16px;
 	}
+
+
 
 	.imperia-contact-button,
+
 	.imperia-contact-item
 	{
-		width: 56px;
+		width:
 
-		height: 56px;
+			56px;
+
+
+		height:
+
+			56px;
 	}
+
+
 
 	.imperia-contact-button svg,
+
 	.imperia-contact-item svg
 	{
-		width: 26px;
+		width:
 
-		height: 26px;
+			26px;
+
+
+		height:
+
+			26px;
 	}
+
 }

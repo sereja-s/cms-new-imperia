@@ -41,5 +41,5 @@ document.addEventListener(
 );
 
 console.log(
-'Imperia Catalog loaded'
+'Imperia Contacts loaded'
 );

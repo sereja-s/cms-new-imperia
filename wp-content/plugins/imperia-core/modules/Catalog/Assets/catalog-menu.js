@@ -4,7 +4,6 @@ IMPERIA CATALOG MENU
 ==================================================
 */
 
-
 document.addEventListener(
 'DOMContentLoaded',
 ()=>{
@@ -22,12 +21,10 @@ if(!catalog)
 }
 
 
-
 const button =
 catalog.querySelector(
 '.imperia-catalog__button'
 );
-
 
 
 const dropdown =
@@ -36,26 +33,16 @@ catalog.querySelector(
 );
 
 
-
 const submenu =
 catalog.querySelector(
 '.imperia-catalog__submenu'
 );
 
 
-
-const categories =
-catalog.querySelectorAll(
-'.imperia-catalog__category'
-);
-
-
-
 const arrows =
 catalog.querySelectorAll(
 '.imperia-catalog__toggle'
 );
-
 
 
 if(!window.imperiaCatalogTree)
@@ -68,13 +55,11 @@ if(!window.imperiaCatalogTree)
 }
 
 
-
 /**
 ==================================================
 OPEN MENU
 ==================================================
 */
-
 
 button.addEventListener(
 'click',
@@ -87,7 +72,6 @@ catalog.classList.toggle(
 );
 
 
-
 button.setAttribute(
 'aria-expanded',
 opened
@@ -96,13 +80,12 @@ opened
 );
 
 
-
 if(!opened)
 {
 
 closeDesktopSubmenu();
 
-closeMobileAccordion();
+closeAllMobileCategories();
 
 }
 
@@ -111,13 +94,11 @@ closeMobileAccordion();
 
 
 
-
 /**
 ==================================================
 ARROWS
 ==================================================
 */
-
 
 arrows.forEach(
 arrow=>{
@@ -133,12 +114,10 @@ event.preventDefault();
 event.stopPropagation();
 
 
-
 const category =
 arrow.closest(
 '.imperia-catalog__category'
 );
-
 
 
 const id =
@@ -147,12 +126,10 @@ category.dataset.categoryId
 );
 
 
-
 const isMobile =
 window.matchMedia(
 '(max-width: 768px)'
 ).matches;
-
 
 
 if(isMobile)
@@ -176,12 +153,10 @@ category
 }
 
 
-
 });
 
 
 });
-
 
 
 
@@ -190,7 +165,6 @@ category
 DESKTOP SUBMENU
 ==================================================
 */
-
 
 function showDesktopChildren(
 id,
@@ -206,7 +180,6 @@ Number(item.id) === id
 );
 
 
-
 if(
 !category ||
 !category.children ||
@@ -214,17 +187,15 @@ if(
 )
 {
 
-submenu.hidden=true;
+submenu.hidden = true;
 
 return;
 
 }
 
 
-
 let html =
 '<ul>';
-
 
 
 category.children.forEach(
@@ -249,25 +220,20 @@ ${child.name}
 });
 
 
-
 html +=
 '</ul>';
-
 
 
 submenu.innerHTML =
 html;
 
 
-
 const rect =
 element.getBoundingClientRect();
 
 
-
 const parentRect =
 dropdown.getBoundingClientRect();
-
 
 
 submenu.style.top =
@@ -279,23 +245,18 @@ parentRect.top
 'px';
 
 
-
-submenu.hidden=false;
+submenu.hidden = false;
 
 
 }
 
 
 
-
-
-
 /**
 ==================================================
-MOBILE ACCORDION
+MOBILE CATEGORY
 ==================================================
 */
-
 
 function toggleMobileCategory(
 id,
@@ -311,12 +272,10 @@ category.querySelector(
 );
 
 
-
 if(!container)
 {
 	return;
 }
-
 
 
 const opened =
@@ -325,24 +284,49 @@ const opened =
 );
 
 
-
-closeMobileAccordion();
-
-
+/**
+==================================================
+CLOSE CURRENT
+==================================================
+*/
 
 if(opened)
 {
+
+container.setAttribute(
+'hidden',
+''
+);
+
+container.innerHTML='';
+
+
+category.classList.remove(
+'is-active'
+);
+
+
+arrow.classList.remove(
+'is-open'
+);
+
 
 arrow.setAttribute(
 'aria-expanded',
 'false'
 );
 
+
 return;
 
 }
 
 
+/**
+==================================================
+LOAD CHILDREN
+==================================================
+*/
 
 const data =
 window.imperiaCatalogTree.find(
@@ -351,23 +335,18 @@ Number(item.id) === id
 );
 
 
-
 if(
 !data ||
 !data.children ||
 !data.children.length
 )
 {
-
-return;
-
+	return;
 }
-
 
 
 let html =
 '<ul>';
-
 
 
 data.children.forEach(
@@ -392,15 +371,12 @@ ${child.name}
 });
 
 
-
 html +=
 '</ul>';
 
 
-
 container.innerHTML =
 html;
-
 
 
 container.removeAttribute(
@@ -408,17 +384,14 @@ container.removeAttribute(
 );
 
 
-
 category.classList.add(
 'is-active'
 );
 
 
-
 arrow.classList.add(
 'is-open'
 );
-
 
 
 arrow.setAttribute(
@@ -431,31 +404,32 @@ arrow.setAttribute(
 
 
 
+/**
+==================================================
+CLOSE ALL MOBILE
+==================================================
+*/
 
-
-function closeMobileAccordion()
+function closeAllMobileCategories()
 {
 
 
-const opened =
-catalog.querySelector(
-'.imperia-catalog__mobile-children:not([hidden])'
-);
+catalog
+.querySelectorAll(
+'.imperia-catalog__mobile-children'
+)
+.forEach(
+container=>{
 
-
-
-if(opened)
-{
-
-opened.setAttribute(
+container.setAttribute(
 'hidden',
 ''
 );
 
-opened.innerHTML='';
+container.innerHTML='';
 
 }
-
+);
 
 
 catalog
@@ -463,14 +437,14 @@ catalog
 '.imperia-catalog__category'
 )
 .forEach(
-item=>{
+category=>{
 
-item.classList.remove(
+category.classList.remove(
 'is-active'
 );
 
-});
-
+}
+);
 
 
 catalog
@@ -480,23 +454,20 @@ catalog
 .forEach(
 arrow=>{
 
-
 arrow.classList.remove(
 'is-open'
 );
-
 
 arrow.setAttribute(
 'aria-expanded',
 'false'
 );
 
-
-});
+}
+);
 
 
 }
-
 
 
 
@@ -506,16 +477,14 @@ CLOSE DESKTOP
 ==================================================
 */
 
-
 function closeDesktopSubmenu()
 {
 
-submenu.hidden=true;
+submenu.hidden = true;
 
-submenu.innerHTML='';
+submenu.innerHTML = '';
 
 }
-
 
 
 
@@ -524,7 +493,6 @@ submenu.innerHTML='';
 CLICK OUTSIDE
 ==================================================
 */
-
 
 document.addEventListener(
 'click',
@@ -538,22 +506,18 @@ event.target
 )
 {
 
-
 catalog.classList.remove(
 'imperia-catalog--open'
 );
 
-
 closeDesktopSubmenu();
 
-closeMobileAccordion();
-
+closeAllMobileCategories();
 
 }
 
 
 });
-
 
 
 console.log(

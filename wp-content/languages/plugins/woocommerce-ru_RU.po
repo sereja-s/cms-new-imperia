@@ -2,7 +2,7 @@
 # This file is distributed under the same license as the Plugins - WooCommerce - Stable (latest release) package.
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2026-06-06 05:20:42+0000\n"
+"PO-Revision-Date: 2026-06-24 06:05:56+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -3275,10 +3275,6 @@ msgstr "Добавьте другой адрес электронной почт
 msgid "You do not have permission to save settings."
 msgstr "У вас нет разрешения на сохранение настроек."
 
-#: src/Internal/Abilities/AbilitiesCategories.php:47
-msgid "REST API operations for WooCommerce resources including products, orders, and other store data."
-msgstr "Операции REST API для ресурсов WooCommerce, включая товары, заказы и другие данные магазина."
-
 #: src/Internal/Abilities/AbilitiesCategories.php:46
 msgid "WooCommerce REST API"
 msgstr "REST API WooCommerce"
@@ -3553,10 +3549,6 @@ msgstr "Обновите существующий товар, изменив е�
 #: src/Internal/Abilities/AbilitiesRestBridge.php:55
 msgid "Update Product"
 msgstr "Обновить товар"
-
-#: src/Internal/Abilities/AbilitiesRestBridge.php:50
-msgid "Create a new product in WooCommerce with name, price, description, and other product attributes."
-msgstr "Создайте новый товар в WooCommerce с названием, ценой, описанием и прочими атрибутами."
 
 #: src/Internal/Abilities/AbilitiesRestBridge.php:44
 msgid "Retrieve detailed information about a single product by ID, including price, description, images, and metadata."
