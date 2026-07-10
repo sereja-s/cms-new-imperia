@@ -99,7 +99,7 @@ final class CategoryCache
 		) {
 
 
-			if (
+			/* if (
 				defined('WP_DEBUG')
 				&& WP_DEBUG
 			) {
@@ -107,7 +107,7 @@ final class CategoryCache
 				imperia_log(
 					'Catalog cache hit'
 				);
-			}
+			} */
 
 
 			return $cachedTree;
@@ -118,7 +118,7 @@ final class CategoryCache
 		/**
 		 * Кэш отсутствует.
 		 */
-		if (
+		/* if (
 			defined('WP_DEBUG')
 			&& WP_DEBUG
 		) {
@@ -126,7 +126,7 @@ final class CategoryCache
 			imperia_log(
 				'Catalog cache miss'
 			);
-		}
+		} */
 
 
 
@@ -140,12 +140,12 @@ final class CategoryCache
 
 		// тест (вывод массива первой категории)
 
-		imperia_log(
+		/* imperia_log(
 			print_r(
 				$tree ?? [],
 				true
 			)
-		);
+		); */
 
 
 

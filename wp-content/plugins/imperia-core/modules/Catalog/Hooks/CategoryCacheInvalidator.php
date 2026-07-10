@@ -44,9 +44,9 @@ final class CategoryCacheInvalidator
 	 */
 	public function register(): void
 	{
-		imperia_log(
+		/* imperia_log(
 			'CategoryCacheInvalidator registered'
-		);
+		); */
 
 		add_action(
 			'created_product_cat',

@@ -110,4 +110,4 @@ add_action('plugins_loaded', static function (): void {
 	\Imperia\Core\Bootstrap::instance()->run();
 });
 
-imperia_log('ENTRY POINT HIT');
+//imperia_log('ENTRY POINT HIT');

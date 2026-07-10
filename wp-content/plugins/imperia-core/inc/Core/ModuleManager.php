@@ -74,17 +74,17 @@ final class ModuleManager
 			|| $context === 'cli'
 		) {
 
-			imperia_log(
+			/* imperia_log(
 				sprintf(
 					'SLEEP MODE: %s',
 					$context
 				)
-			);
+			); */
 
 			return;
 		}
 
-		imperia_log('CONTEXT: ' . $context);
+		//imperia_log('CONTEXT: ' . $context);
 
 		foreach (self::MODULES as $moduleClass => $allowedContexts) {
 
@@ -117,12 +117,12 @@ final class ModuleManager
 
 				//imperia_log('CONTEXT: ' . Context::type());
 
-				imperia_log(
+				/* imperia_log(
 					sprintf(
 						'MODULE LOADED: %s',
 						$moduleClass
 					)
-				);
+				); */
 			} catch (\Throwable $e) {
 
 				imperia_log(

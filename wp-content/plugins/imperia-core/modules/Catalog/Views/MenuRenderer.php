@@ -255,7 +255,7 @@ final class MenuRenderer
 
 
 
-		if (
+		/* if (
 			defined('WP_DEBUG')
 			&& WP_DEBUG
 		) {
@@ -263,6 +263,6 @@ final class MenuRenderer
 			imperia_log(
 				'CATALOG MENU RENDERED'
 			);
-		}
+		} */
 	}
 }
