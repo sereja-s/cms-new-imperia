@@ -45,19 +45,17 @@ class BreadcrumbsBuilder {
 		if (blocksy_get_theme_mod('breadcrumb_home_item', 'text') === 'icon') {
 			$home_icon = '<svg class="ct-icon ct-home-icon" width="15" height="15" viewBox="0 0 15 15" fill="currentColor" aria-hidden="true" focusable="false"><path d="M7.5 1 0 7.8h2.1v6.1h4.1V9.8h2.7v4.1H13V7.8h2.1L7.5 1Z"/></svg>';
 
-			$custom_icon = blocksy_manager()->companion->get_icon([
-				'icon_descriptor' => blocksy_get_theme_mod(
-					'breadcrumb_home_icon',
-					['icon' => 'blc blc-home-alt']
-				),
-				'icon_container' => false,
-				'icon_html_atts' => [
-					'class' => 'ct-icon ct-home-icon',
-				]
-			]);
-
-			if ($custom_icon) {
-				$home_icon = $custom_icon;
+			if (blocksy_manager()->companion->has('custom_icons')) {
+				$home_icon = blocksy_manager()->companion->get_icon([
+					'icon_descriptor' => blocksy_get_theme_mod(
+						'breadcrumb_home_icon',
+						['icon' => 'blc blc-home-alt']
+					),
+					'icon_container' => false,
+					'icon_html_atts' => [
+						'class' => 'ct-icon ct-home-icon',
+					]
+				]);
 			}
 		}
 
@@ -631,7 +629,13 @@ class BreadcrumbsBuilder {
 	public function get_breadcrumbs() {
 		$result = $this->build_breadcrumbs();
 
-		if (class_exists('WC_Breadcrumb')) {
+		if (
+			class_exists('WC_Breadcrumb')
+			&&
+			function_exists('is_woocommerce')
+			&&
+			is_woocommerce()
+		) {
 			$woo_compatible_breadcrumbs = new \WC_Breadcrumb();
 
 			foreach ($result as $item) {
@@ -795,19 +799,17 @@ class BreadcrumbsBuilder {
 		);
 
 		if ($icon_source === 'custom') {
-			$custom_separator = blocksy_manager()->companion->get_icon([
-				'icon_descriptor' => blocksy_get_theme_mod(
-					'breadcrumb_custom_separator',
-					['icon' => 'blc blc-arrow-right']
-				),
-				'icon_container' => false,
-				'icon_html_atts' => [
-					'class' => 'ct-icon ct-separator-custom',
-				]
-			]);
-
-			if ($custom_separator) {
-				$separator = $custom_separator;
+			if (blocksy_manager()->companion->has('custom_icons')) {
+				$separator = blocksy_manager()->companion->get_icon([
+					'icon_descriptor' => blocksy_get_theme_mod(
+						'breadcrumb_custom_separator',
+						['icon' => 'blc blc-arrow-right']
+					),
+					'icon_container' => false,
+					'icon_html_atts' => [
+						'class' => 'ct-icon ct-separator-custom',
+					]
+				]);
 			}
 		}
 
@@ -998,4 +1000,3 @@ class BreadcrumbsBuilder {
 		return ob_get_clean();
 	}
 }
-

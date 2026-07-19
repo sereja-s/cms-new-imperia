@@ -106,7 +106,6 @@
 	margin-bottom: 0;
 
 	li {
-		// flex: 0 0 var(--thumbs-width, 20%);
 		flex-shrink: 0;
 		width: var(--thumbs-width, 20%);
 		cursor: pointer;
@@ -121,7 +120,7 @@
 
 // data type circle
 .flexy-pills[data-type='circle'] {
-	max-width: 180px;
+	max-width: var(--pills-container-width, 180px);
 	margin-top: 30px;
 	margin-inline: auto;
 
@@ -131,27 +130,25 @@
 	}
 
 	li {
-		--thumbs-width: 20%;
-		--thumbs-top-spacing: 0;
-
 		display: flex;
 		align-items: center;
 		justify-content: center;
 		height: 20px;
+		padding: 0;
 
 		&:before {
 			content: '';
 			width: 6px;
 			height: 6px;
 			border-radius: 100%;
-			box-shadow: inset 0 0 0 5px var(--flexyInitialPill, rgba(44, 62, 80, 0.9));
+			box-shadow: inset 0 0 0 5px var(--flexy-initial-pill-color, rgba(44, 62, 80, 0.9));
 			transition: box-shadow 0.2s ease, transform 0.2s ease;
 		}
 
 		&.active {
 			&:before {
 				transform: scale3d(2, 2, 1);
-				box-shadow: inset 0 0 0 1px var(--flexyActivePill, rgba(44, 62, 80, 0.9));
+				box-shadow: inset 0 0 0 1px var(--flexy-active-pill-color, rgba(44, 62, 80, 0.9));
 			}
 		}
 	}

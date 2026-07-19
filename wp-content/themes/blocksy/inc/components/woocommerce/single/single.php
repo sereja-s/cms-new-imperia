@@ -357,14 +357,12 @@ class WooCommerceSingle {
 					&&
 					$item['icon_source'] === 'custom'
 				) {
-					$custom_icon = blocksy_manager()->companion->get_icon([
-						'icon_descriptor' => blocksy_akg('icon', $item, [
-							'icon' => "blc blc-user" // TODO: get defaults from item ID
-						])
-					]);
-
-					if ($custom_icon) {
-						$icon = $custom_icon;
+					if (blocksy_manager()->companion->has('custom_icons')) {
+						$icon = blocksy_manager()->companion->get_icon([
+							'icon_descriptor' => blocksy_akg('icon', $item, [
+								'icon' => "blc blc-user" // TODO: get defaults from item ID
+							])
+						]);
 					}
 				}
 
@@ -457,14 +455,12 @@ class WooCommerceSingle {
 				&&
 				$item['icon_source'] === 'custom'
 			) {
-				$custom_icon = blocksy_manager()->companion->get_icon([
-					'icon_descriptor' => blocksy_akg('icon', $item, [
-						'icon' => "fas fa-check"
-					])
-				]);
-
-				if ($custom_icon) {
-					$icon = $custom_icon;
+				if (blocksy_manager()->companion->has('custom_icons')) {
+					$icon = blocksy_manager()->companion->get_icon([
+						'icon_descriptor' => blocksy_akg('icon', $item, [
+							'icon' => "fas fa-check"
+						])
+					]);
 				}
 			}
 

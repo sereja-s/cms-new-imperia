@@ -4,7 +4,7 @@
 .entry-header {
 	
 	> *:not(:first-child) {
-		margin-top: var(--itemSpacing, 20px);
+		margin-top: var(--item-spacing, 20px);
 	}
 
 	.page-title {

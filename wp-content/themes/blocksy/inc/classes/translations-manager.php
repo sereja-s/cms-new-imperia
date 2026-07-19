@@ -20,7 +20,11 @@ class Blocksy_Translations_Manager {
 				// Only need to register customizer keys for polylang. WPML will
 				// auto-discover all strings from the customizer without registering
 				// them in the wpml-config.xml file.
-				if (! class_exists('PLL_Translate_Option')) {
+				if (
+					! class_exists('PLL_Translate_Option')
+					||
+					! function_exists('PLL')
+				) {
 					return;
 				}
 
@@ -300,8 +304,13 @@ class Blocksy_Translations_Manager {
 if (! function_exists('blocksy_get_all_i18n_languages')) {
 	function blocksy_get_all_i18n_languages() {
 		$result = [];
+		$has_polylang_api = (
+			function_exists('pll_languages_list')
+			&&
+			function_exists('PLL')
+		);
 
-		if (function_exists('pll_languages_list')) {
+		if ($has_polylang_api) {
 			$locales = pll_languages_list(['fields' => '']);
 
 			foreach ($locales as $locale) {
@@ -313,7 +322,7 @@ if (! function_exists('blocksy_get_all_i18n_languages')) {
 		}
 
 		if (
-			! function_exists('pll_languages_list')
+			! $has_polylang_api
 			&&
 			function_exists('icl_get_languages')
 		) {
@@ -379,8 +388,14 @@ if (! function_exists('blocksy_get_all_i18n_languages')) {
 if (! function_exists('blocksy_get_current_language')) {
 	function blocksy_get_current_language($format = 'locale') {
 		if ($format === 'slug') {
-			if (function_exists('pll_current_language')) {
-				return pll_current_language();
+			if (
+				function_exists('pll_current_language')
+				&&
+				function_exists('PLL')
+			) {
+				$current_language = pll_current_language();
+
+				return $current_language ? $current_language : '__NOT_KNOWN__';
 			}
 
 			if (class_exists('Sitepress')) {
@@ -390,8 +405,14 @@ if (! function_exists('blocksy_get_current_language')) {
 			return '__NOT_KNOWN__';
 		}
 
-		if (function_exists('pll_current_language')) {
-			return pll_current_language('locale');
+		if (
+			function_exists('pll_current_language')
+			&&
+			function_exists('PLL')
+		) {
+			$current_language = pll_current_language('locale');
+
+			return $current_language ? $current_language : '__NOT_KNOWN__';
 		}
 
 		if (

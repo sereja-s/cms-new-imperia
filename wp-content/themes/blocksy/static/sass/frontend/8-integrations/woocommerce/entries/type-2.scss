@@ -10,7 +10,7 @@
 		box-shadow: var(--theme-box-shadow);
 		border: var(--card-border);
 		border-radius: var(--theme-border-radius, 3px);
-		background: var(--backgroundColor, var(--theme-palette-color-8));
+		background: var(--card-background-color, var(--theme-palette-color-8));
 
 		--horizontal-alignment: center;
     	--text-horizontal-alignment: center;

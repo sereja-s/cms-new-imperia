@@ -627,7 +627,7 @@ if ($shop_cards_type === 'type-2') {
 		'variables' => [
 			'default' => [
 				'selector' => '[data-products="type-2"]',
-				'variable' => 'backgroundColor'
+				'variable' => 'card-background-color'
 			],
 		],
 	]);

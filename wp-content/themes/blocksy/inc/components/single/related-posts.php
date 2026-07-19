@@ -144,7 +144,7 @@ if (! function_exists('blocksy_render_related_card')) {
 				'aria-label' => wp_strip_all_tags(get_the_title()),
 			] : [],
 			'lazyload' => blocksy_get_theme_mod(
-				'has_lazy_load_relateds_image',
+				'has_lazy_load_related_posts_image',
 				'yes'
 			) === 'yes',
 			'display_video' => blocksy_default_akg('has_related_video_thumbnail', $featured_image_settings, 'no') === 'yes'
@@ -266,5 +266,4 @@ if (! function_exists('blocksy_render_related_card')) {
 		echo $entry_close;
 	}
 }
-
 

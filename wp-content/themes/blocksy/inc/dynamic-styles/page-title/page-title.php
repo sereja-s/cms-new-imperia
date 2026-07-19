@@ -619,7 +619,7 @@ foreach ($hero_elements as $index => $single_hero_element) {
 			'tablet_css' => $tablet_css,
 			'mobile_css' => $mobile_css,
 			'selector' => $selectors_map[$single_hero_element['id']],
-			'variableName' => 'itemSpacing',
+			'variableName' => 'item-spacing',
 			'value' => $hero_item_spacing
 		]);
 	}

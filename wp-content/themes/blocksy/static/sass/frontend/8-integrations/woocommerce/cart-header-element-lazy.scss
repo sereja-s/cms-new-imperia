@@ -3,7 +3,7 @@
 // dropdown type
 .ct-cart-content {
 	width: 310px;
-	margin-top: var(--dropdownTopOffset);
+	margin-top: var(--dropdown-top-offset);
 	padding: 22px 20px;
 	border-radius: 2px;
 	background: var(--mini-cart-background-color);
@@ -65,8 +65,8 @@
 		position: absolute;
 		content: '';
 		width: 100%;
-		height: var(--dropdownTopOffset);
-		top: calc(var(--dropdownTopOffset) * -1);
+		height: var(--dropdown-top-offset);
+		top: calc(var(--dropdown-top-offset) * -1);
 		left: 0;
 	}
 }
@@ -166,11 +166,11 @@
 	margin: 0;
 
 	> * {
-		grid-column: var(--gridColumn, 1/-1);
+		grid-column: 1 / -1;
 	}
 
-	.button.wc-forward {
-		--gridColumn: span 1;
+	> :is(.button.wc-forward) {
+		grid-column: span 1;
 	}
 }
 

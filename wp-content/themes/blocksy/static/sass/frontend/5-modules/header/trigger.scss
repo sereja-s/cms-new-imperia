@@ -75,18 +75,18 @@
 
 	&[data-design*="outline"] {
 		--toggle-button-border-width: 1px;
-		--toggle-button-border-color: var(--secondColor, rgba(224, 229, 235, 0.9));
+		--toggle-button-border-color: var(--toggle-button-second-color, rgba(224, 229, 235, 0.9));
 
 		&:hover {
-			--toggle-button-border-color: var(--secondColorHover, rgba(224, 229, 235, 0.9));
+			--toggle-button-border-color: var(--toggle-button-second-color-hover, rgba(224, 229, 235, 0.9));
 		}
 	}
 
 	&[data-design*="solid"] {
-		--toggle-button-background: var(--secondColor, rgba(224, 229, 235, 0.9));
+		--toggle-button-background: var(--toggle-button-second-color, rgba(224, 229, 235, 0.9));
 
 		&:hover {
-			--toggle-button-background: var(--secondColorHover, rgba(224, 229, 235, 0.9));
+			--toggle-button-background: var(--toggle-button-second-color-hover, rgba(224, 229, 235, 0.9));
 		}
 	}
 }

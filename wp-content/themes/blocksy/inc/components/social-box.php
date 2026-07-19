@@ -1375,19 +1375,17 @@ function blocksy_get_social_box($args = []) {
 							$icon_source = blocksy_default_akg('icon_source', $single_social, 'default');
 
 							if ($icon_source === 'custom') {
-								$custom_icon = blocksy_manager()->companion->get_icon([
-									'icon_descriptor' => blocksy_akg(
-										'icon',
-										$single_social,
-										['icon' => 'blc blc-email']
-									),
-									'icon_html_atts' => [
-										'aria-hidden' => 'true',
-									]
-								]);
-
-								if ($custom_icon) {
-									$icon = $custom_icon;
+								if (blocksy_manager()->companion->has('custom_icons')) {
+									$icon = blocksy_manager()->companion->get_icon([
+										'icon_descriptor' => blocksy_akg(
+											'icon',
+											$single_social,
+											['icon' => 'blc blc-email']
+										),
+										'icon_html_atts' => [
+											'aria-hidden' => 'true',
+										]
+									]);
 								}
 							}
 

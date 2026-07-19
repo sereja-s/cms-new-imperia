@@ -1,12 +1,19 @@
 // stackable v3
-[data-type="stackable/button"] {
+:where(body:not(.stk--has-base-scheme)) {
 
-	.stk-button {
-		border-radius: var(--theme-button-border-radius, 3px);
+	[data-type="stackable/button"] {
+		--stk-button-text-color: var(--theme-button-text-initial-color);
+		--stk-button-background-color: var(--theme-button-background-initial-color);
+
+		.stk-button {
+			border-radius: var(--theme-button-border-radius, 3px);
+
+			&:hover {
+				--stk-button-text-color: var(--theme-button-text-hover-color);
+				--stk-button-background-color: var(--theme-button-background-hover-color);
+			}
+		}
 	}
-	
-	--stk-button-text-color: var(--theme-button-text-initial-color);
-	--stk-button-background-color: var(--theme-button-background-initial-color);
 }
 
 

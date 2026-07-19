@@ -8,6 +8,7 @@
 // dynamic media
 .ct-dynamic-media {
 	display: flex;
+	flex-direction: column;
 
 	.ct-dynamic-media-inner {
 		position: relative;

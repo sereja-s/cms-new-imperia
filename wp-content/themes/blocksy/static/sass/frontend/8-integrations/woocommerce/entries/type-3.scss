@@ -47,19 +47,10 @@
 				color: var(--theme-button-text-hover-color);
 			}
 
+			// tooltip
 			.ct-tooltip {
-				transform: translate3d(0px, -45px, 0px);
-			}
-
-			&:hover {
-
-				@media (any-hover: hover) {
-					.ct-tooltip {
-						opacity: 1;
-						visibility: visible;
-						transform: translate3d(0px, -50px, 0px);
-					}
-				}
+				--ct-tooltip-vertical-initial-offset: 7px;
+				--ct-tooltip-vertical-hover-offset: 12px;
 			}
 		}
 	}

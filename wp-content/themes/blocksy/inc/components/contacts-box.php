@@ -151,20 +151,18 @@ if (! function_exists('blocksy_get_contacts_output')) {
 							$icon = $svg_icons_defaults[$single_layer['id']];
 						}
 
-						$custom_icon = blocksy_manager()->companion->get_icon([
-							'icon_descriptor' => blocksy_akg(
-								'icon',
-								$single_layer,
-								['icon' => $custom_icon_defaults[$single_layer['id']]]
-							),
-							'icon_container' => ! $with_link,
-							'icon_html_atts' => [
-								'aria-hidden' => 'true',
-							]
-						]);
-
-						if ($custom_icon) {
-							$icon = $custom_icon;
+						if (blocksy_manager()->companion->has('custom_icons')) {
+							$icon = blocksy_manager()->companion->get_icon([
+								'icon_descriptor' => blocksy_akg(
+									'icon',
+									$single_layer,
+									['icon' => $custom_icon_defaults[$single_layer['id']]]
+								),
+								'icon_container' => ! $with_link,
+								'icon_html_atts' => [
+									'aria-hidden' => 'true',
+								]
+							]);
 						}
 
 						if ($with_link) {

@@ -119,15 +119,13 @@ $icon = $icon[$icon_type];
 $icon_source = blocksy_default_akg('icon_source', $atts, 'default');
 
 if ($icon_source === 'custom') {
-	$custom_icon = blocksy_manager()->companion->get_icon([
-		'icon_descriptor' => blocksy_akg('icon', $atts, [
-			'icon' => 'blc blc-cart'
-		]),
-		'icon_container' => false
-	]);
-
-	if ($custom_icon) {
-		$icon = $custom_icon;
+	if (blocksy_manager()->companion->has('custom_icons')) {
+		$icon = blocksy_manager()->companion->get_icon([
+			'icon_descriptor' => blocksy_akg('icon', $atts, [
+				'icon' => 'blc blc-cart'
+			]),
+			'icon_container' => false
+		]);
 	}
 }
 

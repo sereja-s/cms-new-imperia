@@ -49,6 +49,7 @@
 // dynamic media
 .ct-dynamic-media {
 	display: flex;
+	flex-direction: column;
 	margin: 0;
 
 	img {

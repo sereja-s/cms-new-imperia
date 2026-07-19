@@ -1,13 +1,23 @@
 // version 3
-.stk-block-button {
+:where(body:not(.stk--has-base-scheme)) {
 
-	.stk-button {
-		border-radius: var(--theme-button-border-radius, 3px);
+	.stk-block-button {
+		--stk-button-text-color: var(--theme-button-text-initial-color);
+		--stk-button-background-color: var(--theme-button-background-initial-color);
+
+		.stk-button {
+			border-radius: var(--theme-button-border-radius, 3px);
+
+			&:hover {
+				--stk-button-text-color: var(--theme-button-text-hover-color);
+				--stk-button-background-color: var(--theme-button-background-hover-color);
+			}
+		}
 	}
-	
-	--stk-button-text-color: var(--theme-button-text-initial-color);
-	--stk-button-background-color: var(--theme-button-background-initial-color);
 }
+
+
+
 
 
 .wp-block-stackable-columns {

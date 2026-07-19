@@ -7,7 +7,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-06-24 18:28+0000\n"
+"POT-Creation-Date: 2026-07-14 16:37+0000\n"
 "Project-Id-Version: undefined\n"
 "X-Poedit-Basepath: ..\n"
 "X-Poedit-KeywordsList: __;_e;_ex:1,2c;_n:1,2;_n_noop:1,2;_nx:1,2,4c;"
@@ -29,7 +29,7 @@ msgid "One comment"
 msgstr ""
 
 #. translators: % refers to the number of comments, when more than 1
-#: comments.php:64, inc/components/post-meta.php:531
+#: comments.php:64, inc/components/post-meta.php:523
 msgid "% Comments"
 msgstr ""
 
@@ -114,31 +114,31 @@ msgstr ""
 msgid "WooCommerce Archive Thumbnail"
 msgstr ""
 
-#: inc/init.php:406
+#: inc/init.php:409
 msgid "Footer Menu"
 msgstr ""
 
-#: inc/init.php:407
+#: inc/init.php:410
 msgid "Header Menu 1"
 msgstr ""
 
-#: inc/init.php:408
+#: inc/init.php:411
 msgid "Header Menu 2"
 msgstr ""
 
-#: inc/init.php:409, inc/panel-builder/header/mobile-menu/config.php:4
+#: inc/init.php:412, inc/panel-builder/header/mobile-menu/config.php:4
 msgid "Mobile Menu"
 msgstr ""
 
-#: inc/init.php:471
+#: inc/init.php:474
 msgid "Main Sidebar"
 msgstr ""
 
-#: inc/init.php:473, inc/components/woocommerce/boot.php:99
+#: inc/init.php:476, inc/components/woocommerce/boot.php:99
 msgid "Add widgets here."
 msgstr ""
 
-#: inc/init.php:489
+#: inc/init.php:492
 msgid "Footer Widget Area "
 msgstr ""
 
@@ -293,7 +293,7 @@ msgstr ""
 msgid "Color %s"
 msgstr ""
 
-#: inc/classes/screen-manager.php:219, inc/components/breadcrumbs.php:430,
+#: inc/classes/screen-manager.php:219, inc/components/breadcrumbs.php:428,
 #: inc/options/general/posts-listing.php:14, inc/options/posts/blog.php:20
 msgid "Blog"
 msgstr ""
@@ -344,11 +344,11 @@ msgstr ""
 msgid "Blocksy Variation Images"
 msgstr ""
 
-#: inc/components/back-to-top.php:56, inc/components/back-to-top.php:56
+#: inc/components/back-to-top.php:54, inc/components/back-to-top.php:54
 msgid "Go to top"
 msgstr ""
 
-#: inc/components/breadcrumbs.php:68, inc/components/hero/elements.php:201,
+#: inc/components/breadcrumbs.php:66, inc/components/hero/elements.php:201,
 #: inc/options/general/breadcrumbs.php:168,
 #: inc/options/general/page-title.php:131,
 #: inc/options/general/page-title.php:392
@@ -356,23 +356,23 @@ msgstr ""
 msgid "Home"
 msgstr ""
 
-#: inc/components/breadcrumbs.php:99
+#: inc/components/breadcrumbs.php:97
 msgid "Searching for:"
 msgstr ""
 
-#: inc/components/breadcrumbs.php:91
+#: inc/components/breadcrumbs.php:89
 msgid "404 Not found"
 msgstr ""
 
-#: inc/components/breadcrumbs.php:317, inc/components/breadcrumbs.php:639
+#: inc/components/breadcrumbs.php:315, inc/components/breadcrumbs.php:643
 msgid "No title"
 msgstr ""
 
-#: inc/components/breadcrumbs.php:373
+#: inc/components/breadcrumbs.php:371
 msgid "Shop"
 msgstr ""
 
-#: inc/components/breadcrumbs.php:655
+#: inc/components/breadcrumbs.php:659
 msgctxt "breadcrumb"
 msgid "Home"
 msgstr ""
@@ -465,47 +465,47 @@ msgstr ""
 msgid "Posts by %s"
 msgstr ""
 
-#: inc/components/post-meta.php:195, inc/components/post-meta.php:813,
+#: inc/components/post-meta.php:195, inc/components/post-meta.php:803,
 #: inc/options/general/meta.php:249
 #: static/js/customizer/sync/helpers/entry-meta.js:71
 msgid "By"
 msgstr ""
 
-#: inc/components/post-meta.php:205, inc/components/post-meta.php:821,
-#: inc/components/post-meta.php:829, inc/options/general/meta.php:302,
+#: inc/components/post-meta.php:205, inc/components/post-meta.php:811,
+#: inc/components/post-meta.php:819, inc/options/general/meta.php:302,
 #: inc/options/general/meta.php:339
 #: static/js/customizer/sync/helpers/entry-meta.js:93
 msgid "On"
 msgstr ""
 
-#: inc/components/post-meta.php:213, inc/components/post-meta.php:837,
+#: inc/components/post-meta.php:213, inc/components/post-meta.php:827,
 #: inc/options/general/meta.php:400
 #: static/js/customizer/sync/helpers/entry-meta.js:107
 msgid "In"
 msgstr ""
 
 #. translators: text for one review
-#: inc/components/post-meta.php:529
+#: inc/components/post-meta.php:521
 msgid "1 Comment"
 msgstr ""
 
 #. translators: text for no reviews
-#: inc/components/post-meta.php:535
+#: inc/components/post-meta.php:527
 msgid "No Comments"
 msgstr ""
 
 #. translators: text for one review
-#: inc/components/post-meta.php:540
+#: inc/components/post-meta.php:532
 msgid "1 Review"
 msgstr ""
 
 #. translators: % refers to the number of reviews, when more than 1
-#: inc/components/post-meta.php:542
+#: inc/components/post-meta.php:534
 msgid "% Reviews"
 msgstr ""
 
 #. translators: text for no reviews
-#: inc/components/post-meta.php:546
+#: inc/components/post-meta.php:538
 msgid "No Reviews"
 msgstr ""
 
@@ -519,39 +519,39 @@ msgstr ""
 msgid "Share your love"
 msgstr ""
 
-#: inc/components/social-box.php:506, inc/components/social-box.php:1475
+#: inc/components/social-box.php:506, inc/components/social-box.php:1473
 msgid "Apple Podcasts"
 msgstr ""
 
-#: inc/components/social-box.php:623, inc/components/social-box.php:1651
+#: inc/components/social-box.php:623, inc/components/social-box.php:1649
 msgid "VK"
 msgstr ""
 
-#: inc/components/social-box.php:636, inc/components/social-box.php:1559,
+#: inc/components/social-box.php:636, inc/components/social-box.php:1557,
 #: inc/options/single-elements/post-share-box.php:120
 msgid "Odnoklassniki"
 msgstr ""
 
-#: inc/components/social-box.php:662, inc/components/social-box.php:1511
+#: inc/components/social-box.php:662, inc/components/social-box.php:1509
 msgid "Facebook Group"
 msgstr ""
 
-#: inc/components/social-box.php:675, inc/components/social-box.php:1515
+#: inc/components/social-box.php:675, inc/components/social-box.php:1513
 msgid "Facebook Messenger"
 msgstr ""
 
-#: inc/components/social-box.php:910, inc/components/social-box.php:1571
+#: inc/components/social-box.php:910, inc/components/social-box.php:1569
 msgid "Phone"
 msgstr ""
 
-#: inc/components/social-box.php:923, inc/components/social-box.php:1503,
+#: inc/components/social-box.php:923, inc/components/social-box.php:1501,
 #: inc/components/single/comments.php:128,
 #: inc/options/single-elements/post-share-box.php:148,
 #: inc/components/woocommerce/single/review-form.php:22
 msgid "Email"
 msgstr ""
 
-#: inc/components/social-box.php:936, inc/components/social-box.php:1401,
+#: inc/components/social-box.php:936, inc/components/social-box.php:1399,
 #: inc/options/single-elements/post-share-box.php:156
 msgid "Copy to Clipboard"
 msgstr ""
@@ -561,7 +561,7 @@ msgstr ""
 msgid "Bluesky"
 msgstr ""
 
-#: inc/components/social-box.php:1396
+#: inc/components/social-box.php:1394
 msgid "Share on %s"
 msgstr ""
 
@@ -1053,7 +1053,7 @@ msgstr ""
 
 #: inc/components/single/comments.php:284
 #: static/js/customizer/sync/builder.js:111
-#: static/js/options/options/ct-image-uploader.js:400
+#: static/js/options/options/ct-image-uploader.js:412
 msgid "Edit"
 msgstr ""
 
@@ -4582,7 +4582,7 @@ msgid "Reasons to Buy"
 msgstr ""
 
 #: inc/options/woocommerce/single-product-layers.php:422,
-#: inc/components/woocommerce/single/single.php:421
+#: inc/components/woocommerce/single/single.php:419
 msgid "Extra Features"
 msgstr ""
 
@@ -4591,27 +4591,27 @@ msgid "Items"
 msgstr ""
 
 #: inc/options/woocommerce/single-product-layers.php:437,
-#: inc/components/woocommerce/single/single.php:385
+#: inc/components/woocommerce/single/single.php:383
 msgid "Premium Quality"
 msgstr ""
 
 #: inc/options/woocommerce/single-product-layers.php:442,
-#: inc/components/woocommerce/single/single.php:390
+#: inc/components/woocommerce/single/single.php:388
 msgid "Secure Payments"
 msgstr ""
 
 #: inc/options/woocommerce/single-product-layers.php:447,
-#: inc/components/woocommerce/single/single.php:395
+#: inc/components/woocommerce/single/single.php:393
 msgid "Satisfaction Guarantee"
 msgstr ""
 
 #: inc/options/woocommerce/single-product-layers.php:452,
-#: inc/components/woocommerce/single/single.php:400
+#: inc/components/woocommerce/single/single.php:398
 msgid "Worldwide Shipping"
 msgstr ""
 
 #: inc/options/woocommerce/single-product-layers.php:457,
-#: inc/components/woocommerce/single/single.php:405
+#: inc/components/woocommerce/single/single.php:403
 msgid "Money Back Guarantee"
 msgstr ""
 
@@ -5632,7 +5632,7 @@ msgstr ""
 msgid "Close Button Type"
 msgstr ""
 
-#: inc/panel-builder/header/cart/view.php:211
+#: inc/panel-builder/header/cart/view.php:209
 msgid "Shopping cart"
 msgstr ""
 
@@ -6955,7 +6955,7 @@ msgid "Custom Palette #%s"
 msgstr ""
 
 #: static/js/options/options/color-palettes/CustomPalettes.js:55
-#: static/js/options/options/ct-image-uploader.js:416
+#: static/js/options/options/ct-image-uploader.js:428
 msgid "Remove"
 msgstr ""
 
@@ -7062,7 +7062,7 @@ msgstr ""
 msgid "Choose File"
 msgstr ""
 
-#: static/js/options/options/ct-image-uploader.js:431
+#: static/js/options/options/ct-image-uploader.js:443
 msgid "Select logo"
 msgstr ""
 

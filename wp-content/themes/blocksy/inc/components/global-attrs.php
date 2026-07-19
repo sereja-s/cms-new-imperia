@@ -3,7 +3,8 @@
 function blocksy_main_attr() {
 	$attrs = [
 		'id' => 'main',
-		'class' => 'site-main'
+		'class' => 'site-main',
+		'tabindex' => '-1',
 	];
 
 	if (blocksy_has_schema_org_markup()) {

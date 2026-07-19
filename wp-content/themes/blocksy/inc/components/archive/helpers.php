@@ -12,6 +12,7 @@ if (! function_exists('blocksy_render_archive_cards')) {
 
 				'has_slideshow' => false,
 				'has_slideshow_arrows' => false,
+				'has_slideshow_pills' => false,
 				'has_slideshow_autoplay' => false,
 				'has_slideshow_autoplay_speed' => 3,
 
@@ -35,6 +36,16 @@ if (! function_exists('blocksy_render_archive_cards')) {
 				'class' => 'entries',
 			];
 
+			/**
+			 * Filters the custom output used in place of the default posts listing container.
+			 *
+			 * Returning a non-null value marks the archive listing as custom and skips
+			 * the theme's default container output behavior.
+			 *
+			 * @since 2.1.47
+			 *
+			 * @param string|null $container_output Custom container output. Default null.
+			 */
 			$container_output = apply_filters(
 				'blocksy:posts-listing:container:custom-output',
 				null
@@ -123,6 +134,11 @@ if (! function_exists('blocksy_render_archive_cards')) {
 				])
 			);
 
+			/**
+			 * Fires before the archive loop output is rendered.
+			 *
+			 * @since 2.0.1
+			 */
 			do_action('blocksy:loop:before');
 
 			if ($args['has_slideshow']) {
@@ -170,8 +186,21 @@ if (! function_exists('blocksy_render_archive_cards')) {
 
 			if ($args['has_slideshow']) {
 				$arrows = '';
+				$pills = '';
 
 				if ($args['has_slideshow_arrows']) {
+					/**
+					 * Filters the SVG icons used for Flexy slideshow navigation arrows.
+					 *
+					 * @since 2.0.98
+					 *
+					 * @param array $arrow_icons {
+					 *     List of slideshow arrow icons.
+					 *
+					 *     @type string $prev SVG markup for the previous arrow icon.
+					 *     @type string $next SVG markup for the next arrow icon.
+					 * }
+					 */
 					$arrow_icons = apply_filters(
 						'blocksy:flexy:arrows',
 						[
@@ -184,9 +213,27 @@ if (! function_exists('blocksy_render_archive_cards')) {
 							<span class="flexy-arrow-next">' . $arrow_icons['next'] . '</span>';
 				}
 
-				echo $arrows . '</div></div></div>';
+				if ($args['has_slideshow_pills']) {
+					ob_start();
+					blocksy_flexy_pills([
+						'pills_count' => $args['query']->post_count,
+						'pills_container_attr' => [
+							'data-flexy' => $args['query']->post_count <= 5
+								? 'no:paused'
+								: 'no',
+						],
+					]);
+					$pills = ob_get_clean();
+				}
+
+				echo $arrows . '</div></div>' . $pills . '</div>';
 			}
 
+			/**
+			 * Fires after the archive loop output is rendered.
+			 *
+			 * @since 2.0.1
+			 */
 			do_action('blocksy:loop:after');
 
 			/**

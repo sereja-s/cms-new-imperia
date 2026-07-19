@@ -25,7 +25,10 @@ add_action('after_setup_theme', function () {
 	add_theme_support('custom-logo');
 	add_theme_support('lifterlms-sidebars');
 	add_theme_support('boostify-header-footer');
-	add_theme_support('rank-math-breadcrumbs');
+
+	if (blocksy_get_theme_mod('breadcrumbs_source', 'default') === 'rankmath') {
+		add_theme_support('rank-math-breadcrumbs');
+	}
 
 	add_theme_support('fl-theme-builder-headers');
 	add_theme_support('fl-theme-builder-footers');

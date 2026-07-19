@@ -51,12 +51,12 @@ blocksy_output_colors([
 	'variables' => [
 		'default' => [
 			'selector' => blocksy_assemble_selector($root_selector),
-			'variable' => 'secondColor'
+			'variable' => 'toggle-button-second-color'
 		],
 
 		'hover' => [
 			'selector' => blocksy_assemble_selector($root_selector),
-			'variable' => 'secondColorHover'
+			'variable' => 'toggle-button-second-color-hover'
 		],
 	],
 	'responsive' => true
@@ -247,7 +247,7 @@ if (isset($has_transparent_header) && $has_transparent_header) {
 					'operation' => 'between',
 					'to_add' => '[data-transparent-row="yes"]'
 				])),
-				'variable' => 'secondColor'
+				'variable' => 'toggle-button-second-color'
 			],
 
 			'hover' => [
@@ -256,7 +256,7 @@ if (isset($has_transparent_header) && $has_transparent_header) {
 					'operation' => 'between',
 					'to_add' => '[data-transparent-row="yes"]'
 				])),
-				'variable' => 'secondColorHover'
+				'variable' => 'toggle-button-second-color-hover'
 			],
 		],
 		'responsive' => true
@@ -348,7 +348,7 @@ if (isset($has_sticky_header) && $has_sticky_header) {
 					'operation' => 'between',
 					'to_add' => '[data-sticky*="yes"]'
 				])),
-				'variable' => 'secondColor'
+				'variable' => 'toggle-button-second-color'
 			],
 
 			'hover' => [
@@ -357,7 +357,7 @@ if (isset($has_sticky_header) && $has_sticky_header) {
 					'operation' => 'between',
 					'to_add' => '[data-sticky*="yes"]'
 				])),
-				'variable' => 'secondColorHover'
+				'variable' => 'toggle-button-second-color-hover'
 			],
 		],
 		'responsive' => true

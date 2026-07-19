@@ -1,3 +1,21 @@
+2.1.49: 2026-07-14
+- Improvement: Correctly apply related posts featured image lazy-loading setting
+- Improvement: Frontend tooltips - prevent overflow outside the viewport on mobile devices
+- Fix: Image uploader - stop re-fetching attachment on every change event
+- Fix: Posts listing - fix PHP warning from `[products]` shortcode caused by orderby tiebreaker
+- Fix: Single product gallery - fix first tap on a thumbnail not switching the image on mobile
+
+2.1.48: 2026-07-01
+- Improvement: Breadcrumbs - enable breadcrumb support for Rank Math only when it is selected as the breadcrumb source
+- Improvement: Improve `skip-to-content` focus behavior by making the main content target programmatically focusable
+- Improvement: Improved Polylang compatibility when saving conditions without configured languages
+- Improvement: Make sure global button colors and typography are applied correctly to Stackable buttons
+- Improvement: Make sure icon options are respected properly in the contacts element
+- Improvement: Posts list - stabilize archive pagination when multiple posts share the same publish date
+- Improvement: Prevented duplicate breadcrumb schema output on non-WooCommerce pages when WooCommerce is active
+- Improvement: WooCommerce - improve review star rendering in Single Product live preview
+- Fix: Single product gallery - keep third-party badges (YITH) in sync on variation change
+
 2.1.47: 2026-06-24
 - Improvement: Make communication between theme and companion more resilient and optimized
 - Improvement: Posts navigation - added option to loop between first and last posts

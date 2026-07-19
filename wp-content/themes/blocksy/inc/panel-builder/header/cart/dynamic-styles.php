@@ -464,7 +464,7 @@ if ($cart_drawer_type === 'dropdown' || is_customize_preview()) {
 				'to_add' => '.ct-cart-content'
 			])
 		),
-		'--dropdownTopOffset: ' . $cartDropdownTopOffset . 'px'
+		'--dropdown-top-offset: ' . $cartDropdownTopOffset . 'px'
 	);
 
 	// Cart font color
