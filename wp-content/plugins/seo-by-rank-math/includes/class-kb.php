@@ -35,6 +35,7 @@ class KB {
 		'changelog'                       => 'https://rankmath.com/changelog/',
 		'changelog-free'                  => 'https://rankmath.com/changelog/free/',
 		'help-affiliate'                  => 'https://rankmath.com/affiliates/',
+		'seo-care'                        => 'https://rankmath.com/services/',
 		'content-ai'                      => 'https://rankmath.com/content-ai/',
 		'content-ai-pricing-tables'       => 'https://rankmath.com/content-ai/?#pricing-tables',
 		'content-ai-restore-credits'      => 'https://rankmath.com/kb/how-to-restore-missing-content-ai-credits/',
@@ -89,7 +90,7 @@ class KB {
 		'seo-email-reporting'             => 'https://rankmath.com/kb/seo-email-reporting/',
 		'email-reports-logo'              => 'https://rankmath.com/kb/seo-email-reporting/#report-logo',
 		'kb-seo-suite'                    => 'https://rankmath.com/kb/wordpress/seo-suite/',
-		'kb-search'                       => 'https://rankmath.com/kb/wordpress/seo-suite/?ht-kb-search=1',
+		'kb-search'                       => 'https://rankmath.com/kb/?ht-kb-search=1',
 		'help-analytics'                  => 'https://rankmath.com/kb/analytics/',
 		'monitor-seo-performance'         => 'https://rankmath.com/kb/client-management/#num-3-1-monitor-seo-performance-business',
 		'top-5-winning-and-losing'        => 'https://rankmath.com/kb/analytics/?#top-5-winning-and-losing-posts-pro',
@@ -145,6 +146,13 @@ class KB {
 		'analysis-search-console'         => 'https://rankmath.com/kb/seo-analysis/?#search-console-test',
 		'analysis-sitemaps'               => 'https://rankmath.com/kb/seo-analysis/?#sitemaps-test',
 		'analysis-auto-update'            => 'https://rankmath.com/kb/seo-analysis/?#priority',
+
+		// Link Genius.
+		'link-genius'                     => 'https://rankmath.com/kb/wordpress/ai-link-genius/',
+
+		// AI Visibility.
+		'ai-visibility'                   => 'https://rankmath.com/kb/track-ai-visibility/',
+		'ai-visibility-connect'           => 'https://rankmath.com/kb/how-to-connect-or-disconnect-rank-math/',
 
 		// Social Media.
 		'yt-link'                         => 'http://youtube.com/rankmath',

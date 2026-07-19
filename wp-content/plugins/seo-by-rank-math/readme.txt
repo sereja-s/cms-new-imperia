@@ -3,13 +3,13 @@ Contributors: rankmath
 Plugin link: https://rankmath.com/?utm_source=LP&utm_campaign=WP
 Tags: seo, google search console, schema, redirection, xml sitemap
 Tested up to: 7.0
-Requires at least: 6.3
+Requires at least: 6.7
 Requires PHP: 7.4
-Stable tag: 1.0.272
+Stable tag: 1.0.274.1
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.txt
 
-Grow your organic traffic and AI visibility with powerful SEO tools, Schema automation, actionable insights, and built-in AI SEO, all in one place.
+Grow your organic traffic and AI visibility with powerful SEO tools, XML sitemaps, Schema automation, and built-in AI SEO, all in one place.
 
 == Description ==
 
@@ -264,7 +264,7 @@ If you set up Rank Math from scratch, your search engine rankings will depend on
 
 = Where do I report security bugs found in this plugin? =
 
-Please report security bugs found in the source code of the Rank Math SEO plugin through the Patchstack Vulnerability Disclosure  Program. The Patchstack team will assist you with verification, CVE assignment, and notify the developers of this plugin.
+Please report security bugs found in the source code of the Rank Math SEO plugin through the [Patchstack Vulnerability Disclosure  Program](https://patchstack.com/database/vdp/9e5fb4c0-23d7-4a55-9a5c-256a4c6daf1e). The Patchstack team will assist you with verification, CVE assignment, and notify the developers of this plugin.
 
 = Can I use Rank Math on a WordPress.com website? =
 Yes, as the plugin is provided through WordPress.org, it is available on WordPress.com as well. However, you might be required to opt for the business plan on WordPress.com.
@@ -375,15 +375,21 @@ Terms of service: https://developers.facebook.com/terms/
 
 == Changelog ==
 
-= 1.0.272 [June 10, 2026] =
-- Added `rank-math/get-link-report` [MCP Tool](https://rankmath.com/kb/mcp-tools/) to let AI assistants retrieve site-wide link statistics, including internal, external, and broken link counts.
-- Added `rank-math/get-post-seo-meta` [MCP Tool](https://rankmath.com/kb/mcp-tools/) to let AI assistants retrieve a post's SEO title, description, focus keyword, robots meta settings, and SEO score.
-- Added `rank-math/get-post-links` [MCP Tool](https://rankmath.com/kb/mcp-tools/) to let AI assistants retrieve all internal and external links stored for a post.
-- Added `rank-math/get-post-schema` [MCP Tool](https://rankmath.com/kb/mcp-tools/) to let AI assistants retrieve all Schema markup attached to a post.
-- Fixed [Table of Contents Block](https://rankmath.com/kb/table-of-contents-block/) translation that was not working in the latest version.
-- Fixed [Content AI](https://rankmath.com/kb/content-ai-credits-migration/) dashboard that was incorrectly showing the 750 monthly credits notice for users without a Content AI plan.
-- Fixed [llms.txt](https://rankmath.com/kb/llms-txt/) output that was not including content rendered by shortcodes.
-- Fixed Block Editor crashing in WordPress 7.0 due to a deprecated `isAutosavingPost` selector.
+= 1.0.274 [Jul 14, 2026] =
+- Added `rank-math/get-top-keywords` [MCP Tool](https://rankmath.com/kb/mcp-tools) to let AI assistants retrieve top-performing keywords from Google Search Console with impressions, CTR, and average position.
+- Added `rank-math/analyze-post-content` [MCP Tool](https://rankmath.com/kb/mcp-tools) to let AI assistants run Rank Math's full on-page SEO analysis for a post and see which tests passed or failed.
+- Added `rank-math/get-seo-scores` [MCP Tool](https://rankmath.com/kb/mcp-tools) to let AI assistants retrieve SEO scores and grades for posts, with filtering by score range or missing focus keyword.
+- Fixed [AI Visibility](https://rankmath.com/ai-visibility/) "Add Your First Brand" modal that was not displaying on WordPress 6.7.5–6.8.5.
+- Fixed an issue with MixPanel usage events
+- Fixed fatal error on [Status & Tools → System Status](https://rankmath.com/kb/rank-math-status-and-tools/) caused by an undefined function on some hosts.
+- Fixed the [Setup Wizard](https://rankmath.com/kb/how-to-access-setup-wizard/) help search that was linking to the general KB page instead of the searched query.
+- Fixed PHP warning that was logged when creating a new taxonomy term with SEO controls enabled for tags.
+- Fixed Classic revisions editor that was appearing inside the Block Editor when Rank Math was active.
+- Fixed [Content AI](https://rankmath.com/kb/how-to-use-content-ai/) media file suggestions that were incorrect on top-level pages.
+- Fixed [Redirections](https://rankmath.com/kb/setting-up-redirections/) query parameters that were not merging correctly when appended to the destination URL.
+
+= 1.0.274.1 [Jul 15, 2026] =
+- Fixed a fatal error that occurred when editing a post using [Divi's Front-end/Visual Builder](https://rankmath.com/blog/divi-seo/).
 
 
 Full changelog can be found here - **[Rank Math changelog](https://rankmath.com/changelog/?utm_source=Plugin&utm_medium=Changelog&utm_campaign=WP)**
