@@ -2,7 +2,7 @@
 # This file is distributed under the same license as the Themes - Blocksy package.
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2026-06-25 05:48:13+0000\n"
+"PO-Revision-Date: 2026-07-17 16:35:16+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -102,7 +102,7 @@ msgid "Show if empty"
 msgstr "Показать, если пусто"
 
 #. translators: text for no reviews
-#: inc/components/post-meta.php:546
+#: inc/components/post-meta.php:538
 msgid "No Reviews"
 msgstr "Нет отзывов"
 
@@ -319,11 +319,11 @@ msgstr "Не удалось скопировать"
 msgid "Copied!"
 msgstr "Скопировано!"
 
-#: inc/components/social-box.php:1396
+#: inc/components/social-box.php:1394
 msgid "Share on %s"
 msgstr "Опубликовать на %s"
 
-#: inc/components/social-box.php:936 inc/components/social-box.php:1401
+#: inc/components/social-box.php:936 inc/components/social-box.php:1399
 #: inc/options/single-elements/post-share-box.php:156
 msgid "Copy to Clipboard"
 msgstr "Копировать в буфер"
@@ -728,32 +728,32 @@ msgstr "Товар WooCommerce"
 msgid "WooCommerce Thumbnail"
 msgstr "Миниатюра WooCommerce"
 
-#: inc/components/woocommerce/single/single.php:421
+#: inc/components/woocommerce/single/single.php:419
 #: inc/options/woocommerce/single-product-layers.php:422
 msgid "Extra Features"
 msgstr "Дополнительные функции"
 
-#: inc/components/woocommerce/single/single.php:405
+#: inc/components/woocommerce/single/single.php:403
 #: inc/options/woocommerce/single-product-layers.php:457
 msgid "Money Back Guarantee"
 msgstr "Гарантия возврата денег"
 
-#: inc/components/woocommerce/single/single.php:400
+#: inc/components/woocommerce/single/single.php:398
 #: inc/options/woocommerce/single-product-layers.php:452
 msgid "Worldwide Shipping"
 msgstr "Доставка по всему миру"
 
-#: inc/components/woocommerce/single/single.php:395
+#: inc/components/woocommerce/single/single.php:393
 #: inc/options/woocommerce/single-product-layers.php:447
 msgid "Satisfaction Guarantee"
 msgstr "Гарантия удовлетворённости"
 
-#: inc/components/woocommerce/single/single.php:390
+#: inc/components/woocommerce/single/single.php:388
 #: inc/options/woocommerce/single-product-layers.php:442
 msgid "Secure Payments"
 msgstr "Безопасные платежи"
 
-#: inc/components/woocommerce/single/single.php:385
+#: inc/components/woocommerce/single/single.php:383
 #: inc/options/woocommerce/single-product-layers.php:437
 msgid "Premium Quality"
 msgstr "Премиальное качество"
@@ -855,7 +855,7 @@ msgid "In stock"
 msgstr "В наличии"
 
 #. translators: text for no reviews
-#: inc/components/post-meta.php:535
+#: inc/components/post-meta.php:527
 msgid "No Comments"
 msgstr "Нет комментариев"
 
@@ -1153,7 +1153,7 @@ msgstr "Скругление углов миниатюры"
 msgid "Badge Shape"
 msgstr "Форма индикатора"
 
-#: inc/components/breadcrumbs.php:655
+#: inc/components/breadcrumbs.php:659
 msgctxt "breadcrumb"
 msgid "Home"
 msgstr "Главная"
@@ -1178,7 +1178,7 @@ msgstr "Сообщения об исполнении"
 msgid "Info Messages"
 msgstr "Информационные сообщения"
 
-#: inc/panel-builder/header/cart/view.php:211
+#: inc/panel-builder/header/cart/view.php:209
 msgid "Shopping cart"
 msgstr "Корзина"
 
@@ -1556,7 +1556,7 @@ msgstr "Отключить Emoji"
 msgid "Max Width"
 msgstr "Макс. ширина"
 
-#: inc/components/social-box.php:675 inc/components/social-box.php:1515
+#: inc/components/social-box.php:675 inc/components/social-box.php:1513
 msgid "Facebook Messenger"
 msgstr "Facebook Messenger"
 
@@ -1568,7 +1568,7 @@ msgstr "JetEngine - это подключаемый модуль динамич�
 msgid "Navigation Quick Links"
 msgstr "Быстрые ссылки навигации"
 
-#: inc/init.php:489
+#: inc/init.php:492
 msgid "Footer Widget Area "
 msgstr "Область виджетов подвала"
 
@@ -1764,7 +1764,7 @@ msgstr "Интервал между виджетами"
 
 #: inc/panel-builder/footer/middle-row/options.php:28
 msgid "Columns"
-msgstr "Колонки"
+msgstr "Столбцы"
 
 #. translators: placeholder here means the actual URL.
 #: inc/panel-builder/footer/socials/options.php:37
@@ -1851,7 +1851,7 @@ msgstr "Все заголовки (H1-H6)"
 
 #: inc/options/general/colors.php:161
 msgid "Borders"
-msgstr "Границы"
+msgstr "Рамки"
 
 #: inc/options/general/colors.php:131
 msgid "Text Selection"
@@ -2204,7 +2204,7 @@ msgstr "Тип выезжающей корзины"
 msgid "Cart Drawer"
 msgstr "Выезжающая корзина"
 
-#: inc/components/social-box.php:506 inc/components/social-box.php:1475
+#: inc/components/social-box.php:506 inc/components/social-box.php:1473
 msgid "Apple Podcasts"
 msgstr "Apple Podcasts"
 
@@ -2224,7 +2224,7 @@ msgstr "Сжатие в плавающем режиме"
 msgid "Website Frame"
 msgstr "Рамка сайта"
 
-#: inc/components/social-box.php:910 inc/components/social-box.php:1571
+#: inc/components/social-box.php:910 inc/components/social-box.php:1569
 msgid "Phone"
 msgstr "Телефон"
 
@@ -2292,7 +2292,7 @@ msgstr "Поле ввода сайта"
 #: inc/panel-builder/footer/middle-row/options.php:659
 #: inc/panel-builder/header/middle-row/options.php:481
 msgid "Bottom Border Width"
-msgstr "Ширина нижней границы"
+msgstr "Ширина нижней рамки"
 
 #: inc/panel-builder/footer/middle-row/options.php:618
 #: inc/panel-builder/header/middle-row/options.php:374
@@ -2713,7 +2713,7 @@ msgstr "Ярлыки"
 msgid "Items Style"
 msgstr "Стиль элемента"
 
-#: inc/components/post-meta.php:213 inc/components/post-meta.php:837
+#: inc/components/post-meta.php:213 inc/components/post-meta.php:827
 #: inc/options/general/meta.php:400
 #: static/js/customizer/sync/helpers/entry-meta.js:107
 msgid "In"
@@ -2731,19 +2731,19 @@ msgstr "%sИнструкции%s по форматам даты."
 msgid "Learn more about palettes and colors %shere%s."
 msgstr "%sРуководство%s по палитрам и цветам"
 
-#: inc/components/breadcrumbs.php:317 inc/components/breadcrumbs.php:639
+#: inc/components/breadcrumbs.php:315 inc/components/breadcrumbs.php:643
 msgid "No title"
 msgstr "Без заголовка"
 
-#: inc/components/breadcrumbs.php:99
+#: inc/components/breadcrumbs.php:97
 msgid "Searching for:"
 msgstr "Искать:"
 
-#: inc/components/breadcrumbs.php:91
+#: inc/components/breadcrumbs.php:89
 msgid "404 Not found"
 msgstr "404 Шаром покати..."
 
-#: inc/classes/screen-manager.php:219 inc/components/breadcrumbs.php:430
+#: inc/classes/screen-manager.php:219 inc/components/breadcrumbs.php:428
 #: inc/options/general/posts-listing.php:14 inc/options/posts/blog.php:20
 msgid "Blog"
 msgstr "Блог"
@@ -2934,7 +2934,7 @@ msgstr "Ссылка при наведении"
 msgid "Link Initial"
 msgstr "Начальная ссылка"
 
-#: inc/components/social-box.php:662 inc/components/social-box.php:1511
+#: inc/components/social-box.php:662 inc/components/social-box.php:1509
 msgid "Facebook Group"
 msgstr "Группа Facebook"
 
@@ -2942,14 +2942,14 @@ msgstr "Группа Facebook"
 msgid "Joined Date"
 msgstr "Дата регистр."
 
-#: inc/init.php:471
+#: inc/init.php:474
 msgid "Main Sidebar"
 msgstr "Главный сайдбар"
 
 #: inc/components/single/comments.php:284
 #: static/bundle/customizer-controls.js:14 static/bundle/options.js:14
 #: static/js/customizer/sync/builder.js:111
-#: static/js/options/options/ct-image-uploader.js:400
+#: static/js/options/options/ct-image-uploader.js:412
 msgid "Edit"
 msgstr "Править"
 
@@ -3205,7 +3205,7 @@ msgstr "Статей"
 msgid "Joined"
 msgstr "На сайте с"
 
-#: inc/init.php:407
+#: inc/init.php:410
 msgid "Header Menu 1"
 msgstr "Меню шапки 1"
 
@@ -3387,17 +3387,17 @@ msgid "Bottom Offset"
 msgstr "Смещение снизу"
 
 #. translators: % refers to the number of reviews, when more than 1
-#: inc/components/post-meta.php:542
+#: inc/components/post-meta.php:534
 msgid "% Reviews"
 msgstr "Отзывы (%)"
 
 #. translators: text for one review
-#: inc/components/post-meta.php:540
+#: inc/components/post-meta.php:532
 msgid "1 Review"
 msgstr "1 отзыв"
 
 #. translators: text for one review
-#: inc/components/post-meta.php:529
+#: inc/components/post-meta.php:521
 msgid "1 Comment"
 msgstr "1&nbsp;коммент"
 
@@ -3419,7 +3419,7 @@ msgstr "Тень"
 msgid "Reply"
 msgstr "Ответить"
 
-#: inc/init.php:409 inc/panel-builder/header/mobile-menu/config.php:4
+#: inc/init.php:412 inc/panel-builder/header/mobile-menu/config.php:4
 msgid "Mobile Menu"
 msgstr "Мобильное меню"
 
@@ -4074,7 +4074,7 @@ msgid "Comment navigation"
 msgstr "Навигация по комментариям"
 
 #. translators: % refers to the number of comments, when more than 1
-#: comments.php:64 inc/components/post-meta.php:531
+#: comments.php:64 inc/components/post-meta.php:523
 msgid "% Comments"
 msgstr "Комментариев: %"
 
@@ -4091,7 +4091,7 @@ msgid "Add Comment"
 msgstr "Оставьте свой комментарий"
 
 #: inc/components/single/comments.php:128 inc/components/social-box.php:923
-#: inc/components/social-box.php:1503
+#: inc/components/social-box.php:1501
 #: inc/components/woocommerce/single/review-form.php:22
 #: inc/options/single-elements/post-share-box.php:148
 msgid "Email"
@@ -4133,7 +4133,7 @@ msgstr "След. %s"
 msgid "Previous %s"
 msgstr "Пред. %s"
 
-#: inc/components/social-box.php:636 inc/components/social-box.php:1559
+#: inc/components/social-box.php:636 inc/components/social-box.php:1557
 #: inc/options/single-elements/post-share-box.php:120
 msgid "Odnoklassniki"
 msgstr "Одноклассники"
@@ -4154,19 +4154,19 @@ msgstr "WooCommerce"
 msgid "Show more"
 msgstr "Подробнее"
 
-#: inc/components/woocommerce/boot.php:99 inc/init.php:473
+#: inc/components/woocommerce/boot.php:99 inc/init.php:476
 msgid "Add widgets here."
 msgstr "Вставляйте виджеты сюда."
 
-#: inc/components/post-meta.php:205 inc/components/post-meta.php:821
-#: inc/components/post-meta.php:829 inc/options/general/meta.php:302
+#: inc/components/post-meta.php:205 inc/components/post-meta.php:811
+#: inc/components/post-meta.php:819 inc/options/general/meta.php:302
 #: inc/options/general/meta.php:339
 #: static/js/customizer/sync/helpers/entry-meta.js:82
 #: static/js/customizer/sync/helpers/entry-meta.js:93
 msgid "On"
 msgstr " "
 
-#: inc/components/post-meta.php:195 inc/components/post-meta.php:813
+#: inc/components/post-meta.php:195 inc/components/post-meta.php:803
 #: inc/options/general/meta.php:249
 #: static/js/customizer/sync/helpers/entry-meta.js:71
 msgid "By"
@@ -4215,7 +4215,7 @@ msgstr "Отдельный товар"
 msgid "Archive"
 msgstr "Список"
 
-#: inc/components/breadcrumbs.php:373
+#: inc/components/breadcrumbs.php:371
 msgid "Shop"
 msgstr "Магазин"
 
@@ -4264,7 +4264,7 @@ msgstr "Горизонтально"
 #: inc/options/general/page-title.php:311
 #: inc/options/woocommerce/single-product-layers.php:136
 msgid "Breadcrumbs"
-msgstr "Цепочка навигации"
+msgstr "Навигационные цепочки"
 
 #: inc/options/integrations/visual-portfolio-single.php:66
 #: inc/options/meta/default.php:237 inc/options/meta/page.php:176
@@ -4467,11 +4467,11 @@ msgstr "Позиция сайдбара"
 msgid "Sidebar"
 msgstr "Боковая панель"
 
-#: inc/init.php:408
+#: inc/init.php:411
 msgid "Header Menu 2"
 msgstr "Меню шапки 2"
 
-#: inc/components/social-box.php:623 inc/components/social-box.php:1651
+#: inc/components/social-box.php:623 inc/components/social-box.php:1649
 msgid "VK"
 msgstr "VK"
 
@@ -4489,7 +4489,7 @@ msgstr "Образец текста"
 msgid "Social Icons"
 msgstr "Значки социальных сетей"
 
-#: inc/init.php:406
+#: inc/init.php:409
 msgid "Footer Menu"
 msgstr "Меню подвала"
 
@@ -4626,7 +4626,7 @@ msgstr "Здесь можно добавлять в магазин новые т
 msgid "Description"
 msgstr "Описание"
 
-#: inc/components/breadcrumbs.php:68 inc/components/hero/elements.php:201
+#: inc/components/breadcrumbs.php:66 inc/components/hero/elements.php:201
 #: inc/options/general/breadcrumbs.php:168
 #: inc/options/general/page-title.php:131
 #: inc/options/general/page-title.php:392
@@ -4901,7 +4901,7 @@ msgstr "Нижняя граница"
 #: inc/panel-builder/header/middle-row/options.php:330
 #: inc/panel-builder/header/middle-row/options.php:345
 msgid "Top Border"
-msgstr "Верхняя граница"
+msgstr "Верхняя рамка"
 
 #: inc/options/general/back-to-top.php:98
 #: inc/options/general/breadcrumbs.php:97
@@ -5969,9 +5969,9 @@ msgstr "Структура страницы"
 
 #: inc/integrations/beaver-themer.php:8 inc/options/customizer.php:49
 msgid "Header"
-msgstr "Шапка"
+msgstr "Заголовок"
 
-#: inc/components/back-to-top.php:56
+#: inc/components/back-to-top.php:54
 msgid "Go to top"
 msgstr "Наверх"
 
