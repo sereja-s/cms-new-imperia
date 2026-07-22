@@ -2,7 +2,7 @@
 # This file is distributed under the same license as the WordPress - 7.0.x - Development package.
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2026-07-10 08:45:43+0000\n"
+"PO-Revision-Date: 2026-07-20 19:02:53+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -18813,7 +18813,7 @@ msgstr "Случайный порядок"
 
 #: wp-includes/media.php:5078 wp-includes/js/dist/block-editor.js:51388
 msgid "Insert from URL"
-msgstr "Вставить с сайта"
+msgstr "Вставить из URL"
 
 #. translators: This is a would-be plural string used in the media manager. If
 #. there is not a word you can use in your language to avoid issues with the

@@ -2,7 +2,7 @@
 # This file is distributed under the same license as the Plugins - WooCommerce - Stable (latest release) package.
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2026-07-19 08:43:54+0000\n"
+"PO-Revision-Date: 2026-07-21 14:46:42+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -1448,7 +1448,7 @@ msgstr "Отправить примечание клиенту &rarr;"
 
 #: includes/admin/meta-boxes/class-wc-meta-box-order-notes.php:37
 msgid "Add private note"
-msgstr "Добавить конфиденциальное примечание"
+msgstr "Добавить личную заметку"
 
 #: includes/admin/class-wc-admin-assets.php:708
 msgid "Order note added and emailed to the customer."
