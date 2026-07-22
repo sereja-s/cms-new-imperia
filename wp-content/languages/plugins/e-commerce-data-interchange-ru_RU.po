@@ -1,0 +1,333 @@
+# Translation of Plugins - EDI &#8211; Обмен данными между WooCommerce и 1С - Stable (latest release) in Russian
+# This file is distributed under the same license as the Plugins - EDI &#8211; Обмен данными между WooCommerce и 1С - Stable (latest release) package.
+msgid ""
+msgstr ""
+"PO-Revision-Date: 2026-07-05 09:03:03+0000\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n % 10 == 1 && n % 100 != 11) ? 0 : ((n % 10 >= 2 && n % 10 <= 4 && (n % 100 < 12 || n % 100 > 14)) ? 1 : 2);\n"
+"X-Generator: GlotPress/4.0.3\n"
+"Language: ru\n"
+"Project-Id-Version: Plugins - EDI &#8211; Обмен данными между WooCommerce и 1С - Stable (latest release)\n"
+
+#: src/Matchers/ProductMatcher.php:179
+msgid "Product was matched by %s. GUID %s, Product ID %d."
+msgstr "Товар был найден по %s. GUID %s, ID товара %d."
+
+#: src/Parsers/OffersParser.php:124
+msgid "Parent product is not valid."
+msgstr "Родительский товар недействителен."
+
+#: src/partials/permalinks-missing-notice.php:15
+msgid "Permalinks"
+msgstr "Постоянные ссылки"
+
+#. Plugin URI of the plugin
+#. Author URI of the plugin
+#: e-commerce-data-interchange.php
+msgid "https://ediplugin.org/"
+msgstr "https://ediplugin.org/"
+
+#. Author of the plugin
+#: e-commerce-data-interchange.php
+msgid "Aleksandr Levashov <aleksandr@byteperfect.dev>"
+msgstr "Александр Левашов <aleksandr@byteperfect.dev>"
+
+#: src/partials/upsale-box.php:13
+msgid "Having trouble with setup?"
+msgstr "Возникли проблемы с настройкой?"
+
+#: src/Settings.php:134
+msgid "Disable"
+msgstr "Отключить"
+
+#: src/Settings.php:135
+msgid "Settings page"
+msgstr "Страница настроек"
+
+#: src/Settings.php:96
+msgid "Sale settings"
+msgstr "Настройки распродажи"
+
+#: src/Settings.php:103
+msgid "Import orders"
+msgstr "Импорт заказов"
+
+#: src/Settings.php:129
+msgid "Status indicator"
+msgstr "Индикатор статуса"
+
+#: src/Parsers/DocumentsParser.php:123
+msgid "Order does not exist: %d."
+msgstr "Заказ не существует: %d."
+
+#: src/Parsers/DocumentsParser.php:280 src/Parsers/DocumentsParser.php:309
+msgid "Product was not found: %d."
+msgstr "Товар не найден: %d."
+
+#: src/OrderQuery.php:93
+msgid "Order #%d was nor exported."
+msgstr "Заказ №%d не был экспортирован."
+
+#: src/OrderQuery.php:127
+msgid "Exported %1$d of %2$d orders."
+msgstr "Экспортировано %1$d из %2$d заказов."
+
+#: src/Parsers/DocumentsParser.php:77
+msgid "Product is not synchronized: %s."
+msgstr "Товар не синхронизирован: %s."
+
+#: src/CatalogInterchange.php:17
+msgid "Unpacking %s ..."
+msgstr "Распаковка %s ..."
+
+#: src/Parsers/CategoriesParser.php:112 src/Parsers/GroupsParser.php:128
+msgid "Product category was created: %s"
+msgstr "Категория товара создана: %s"
+
+#: src/Parsers/CategoriesParser.php:149 src/Parsers/GroupsParser.php:165
+msgid "Product category was updated: %s"
+msgstr "Категория товара обновлена: %s"
+
+#: src/Settings.php:30
+msgid "Synchronization settings with 1C"
+msgstr "Настройки синхронизации с 1C"
+
+#: src/Settings.php:118
+msgid "Advanced settings"
+msgstr "Расширенные настройки"
+
+#: src/CatalogInterchange.php:39
+msgid "Unexpected file name: %s."
+msgstr "Неожиданное имя файла: %s."
+
+#: src/Settings.php:142
+msgid "Import chunk size (in bytes)"
+msgstr "Размер блока импорта (в байтах)"
+
+#. Plugin Name of the plugin
+#: e-commerce-data-interchange.php
+msgid "E-Commerce Data Interchange"
+msgstr "Обмен Данными Электронной Коммерции"
+
+#: src/AbstractInterchange.php:23
+msgid "Running interchange..."
+msgstr "Выполняется обмен ..."
+
+#: src/AbstractInterchange.php:34
+msgid "Mode is not supported: %s"
+msgstr "Режим не поддерживается: %s"
+
+#: src/SaleInterchange.php:64
+msgid "%s was unpacked."
+msgstr "%s был распакован."
+
+#: src/CatalogInterchange.php:32 src/SaleInterchange.php:85
+msgid "Processing %s ..."
+msgstr "Обрабатывается %s ..."
+
+#: src/SaleInterchange.php:92
+msgid "%s was processed successfully."
+msgstr "%s успешно обработан."
+
+#: src/DirectFileSystem.php:55
+msgid "Error create directory: %s."
+msgstr "Ошибка создания каталога: %s."
+
+#: src/DirectFileSystem.php:88
+msgid "Error remove directory: %s."
+msgstr "Ошибка удаления каталога: %s."
+
+#: src/DirectFileSystem.php:130
+msgid "Error open stream: %s."
+msgstr "Ошибка открытия потока: %s."
+
+#: src/DirectFileSystem.php:146
+msgid "Error read from stream: %s."
+msgstr "Ошибка чтения из потока: %s."
+
+#: src/DirectFileSystem.php:162
+msgid "Error get pointer position: %s."
+msgstr "Ошибка получения позиции указателя: %s."
+
+#: src/DirectFileSystem.php:177
+msgid "Error write to stream: %s."
+msgstr "Ошибка записи в поток: %s."
+
+#: src/DirectFileSystem.php:190
+msgid "Error seek stream: %s."
+msgstr "Ошибка перехода в потоке: %s."
+
+#: src/DirectFileSystem.php:203
+msgid "Error close stream: %s."
+msgstr "Ошибка закрытия потока: %s."
+
+#: src/DirectFileSystem.php:216
+msgid "Error copy stream from %1$s to %2$s."
+msgstr "Ошибка копирования потока из %1$s в %2$s."
+
+#: src/DirectFileSystem.php:243
+msgid "Error unlink file: %s."
+msgstr "Ошибка удаления файла: %s."
+
+#: src/DirectFileSystem.php:258
+msgid "Error set file mode: %s."
+msgstr "Ошибка установки режима файла: %s."
+
+#: src/DirectFileSystem.php:276
+msgid "Error unzip file: %s"
+msgstr "Ошибка распаковки файла: %s"
+
+#: src/EDI.php:94
+msgid "Settings"
+msgstr "Настройки"
+
+#: src/partials/woocommerce-missing-notice.php:14
+msgid "The %s plugin is required for electronic data interchange."
+msgstr "Плагин %s необходим для электронного обмена данными."
+
+#: src/EDI.php:187
+msgid "File system %s is not implemented."
+msgstr "Файловая система %s не реализована."
+
+#: src/Parsers/AttributesParser.php:112
+msgid "Error register taxonomy: %s"
+msgstr "Ошибка регистрации таксономии: %s"
+
+#: src/Parsers/AttributesParser.php:144
+msgid "Error create attribute: %s"
+msgstr "Ошибка создания атрибута: %s"
+
+#: src/Parsers/AttributesParser.php:170
+msgid "Error update attribute: %s"
+msgstr "Ошибка обновления атрибута: %s"
+
+#: src/Parsers/AttributesParser.php:201
+msgid "Error get attribute slug by ID: %d."
+msgstr "Ошибка получения имени атрибута по идентификатору: %d."
+
+#: src/Parsers/CategoriesParser.php:87 src/Parsers/GroupsParser.php:103
+msgid "Product category parent is invalid: %d"
+msgstr "Родительская категория товара недействительна: %d"
+
+#: src/Parsers/CategoriesParser.php:103 src/Parsers/GroupsParser.php:119
+msgid "Error create product category: %s"
+msgstr "Ошибка при создании категории товара: %s"
+
+#: src/Parsers/CategoriesParser.php:133 src/Parsers/GroupsParser.php:149
+msgid "Cannot update product category: %s"
+msgstr "Невозможно обновить категорию товара: %s"
+
+#: src/Parsers/DataXML.php:43
+msgid "Load from empty string."
+msgstr "Загрузка из пустой строки."
+
+#: src/Parsers/DataXML.php:47
+msgid "Error parsing loaded string."
+msgstr "Ошибка анализа загруженной строки."
+
+#: src/Parsers/OffersParser.php:173 src/Parsers/ProductsParser.php:173
+msgid "Is not a valid product."
+msgstr "Недействительный товар."
+
+#: src/Parsers/ProductImagesParser.php:120
+msgid "Error upload image: %s"
+msgstr "Ошибка загрузки изображения: %s"
+
+#: src/Request.php:118
+msgid "Unexpected XML entry."
+msgstr "Неожиданная запись XML."
+
+#: src/Request.php:136
+msgid "Undefined property: %s"
+msgstr "Неопределенное свойство: %s"
+
+#: src/Request.php:165
+msgid "Synchronization was interrupted on the site side."
+msgstr "Синхронизация была прервана на стороне сайта."
+
+#: src/Request.php:207
+msgid "Products synchronization"
+msgstr "Синхронизация товаров"
+
+#: src/Request.php:209
+msgid "Orders synchronization"
+msgstr "Синхронизация заказов"
+
+#: src/Request.php:215
+msgid "Initialization"
+msgstr "Инициализация"
+
+#: src/Request.php:217
+msgid "Getting the import file"
+msgstr "Получение файла импорта"
+
+#: src/Request.php:219
+msgid "Import"
+msgstr "Импорт"
+
+#: src/Request.php:221 src/Settings.php:110
+msgid "Export orders"
+msgstr "Экспорт заказов"
+
+#: src/Request.php:226
+msgid "Interrupting the import process..."
+msgstr "Прерывание процесса импорта..."
+
+#: src/Settings.php:39
+msgid "General settings"
+msgstr "Общие настройки"
+
+#: src/Settings.php:44
+msgid "Site URL used for 1C interchange:"
+msgstr "URL сайта для обмена с 1С:"
+
+#: src/Settings.php:51
+msgid "Username"
+msgstr "Имя пользователя"
+
+#: src/Settings.php:54
+msgid "Username used for 1C interchange."
+msgstr "Имя пользователя для обмена с 1С."
+
+#: src/Settings.php:59
+msgid "Password"
+msgstr "Пароль"
+
+#: src/Settings.php:62
+msgid "Password used for 1C interchange."
+msgstr "Пароль для обмена с 1С."
+
+#: src/Settings.php:67
+msgid "Import categories"
+msgstr "Импортировать категории"
+
+#: src/Settings.php:74
+msgid "Import products"
+msgstr "Импортировать товары"
+
+#: src/Settings.php:81
+msgid "Import attributes"
+msgstr "Импортировать атрибуты"
+
+#: src/Settings.php:88
+msgid "Import images"
+msgstr "Импортировать изображения"
+
+#: src/Settings.php:206
+msgid "Interrupt"
+msgstr "Прервать"
+
+#: src/Utils.php:229 src/Utils.php:242
+msgid "Attribute map is: %s."
+msgstr "Сопоставление атрибутов: %s."
+
+#: src/Utils.php:249
+msgid "Error update attribute map."
+msgstr "Ошибка обновления сопоставления атрибутов."
+
+#. Description of the plugin
+#: e-commerce-data-interchange.php
+msgid "The plugin provides data interchange between the WooCommerce plugin and 1С."
+msgstr "Плагин обеспечивает обмен данными между плагином WooCommerce и 1С."
