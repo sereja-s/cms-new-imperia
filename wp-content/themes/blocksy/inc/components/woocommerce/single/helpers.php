@@ -1,19 +1,19 @@
 <?php
 
-function blocksy_has_product_specific_layer($layer_id = '', $args = []) {
+function blocksy_get_product_specific_layer($layer_id = '', $args = []) {
 	$args = wp_parse_args($args, [
 		'respect_post_type' => true
 	]);
 
 	if (empty($layer_id)) {
-		return false;
+		return null;
 	}
 
 	if ($args['respect_post_type']) {
 		$post_type = get_post_type();
 
 		if ($post_type !== 'product') {
-			return false;
+			return null;
 		}
 	}
 
@@ -52,16 +52,30 @@ function blocksy_has_product_specific_layer($layer_id = '', $args = []) {
 	}));
 
 	if (empty($layer_to_find)) {
+		return null;
+	}
+
+	return $layer_to_find[0];
+}
+
+function blocksy_has_product_specific_layer($layer_id = '', $args = []) {
+	$layer = blocksy_get_product_specific_layer($layer_id, $args);
+
+	if (! $layer) {
 		return false;
 	}
 
 	if (
-		isset($layer_to_find[0]['enabled'])
+		isset($layer['enabled'])
 		&&
-		$layer_to_find[0]['enabled']
+		$layer['enabled']
 	) {
 		return true;
 	}
 
 	return false;
+}
+
+function blocksy_woo_has_ajax_add_to_cart() {
+	return blocksy_manager()->woocommerce->single->has_ajax_add_to_cart();
 }

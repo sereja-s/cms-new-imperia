@@ -69,6 +69,14 @@ $options = [
 				],
 			],
 
+			/**
+			 * Filters the options appended to the end of the single product
+			 * product-elements customizer section.
+			 *
+			 * @since 1.7.54
+			 *
+			 * @param array $options List of option definitions.
+			 */
 			apply_filters(
 				'blocksy:options:single_product:product-elements:end',
 				[]
@@ -85,6 +93,14 @@ $options = [
 
 			blocksy_get_options('woocommerce/single-product-elements'),
 
+			/**
+			 * Filters the floating cart options for the single product
+			 * customizer section.
+			 *
+			 * @since 2.0.1
+			 *
+			 * @param array $options List of option definitions.
+			 */
 			apply_filters(
 				'blocksy_single_product_floating_cart',
 				[]
@@ -93,19 +109,6 @@ $options = [
 			blocksy_get_options('woocommerce/single-product-tabs'),
 
 			blocksy_get_options('woocommerce/related-upsells'),
-
-			[
-				blocksy_rand_md5() => [
-					'type'  => 'ct-title',
-					'label' => __( 'Functionality Options', 'blocksy' ),
-				],
-
-				'has_ajax_add_to_cart' => [
-					'label' => __('AJAX Add To Cart', 'blocksy'),
-					'type' => 'ct-switch',
-					'value' => 'yes',
-				],
-			],
 		],
 	],
 ];

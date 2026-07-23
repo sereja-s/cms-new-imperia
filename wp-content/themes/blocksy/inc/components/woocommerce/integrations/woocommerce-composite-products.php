@@ -8,7 +8,7 @@ remove_action('woocommerce_after_single_product_summary', 'wc_cp_add_to_cart_aft
 add_action('woocommerce_after_single_product_summary', 'wc_cp_add_to_cart_after_summary', 2);
 
 add_filter(
-	'woocommerce_composite_form_wrapper_classes', 
+	'woocommerce_composite_form_wrapper_classes',
 	function($classes, $product) {
 		$classes[] = 'is-width-constrained';
 		return $classes;

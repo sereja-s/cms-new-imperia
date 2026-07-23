@@ -402,7 +402,7 @@ export const mount = (el) => {
 			return
 		}
 
-		const acceptHtml = (html, style) => {
+		const acceptHtml = (html, thumbs) => {
 			// Build the fresh gallery markup as real nodes in a detached buffer,
 			// so we can move the real (plugin-mutated) foreign nodes across
 			// instead of recreating everything from an HTML string and orphaning
@@ -478,12 +478,13 @@ export const mount = (el) => {
 				oldContainer.replaceWith(newContainer)
 			}
 
-			currentVariation
-				.closest('.product')
-				.classList.remove('thumbs-left', 'thumbs-bottom')
+			currentVariation.removeAttribute('data-thumbs')
 
-			if (currentVariation.querySelector('.flexy-container')) {
-				currentVariation.closest('.product').classList.add(style)
+			if (
+				currentVariation.dataset.gallery === 'default' &&
+				currentVariation.querySelector('.flexy-container')
+			) {
+				currentVariation.dataset.thumbs = thumbs
 			}
 
 			currentVariation.hasLazyLoadClickHoverListener = false
@@ -500,7 +501,7 @@ export const mount = (el) => {
 		if (variation.blocksy_gallery_html) {
 			acceptHtml(
 				variation.blocksy_gallery_html,
-				variation.blocksy_gallery_style
+				variation.blocksy_gallery_thumbs
 			)
 
 			return
@@ -524,7 +525,7 @@ export const mount = (el) => {
 					return
 				}
 
-				acceptHtml(data.html, data.blocksy_gallery_style)
+				acceptHtml(data.html, data.blocksy_gallery_thumbs)
 			})
 	}
 }

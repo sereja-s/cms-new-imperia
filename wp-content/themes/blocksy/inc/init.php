@@ -49,11 +49,26 @@ add_action('after_setup_theme', function () {
 
 	add_theme_support(
 		'editor-color-palette',
+		/**
+		 * Filters the block editor color palette registered by the theme.
+		 *
+		 * @since 1.8.0
+		 *
+		 * @param array $gutenberg_colors List of color palette definitions.
+		 */
 		apply_filters('blocksy:editor-color-palette', $gutenberg_colors)
 	);
 
 	add_theme_support(
 		'editor-gradient-presets',
+		/**
+		 * Filters the block editor gradient presets registered by the theme.
+		 *
+		 * @since 1.8.21
+		 *
+		 * @param array $gradients     List of gradient preset definitions.
+		 * @param array $color_palette The theme color palette.
+		 */
 		apply_filters('blocksy:editor-gradient-presets', [
 			[
 				'name' => 'Vivid cyan blue to vivid purple',
@@ -411,6 +426,13 @@ add_action('after_setup_theme', function () {
 	$all_menus['menu_2'] = esc_html__('Header Menu 2', 'blocksy');
 	$all_menus['menu_mobile'] = esc_html__('Mobile Menu', 'blocksy');
 
+	/**
+	 * Filters the list of nav menu locations registered by the theme.
+	 *
+	 * @since 1.8.0
+	 *
+	 * @param array $all_menus Map of menu location slug => label.
+	 */
 	$all_menus = apply_filters('blocksy:register_nav_menus:input', $all_menus);
 
 	// This theme uses wp_nav_menu in one location.
@@ -453,6 +475,13 @@ add_action('after_setup_theme', function () {
 	// This variable is intended to be overruled from themes.
 	// Open WPCS issue: {@link https://github.com/WordPress-Coding-Standards/WordPress-Coding-Standards/issues/1043}.
 	// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
+	/**
+	 * Filters the theme content width in pixels.
+	 *
+	 * @since 1.1.0
+	 *
+	 * @param int $content_width The content width in pixels.
+	 */
 	$GLOBALS['content_width'] = apply_filters(
 		'blocksy_content_width',
 		blocksy_get_theme_mod('maxSiteWidth', 1290)
@@ -481,6 +510,13 @@ add_action(
 			]
 		);
 
+		/**
+		 * Fires after the main sidebar is registered.
+		 *
+		 * @since 1.7.11
+		 *
+		 * @param string $sidebar_title_tag The HTML tag used for widget titles.
+		 */
 		do_action('blocksy:widgets_init', $sidebar_title_tag);
 
 		$number_of_sidebars = 6;
@@ -587,7 +623,6 @@ require get_template_directory() . '/inc/integrations/fluent-forms.php';
 require get_template_directory() . '/inc/integrations/coauthors.php';
 require get_template_directory() . '/inc/integrations/disqus.php';
 require get_template_directory() . '/inc/integrations/wpc-variations-table.php';
-require get_template_directory() . '/inc/integrations/woocommerce-composite-products.php';
 
 if (function_exists('get_rocket_cdn_url')) {
 	require get_template_directory() . '/inc/integrations/wprocket.php';
@@ -608,6 +643,11 @@ require get_template_directory() . '/admin/helpers/all.php';
  * Customizer additions.
  */
 
+/**
+ * Fires before the customizer configuration is loaded.
+ *
+ * @since 1.8.7
+ */
 do_action('blocksy:customizer:load:before');
 
 global $wp_customize;

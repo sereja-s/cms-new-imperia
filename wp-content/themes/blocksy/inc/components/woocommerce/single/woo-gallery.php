@@ -9,11 +9,12 @@ add_action(
 
 		wp_enqueue_style('ct-flexy-styles');
 
-		if (! blocksy_woocommerce_has_flexy_view()) {
+		if (blocksy_woocommerce_has_flexy_view()) {
+			echo blocksy_render_view(dirname(__FILE__) . '/woo-gallery-template.php');
+
+			ob_start();
 			return;
 		}
-
-		echo blocksy_render_view(dirname(__FILE__) . '/woo-gallery-template.php');
 
 		ob_start();
 	},
@@ -27,107 +28,78 @@ add_action(
 			return;
 		}
 
-		if (! blocksy_woocommerce_has_flexy_view()) {
+		$product_gallery = ob_get_clean();
+
+		if (blocksy_woocommerce_has_flexy_view()) {
 			return;
 		}
 
-		ob_get_clean();
+		global $product;
+
+		if (
+			! blocksy_manager()->screen->is_product()
+			||
+			! $product
+		) {
+			echo $product_gallery;
+			return;
+		}
+
+		/**
+		 * Filters the attributes applied to the default (non-flexy) single
+		 * product gallery wrapper (`.woocommerce-product-gallery`).
+		 *
+		 * Integrations can return an empty array to opt a product out
+		 * entirely — e.g. the Custom Product Boxes integration for
+		 * `wdm_bundle_product`, which renders its own gallery.
+		 *
+		 * @since 2.1.50
+		 *
+		 * @param array       $attr    Map of attribute name => value applied to
+		 *                             the gallery wrapper. Default
+		 *                             `['data-gallery' => 'default']`.
+		 * @param \WC_Product $product The product being rendered.
+		 */
+		$gallery_attr = apply_filters(
+			'blocksy:woocommerce:default-gallery:attr',
+			['data-gallery' => 'default'],
+			$product
+		);
+
+		if (empty($gallery_attr)) {
+			echo $product_gallery;
+			return;
+		}
+
+		$gallery_processor = new \WP_HTML_Tag_Processor($product_gallery);
+
+		if ($gallery_processor->next_tag([
+			'class_name' => 'woocommerce-product-gallery'
+		])) {
+			foreach ($gallery_attr as $attr_name => $attr_value) {
+				$gallery_processor->set_attribute($attr_name, $attr_value);
+			}
+		}
+
+		echo $gallery_processor->get_updated_html();
 	},
 	4, 4
 );
 
-
 add_filter(
 	'blocksy:woocommerce:single-product:post-class',
-	function($classes) {
-		if (! blocksy_manager()->screen->is_product()) {
-			return $classes;
-		}
-
-		global $blocksy_is_quick_view;
-		global $product;
-
-		if (
-			! $blocksy_is_quick_view
-			&&
-			// Integration with Custom Product Boxes plugin
-			$product->get_type() !== 'wdm_bundle_product'
-		) {
-			$classes[] = 'ct-default-gallery';
-		}
-
-		return $classes;
-	}
+	'blocksy_woo_single_post_class'
 );
 
-add_filter(
-	'woocommerce_post_class',
-	'blocksy_woo_single_post_class',
-	999,
-	2
-);
-
-function blocksy_woo_single_post_class($classes, $product) {
+function blocksy_woo_single_post_class($classes) {
+	// Not redundant with the filter's own scoping — the filter also fires
+	// for AJAX renders (quick view), where these gallery classes must not
+	// be applied.
 	if (! blocksy_manager()->screen->is_product()) {
 		return $classes;
 	}
 
-	if (
-		! $product
-		||
-		(int) get_queried_object_id() !== (int) $product->get_id()
-	) {
-		return $classes;
-	}
-
 	$product_view_type = blocksy_get_product_view_type();
-
-	if (blocksy_woocommerce_has_flexy_view()) {
-		$has_gallery = count($product->get_gallery_image_ids()) > 0;
-
-		if ($product->get_type() === 'variable') {
-			$maybe_current_variation = blocksy_manager()
-				->woocommerce
-				->retrieve_product_default_variation($product);
-
-			if ($maybe_current_variation) {
-				$variation_values = blocksy_get_post_options(
-					blocksy_translate_post_id(
-						$maybe_current_variation->get_id(),
-						[
-							'use_wpml_default_language_woo' => true
-						]
-					)
-				);
-
-				$gallery_source = blocksy_akg(
-					'gallery_source',
-					$variation_values,
-					'default'
-				);
-
-				if ($gallery_source !== 'default') {
-					$has_gallery = count(blocksy_akg(
-						'images',
-						$variation_values,
-						[]
-					)) > 0;
-				}
-			}
-		}
-
-		if ($has_gallery) {
-			if (
-				blocksy_get_theme_mod('gallery_style', 'horizontal') === 'vertical'
-				&&
-				$product_view_type === 'default-gallery'
-			) {
-				$classes[] = 'thumbs-left';
-			} else {
-				$classes[] = 'thumbs-bottom';
-			}
-		}
-	}
 
 	if (
 		$product_view_type === 'default-gallery'
@@ -160,9 +132,3 @@ function blocksy_get_product_view_type() {
 	);
 }
 
-// Only for backwards compatibility with Companion <= 2.0.73
-function blocksy_retrieve_product_default_variation($product, $object = true) {
-	return blocksy_manager()
-		->woocommerce
-		->retrieve_product_default_variation($product, $object);
-}

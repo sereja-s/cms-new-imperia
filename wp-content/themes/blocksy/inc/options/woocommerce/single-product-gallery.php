@@ -314,7 +314,7 @@ $options = [
 									'options' => [
 
 										'gallery_style' => [
-											'label' => __('Thumbnails Position', 'blocksy'),
+											'label' => __('Container Position', 'blocksy'),
 											'type' => 'ct-radio',
 											'value' => 'horizontal',
 											'view' => 'text',
@@ -331,7 +331,36 @@ $options = [
 											])
 										],
 
+										blocksy_rand_md5() => [
+											'type' => 'ct-condition',
+											'condition' => [ 'gallery_style' => 'vertical' ],
+											'options' => [
+
+												'product_thumbs_width' => [
+													'label' => __( 'Container Width', 'blocksy' ),
+													'type' => 'ct-slider',
+													'value' => 100,
+													'min' => 10,
+													'max' => 500,
+													'divider' => 'bottom',
+													'setting' => [ 'transport' => 'postMessage' ],
+												],
+
+											],
+										],
+
 									],
+								],
+
+								'product_thumbs_spacing' => [
+									'label' => __( 'Items Spacing', 'blocksy' ),
+									'type' => 'ct-slider',
+									'value' => 15,
+									'min' => 0,
+									'max' => 100,
+									'divider' => 'bottom',
+									'responsive' => true,
+									'setting' => [ 'transport' => 'postMessage' ],
 								],
 
 								'product_gallery_thumbs_ratio' => [
@@ -343,7 +372,6 @@ $options = [
 									'setting' => [ 'transport' => 'postMessage' ],
 									'preview_width_key' => 'gallery_thumbnail_image_width',
 									'view' => 'inline',
-									'divider' => 'bottom',
 									'inner-options' => [
 										'gallery_thumbnail_image_width' => [
 											'type' => 'text',
@@ -353,17 +381,6 @@ $options = [
 											'design' => 'inline',
 										],
 									],
-								],
-
-								'product_thumbs_spacing' => [
-									'label' => __( 'Spacing', 'blocksy' ),
-									'type' => 'ct-slider',
-									'value' => '15px',
-									'units' => blocksy_units_config([
-										[ 'unit' => 'px', 'min' => 0, 'max' => 100 ],
-									]),
-									'responsive' => true,
-									'setting' => [ 'transport' => 'postMessage' ],
 								],
 
 							],

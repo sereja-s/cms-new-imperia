@@ -10,6 +10,11 @@
 
 	.ct-button-loader {
 		display: block;
+
+		path {
+			transform-origin: center;
+			animation: spin 0.5s linear infinite;
+		}
 	}
 
 	svg:not(.ct-button-loader) {

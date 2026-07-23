@@ -1,5 +1,7 @@
-.ct-quick-view-card,
-.product[class*="gallery"] {
+:is(	
+	.product:has([data-gallery]),
+	.ct-quick-view-card
+) {
 
 	.product_meta > span {
 		font-size: 13px;

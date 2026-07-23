@@ -68,7 +68,18 @@ class DbVersioning {
 				update_option('blocksy_db_version', $current_version);
 			}
 
+			/**
+			 * Fires to purge all Blocksy managed caches.
+			 *
+			 * @since 1.7.52
+			 */
 			do_action('blocksy:cache-manager:purge-all');
+
+			/**
+			 * Fires to refresh the dynamic CSS caches.
+			 *
+			 * @since 1.8.0
+			 */
 			do_action('blocksy:dynamic-css:refresh-caches');
 		}
 	}
@@ -437,6 +448,14 @@ class DbVersioning {
 				'cb' => function () {
 					$obj = new DbVersioning\V2145();
 					return $obj->migrate();
+				}
+			],
+
+			[
+				'version' => '2.1.50-dev1',
+				'cb' => function () {
+					$obj = new DbVersioning\V2150();
+					$obj->migrate();
 				}
 			]
 		];

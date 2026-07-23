@@ -533,7 +533,7 @@ if (
 
 	blocksy_output_border([
 		'css' => $css,
-		'selector' => '.product[class*=top-gallery] .entry-summary',
+		'selector' => '.product-entry-wrapper:has([data-gallery="top"], [data-gallery="columns-top"]) .entry-summary',
 		'variableName' => 'container-border',
 		'value' => blocksy_get_theme_mod('entry_summary_container_border'),
 		'default' => [
@@ -549,7 +549,7 @@ if (
 		'css' => $css,
 		'tablet_css' => $tablet_css,
 		'mobile_css' => $mobile_css,
-		'selector' => '.product[class*=top-gallery] .entry-summary',
+		'selector' => '.product-entry-wrapper:has([data-gallery="top"], [data-gallery="columns-top"]) .entry-summary',
 		'property' => 'container-border-radius',
 		'value' => blocksy_get_theme_mod('entry_summary_container_border_radius',
 			blocksy_spacing_value()

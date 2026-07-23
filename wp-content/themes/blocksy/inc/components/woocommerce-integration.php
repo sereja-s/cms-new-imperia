@@ -39,6 +39,9 @@ if (class_exists('WC_Payments')) {
 	require get_template_directory() . '/inc/components/woocommerce/integrations/woocommerce-payments.php';
 }
 
+require get_template_directory() . '/inc/components/woocommerce/integrations/custom-product-boxes.php';
+require get_template_directory() . '/inc/components/woocommerce/integrations/woocommerce-composite-products.php';
+
 ThemeAutoloader::register_classes([
 	'WooCommerceBoot' => 'inc/components/woocommerce/boot.php',
 	'WooCommerceImageSizes' => 'inc/components/woocommerce/common/image-sizes.php',

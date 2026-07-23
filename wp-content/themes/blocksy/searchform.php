@@ -28,7 +28,7 @@ if (isset($args['search_through_taxonomy'])) {
 if (isset($args['ct_product_status'])) {
 	$show_product_status = $args['ct_product_status'];
 } else {
-	$show_product_status = blocksy_get_theme_mod('searchProductPrice', 'no') === 'yes';
+	$show_product_status = blocksy_get_theme_mod('searchProductStatus', 'no') === 'yes';
 }
 
 if (isset($args['search_live_results'])) {
@@ -67,11 +67,25 @@ if (
 	$class_output = 'class="modal-field"';
 }
 
+/**
+ * Filters the URL the search form submits to.
+ *
+ * @since 2.0.9
+ *
+ * @param string $home_url The search form action URL. Default site home URL.
+ */
 $home_url = apply_filters(
 	'blocksy:search-form:home-url',
 	home_url('/')
 );
 
+/**
+ * Filters the icon markup rendered inside the search form submit button.
+ *
+ * @since 1.8.15
+ *
+ * @param string $icon Inline SVG icon markup.
+ */
 $icon = apply_filters(
 	'blocksy:search-form:icon',
 	'<svg class="ct-icon ct-search-button-content" aria-hidden="true" width="15" height="15" viewBox="0 0 15 15"><path d="M14.8,13.7L12,11c0.9-1.2,1.5-2.6,1.5-4.2c0-3.7-3-6.8-6.8-6.8S0,3,0,6.8s3,6.8,6.8,6.8c1.6,0,3.1-0.6,4.2-1.5l2.8,2.8c0.1,0.1,0.3,0.2,0.5,0.2s0.4-0.1,0.5-0.2C15.1,14.5,15.1,14,14.8,13.7z M1.5,6.8c0-2.9,2.4-5.2,5.2-5.2S12,3.9,12,6.8S9.6,12,6.8,12S1.5,9.6,1.5,6.8z"/></svg>'
@@ -270,6 +284,14 @@ $button_html_atts = array_merge(
 	isset($args['button_html_atts']) ? $args['button_html_atts'] : []
 );
 
+/**
+ * Filters the minimum number of characters required before the live search
+ * form starts fetching results.
+ *
+ * @since 2.1.19
+ *
+ * @param int $min_length Minimum search query length. Default 1.
+ */
 $search_box_min_length = apply_filters('blocksy:search-form:min-length', 1);
 $results_id = '';
 $status_id = '';

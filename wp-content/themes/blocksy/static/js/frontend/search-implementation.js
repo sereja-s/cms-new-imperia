@@ -260,9 +260,13 @@ export const mount = (formEl, args = {}) => {
 
 			const posts = await response.json()
 
-			if (
-				(formEl.dataset.liveResults || '').indexOf('product_price') > -1
-			) {
+			const liveResultsConfig = formEl.dataset.liveResults || ''
+			const shouldShowProductPrice =
+				liveResultsConfig.indexOf('product_price') > -1
+			const shouldShowProductStatus =
+				liveResultsConfig.indexOf('product_status') > -1
+
+			if (shouldShowProductPrice || shouldShowProductStatus) {
 				const onlyProducts = posts.filter(
 					(p) => p.subtype === 'product'
 				)
@@ -272,7 +276,10 @@ export const mount = (formEl, args = {}) => {
 				)
 
 				if (!maybeAllCached) {
-					const requestRestUrl = `${ct_localizations.rest_url}wc/store/products`
+					const requestRestUrl = new URL(
+						`${ct_localizations.rest_url}wc/store/products`,
+						window.location.origin
+					)
 
 					const requestRestUrlParams = new URLSearchParams()
 					requestRestUrlParams.append(
@@ -284,8 +291,12 @@ export const mount = (formEl, args = {}) => {
 							.join(',')
 					)
 
+					requestRestUrlParams.forEach((value, key) => {
+						requestRestUrl.searchParams.append(key, value)
+					})
+
 					const productsResponse = await cachedFetch(
-						`${requestRestUrl}?${requestRestUrlParams.toString()}`,
+						requestRestUrl.toString(),
 						maybeNonce ? maybeNonce.value : ''
 					)
 
@@ -307,12 +318,18 @@ export const mount = (formEl, args = {}) => {
 					const matchedProduct = productPricesAndStatusCache[post.id]
 
 					if (matchedProduct) {
-						post.product_price = matchedProduct.price_html || ''
-						post.product_status = matchedProduct?.is_in_stock
-							? ct_localizations.search_live_stock_status_texts
-									.instock
-							: ct_localizations.search_live_stock_status_texts
-									.outofstock
+						if (shouldShowProductPrice) {
+							post.product_price = matchedProduct.price_html || ''
+						}
+
+						if (shouldShowProductStatus) {
+							post.product_status = matchedProduct?.is_in_stock
+								? ct_localizations
+										.search_live_stock_status_texts.instock
+								: ct_localizations
+										.search_live_stock_status_texts
+										.outofstock
+						}
 					}
 				})
 			}

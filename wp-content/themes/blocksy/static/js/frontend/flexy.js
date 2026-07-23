@@ -181,7 +181,9 @@ export const mount = (sliderEl, args) => {
 			rightArrow:
 				maybePillsSlider.parentNode.querySelector('.flexy-arrow-next'),
 
-			...(maybePillsSlider.closest('.thumbs-left') &&
+			...(maybePillsSlider
+				.closest('.woocommerce-product-gallery')
+				?.dataset.thumbs === 'left' &&
 			getCurrentScreen({ withTablet: true }) !== 'mobile'
 				? {
 						orientation: 'vertical',

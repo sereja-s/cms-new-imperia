@@ -139,16 +139,7 @@ if (! function_exists('blocksy_action_button')) {
 		$loading_icon = '<svg class="ct-button-loader" width="18" height="18"  viewBox="0 0 24 24">
 			<circle cx="12" cy="12" r="10" opacity="0.2" fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="2.5"/>
 
-			<path d="m12,2c5.52,0,10,4.48,10,10" fill="none" stroke="currentColor" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2.5">
-				<animateTransform
-					attributeName="transform"
-					attributeType="XML"
-					type="rotate"
-					dur="0.5s"
-					from="0 12 12"
-					to="360 12 12"
-					repeatCount="indefinite" />
-			</path>
+			<path d="m12,2c5.52,0,10,4.48,10,10" fill="none" stroke="currentColor" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2.5"/>
 		</svg>';
 
 		$done_icon = '<svg class="ct-done" width="20" height="20" viewBox="0,0,512,512">

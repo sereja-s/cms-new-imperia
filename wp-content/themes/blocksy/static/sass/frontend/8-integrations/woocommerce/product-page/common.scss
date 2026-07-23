@@ -20,7 +20,8 @@ form.cart {
 }
 
 
-.product[class*="gallery"] {
+.product:has([data-gallery]) {
+	
 	form.cart {
 		&:before, &:after {
 			content: '';

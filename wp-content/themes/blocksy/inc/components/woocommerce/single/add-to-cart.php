@@ -28,11 +28,12 @@ class WooCommerceAddToCart {
 		[
 			'action' => 'woocommerce_after_add_to_cart_button',
 			'priority' => 100
-		],
+		]
+	];
 
+	private $filters = [
 		[
-			'action' => 'woocommerce_post_class',
-			'priority' => 10
+			'action' => 'blocksy:woocommerce:single-product:post-class'
 		]
 	];
 
@@ -145,6 +146,10 @@ class WooCommerceAddToCart {
 		$attr = apply_filters('blocksy:woocommerce:cart-actions:attr', [
 			'class' => 'ct-cart-actions'
 		]);
+
+		if (blocksy_woo_has_ajax_add_to_cart()) {
+			$attr['data-add-to-cart'] = 'ajax';
+		}
 
 		echo '<div ' . blocksy_attr_to_html($attr) . '>';
 
@@ -309,35 +314,8 @@ class WooCommerceAddToCart {
 
 	}
 
-	public function woocommerce_post_class($classes) {
+	public function blocksy_woocommerce_single_product_post_class($classes) {
 		global $product;
-		global $woocommerce_loop;
-
-		if ($this->product_was_handled($product)) {
-			return $classes;
-		}
-
-		/**
-		 * Filters the CSS classes applied to the main single product wrapper.
-		 *
-		 * This hook lets Blocksy and third-party integrations add classes that
-		 * are specific to the currently queried single product.
-		 *
-		 * @since 2.0.72
-		 *
-		 * @param string[] $classes List of CSS classes applied to the product wrapper.
-		 */
-		$classes = apply_filters(
-			'blocksy:woocommerce:single-product:post-class',
-			$classes
-		);
-
-		$default_product_layout = blocksy_get_woo_single_layout_defaults();
-
-		$layout = blocksy_get_theme_mod(
-			'woo_single_layout',
-			blocksy_get_woo_single_layout_defaults()
-		);
 
 		if (
 			(
@@ -346,30 +324,9 @@ class WooCommerceAddToCart {
 				! blocksy_has_product_specific_layer('product_add_to_cart')
 			)
 			||
-			! $product
-			||
 			$product->is_type('external')
-			||
-			(
-				! blocksy_manager()->screen->is_product()
-				&&
-				! wp_doing_ajax()
-			)
 		) {
 			return $classes;
-		}
-
-		$has_ajax_add_to_cart = blocksy_get_theme_mod(
-			'has_ajax_add_to_cart',
-			'yes'
-		);
-
-		if (
-			$has_ajax_add_to_cart === 'yes'
-			&&
-			get_option('woocommerce_cart_redirect_after_add', 'no') === 'no'
-		) {
-			$classes[] = 'ct-ajax-add-to-cart';
 		}
 
 		if (! empty($this->finalize_action_name)) {

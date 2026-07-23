@@ -3,7 +3,20 @@
 namespace Blocksy;
 
 class WooCommerceSingle {
+	use WordPressActionsManager;
+
 	public $additional_actions = null;
+
+	private $post_class_handled_product_ids = [];
+
+	private $has_ajax_add_to_cart_option = null;
+
+	private $filters = [
+		[
+			'action' => 'woocommerce_post_class',
+			'args' => 2
+		]
+	];
 
 	private $initial_woo_behavior = [
 		'product_title' => true,
@@ -22,6 +35,8 @@ class WooCommerceSingle {
 		$this->additional_actions = new SingleProductAdditionalActions();
 
 		new WooCommerceAddToCart();
+
+		$this->attach_hooks();
 
 		add_filter('the_password_form', function($output, $post) {
 			if ($post->post_type !== 'product') {
@@ -44,6 +59,104 @@ class WooCommerceSingle {
 				wp_enqueue_script('wc-add-to-cart');
 			}
 		});
+	}
+
+	// The single generic entry point for single-product post classes —
+	// applied once per product per request, no matter how many times
+	// WooCommerce fires `woocommerce_post_class` for it (quick view, AJAX
+	// re-renders, plugins re-rendering the wrapper).
+	public function woocommerce_post_class($classes, $product) {
+		if (! $product instanceof \WC_Product) {
+			return $classes;
+		}
+
+		if (
+			! blocksy_manager()->screen->is_product()
+			&&
+			! wp_doing_ajax()
+		) {
+			return $classes;
+		}
+
+		// Loops rendered on the single product page (related products,
+		// upsells) fire `woocommerce_post_class` too — the filter is only
+		// for the main product. Non-product queried objects (e.g. a page
+		// with the `[product_page]` shortcode) are exempt from the check.
+		$queried_object = get_queried_object();
+
+		if (
+			$queried_object instanceof \WP_Post
+			&&
+			$queried_object->post_type === 'product'
+			&&
+			(int) $queried_object->ID !== (int) $product->get_id()
+		) {
+			return $classes;
+		}
+
+		if (in_array(
+			$product->get_id(),
+			$this->post_class_handled_product_ids
+		)) {
+			return $classes;
+		}
+
+		$this->post_class_handled_product_ids[] = $product->get_id();
+
+		/**
+		 * Filters the CSS classes applied to the main single product wrapper.
+		 *
+		 * This hook lets Blocksy and third-party integrations add classes that
+		 * are specific to the currently queried single product.
+		 *
+		 * Fired at most once per product per request, in these contexts:
+		 * - on single product pages (and pages treated as such, e.g. with the
+		 *   `[product_page]` shortcode) — for the main product only, never for
+		 *   the related products/upsells loops rendered on the same page;
+		 * - during AJAX requests that render single product markup (e.g. the
+		 *   quick view modal). Listeners whose classes only make sense on the
+		 *   actual single product page need to narrow themselves down (see
+		 *   `blocksy_woo_single_post_class()`).
+		 *
+		 * It is NOT fired on archive/shop loops.
+		 *
+		 * @since 2.0.72
+		 *
+		 * @param string[] $classes List of CSS classes applied to the product wrapper.
+		 */
+		return apply_filters(
+			'blocksy:woocommerce:single-product:post-class',
+			$classes
+		);
+	}
+
+	// Whether the given product's single add-to-cart submits via AJAX. The
+	// add-to-cart layer lookup is memoized on the instance so repeat callers
+	// (theme cart actions, companion floating bar) don't re-parse the layout.
+	public function has_ajax_add_to_cart() {
+		if ($this->has_ajax_add_to_cart_option === null) {
+			$layer = blocksy_get_product_specific_layer('product_add_to_cart');
+
+			$this->has_ajax_add_to_cart_option = (
+				$layer
+				&&
+				blocksy_akg('has_ajax_add_to_cart', $layer, 'yes') === 'yes'
+			);
+		}
+
+		if (! $this->has_ajax_add_to_cart_option) {
+			return false;
+		}
+
+		global $product;
+
+		return (
+			$product instanceof \WC_Product
+			&&
+			! $product->is_type('external')
+			&&
+			get_option('woocommerce_cart_redirect_after_add', 'no') === 'no'
+		);
 	}
 
 	public function receive_initial_woo_behavior($initial_woo_behavior) {
@@ -145,11 +258,25 @@ class WooCommerceSingle {
 			);
 		}
 
+		/**
+		 * Filters the resolved single product layout layers.
+		 *
+		 * @since 2.0.8
+		 *
+		 * @param array $layout List of single product layout layers.
+		 */
 		$args['layout'] = apply_filters(
 			'blocksy:woocommerce:product-single:layout',
 			$args['layout']
 		);
 
+		/**
+		 * Fires before the single product layout layers are rendered.
+		 *
+		 * @since 2.0.62
+		 *
+		 * @param array $args Single product layout arguments.
+		 */
 		do_action('blocksy:woocommerce:product-single:layout:before', $args);
 
 		foreach ($args['layout'] as $layer) {
@@ -171,33 +298,88 @@ class WooCommerceSingle {
 				continue;
 			}
 
+			/**
+			 * Fires to render a custom single product layout layer that has no
+			 * built-in renderer method.
+			 *
+			 * @since 2.0.1
+			 *
+			 * @param array $layer Single product layout layer descriptor.
+			 */
 			do_action('blocksy:woocommerce:product:custom:layer', $layer);
 		}
 
+		/**
+		 * Fires after all single product layout layers are rendered.
+		 *
+		 * @since 2.0.62
+		 *
+		 * @param array $args Single product layout arguments.
+		 */
 		do_action('blocksy:woocommerce:product-single:layout:after', $args);
 	}
 
 	public function product_title($layer) {
+		/**
+		 * Fires before the single product title layer.
+		 *
+		 * @since 2.0.1
+		 */
 		do_action('blocksy:woocommerce:product-single:title:before');
 		woocommerce_template_single_title();
+		/**
+		 * Fires after the single product title layer.
+		 *
+		 * @since 2.0.1
+		 */
 		do_action('blocksy:woocommerce:product-single:title:after');
 	}
 
 	public function product_rating($layer) {
+		/**
+		 * Fires before the single product rating layer.
+		 *
+		 * @since 2.0.1
+		 */
 		do_action('blocksy:woocommerce:product-single:rating:before');
 		woocommerce_template_single_rating();
+		/**
+		 * Fires after the single product rating layer.
+		 *
+		 * @since 2.0.1
+		 */
 		do_action('blocksy:woocommerce:product-single:rating:after');
 	}
 
 	public function product_price($layer) {
+		/**
+		 * Fires before the single product price layer.
+		 *
+		 * @since 1.8.0
+		 */
 		do_action('blocksy:woocommerce:product-single:price:before');
 		woocommerce_template_single_price();
+		/**
+		 * Fires after the single product price layer.
+		 *
+		 * @since 1.8.0
+		 */
 		do_action('blocksy:woocommerce:product-single:price:after');
 	}
 
 	public function product_desc($layer) {
+		/**
+		 * Fires before the single product short description layer.
+		 *
+		 * @since 1.8.0
+		 */
 		do_action('blocksy:woocommerce:product-single:excerpt:before');
 		woocommerce_template_single_excerpt();
+		/**
+		 * Fires after the single product short description layer.
+		 *
+		 * @since 1.8.4
+		 */
 		do_action('blocksy:woocommerce:product-single:excerpt:after');
 	}
 
@@ -213,6 +395,11 @@ class WooCommerceSingle {
 	}
 
 	public function product_add_to_cart($layer) {
+		/**
+		 * Fires before the single product add to cart layer.
+		 *
+		 * @since 2.0.1
+		 */
 		do_action('blocksy:woocommerce:product-single:add_to_cart:before');
 
 		$section_title = blocksy_akg('add_to_cart_layer_title', $layer, '');
@@ -239,12 +426,27 @@ class WooCommerceSingle {
 			$single_add_to_cart
 		);
 
+		/**
+		 * Fires after the single product add to cart layer.
+		 *
+		 * @since 2.0.1
+		 */
 		do_action('blocksy:woocommerce:product-single:add_to_cart:after');
 	}
 
 	public function product_meta($layer) {
+		/**
+		 * Fires before the single product meta layer.
+		 *
+		 * @since 2.0.1
+		 */
 		do_action('blocksy:woocommerce:product-single:meta:before');
 		woocommerce_template_single_meta();
+		/**
+		 * Fires after the single product meta layer.
+		 *
+		 * @since 2.0.1
+		 */
 		do_action('blocksy:woocommerce:product-single:meta:after');
 	}
 

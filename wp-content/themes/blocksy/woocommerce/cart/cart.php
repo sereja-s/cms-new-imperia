@@ -12,7 +12,7 @@
  *
  * @see     https://woocommerce.com/document/template-structure/
  * @package WooCommerce\Templates
- * @version 10.8.0
+ * @version 11.0.0
  */
 
 defined( 'ABSPATH' ) || exit;
@@ -40,7 +40,7 @@ $image_ratio = blocksy_get_theme_mod('cart_page_image_ratio', '1/1');
 				<th scope="col" class="product-name" colspan="2"><?php esc_html_e( 'Product', 'blocksy' ); ?></th>
 				<th scope="col" class="product-quantity"><?php esc_html_e( 'Quantity', 'blocksy' ); ?></th>
 				<th scope="col" class="product-subtotal"><?php esc_html_e( 'Subtotal', 'blocksy' ); ?></th>
-				<th class="product-remove"><span class="screen-reader-text"><?php esc_html_e( 'Remove item', 'blocksy' ); ?></span></th>
+				<th scope="col" class="product-remove"><span class="screen-reader-text"><?php esc_html_e( 'Remove item', 'blocksy' ); ?></span></th>
 			</tr>
 		</thead>
 		<tbody>
@@ -77,34 +77,33 @@ $image_ratio = blocksy_get_theme_mod('cart_page_image_ratio', '1/1');
 
 						<td class="product-thumbnail">
 							<?php
+								$thumbnail_args = [
+									'no_image_type' => 'woo',
+									'attachment_id' => $_product->get_image_id(),
+									'post_id' => $_product->get_id(),
+									'size' => $image_size,
+									'ratio' => $image_ratio,
+								];
+
+								if ( $product_permalink ) {
+									$thumbnail_args['tag_name'] = 'a';
+									$thumbnail_args['html_atts'] = [
+										'href' => esc_url( $product_permalink ),
+									];
+								}
+
 								$thumbnail = apply_filters(
 									'woocommerce_cart_item_thumbnail',
-									blocksy_media(
-										[
-										'no_image_type' => 'woo',
-										'attachment_id' => $_product->get_image_id(),
-										'post_id' => $_product->get_id(),
-										'size' => $image_size,
-										'ratio' => $image_ratio,
-										]
-									),
+									blocksy_media( $thumbnail_args ),
 									$cart_item,
 									$cart_item_key
 								);
 
-								if ( ! $product_permalink ) {
-									echo $thumbnail; // PHPCS: XSS ok.
-								} else {
-									echo blocksy_safe_sprintf(
-										'<a href="%s">%s</a>',
-										esc_url( $product_permalink ),
-										$thumbnail
-									); // PHPCS: XSS ok.
-								}
+								echo $thumbnail; // PHPCS: XSS ok.
 							?>
 						</td>
 
-						<td scope="row" role="rowheader" class="product-name" data-title="<?php esc_attr_e( 'Product', 'blocksy' ); ?>">
+						<td role="rowheader" class="product-name" data-title="<?php esc_attr_e( 'Product', 'blocksy' ); ?>">
 							<?php
 								if ( ! $product_permalink ) {
 									echo wp_kses_post( $product_name . '&nbsp;' );

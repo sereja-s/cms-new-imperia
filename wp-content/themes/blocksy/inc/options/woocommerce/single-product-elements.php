@@ -106,6 +106,14 @@ $options = [
 						],
 					],
 
+					/**
+					 * Filters the options appended after the single product
+					 * layers list.
+					 *
+					 * @since 2.0.1
+					 *
+					 * @param array $options List of option definitions.
+					 */
 					apply_filters('blocksy_woo_single_options:after_layers', []),
 
 					blocksy_rand_md5() => [
@@ -420,7 +428,7 @@ $options = [
 
 								blocksy_rand_md5() => [
 									'type' => 'ct-condition',
-									'condition' => ['has_ajax_add_to_cart' => 'yes'],
+									'condition' => ['woo_single_layout:array-ids:product_add_to_cart:has_ajax_add_to_cart' => 'yes'],
 									'options' => [
 
 										blocksy_rand_md5() => [
@@ -557,6 +565,14 @@ $options = [
 
 					],
 
+					/**
+					 * Filters the options appended to the end of the single
+					 * product elements design tab.
+					 *
+					 * @since 2.0.1
+					 *
+					 * @param array $options List of option definitions.
+					 */
 					apply_filters(
 						'blocksy:options:single_product:elements:design_tab:end',
 						[]

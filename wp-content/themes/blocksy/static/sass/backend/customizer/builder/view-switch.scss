@@ -30,10 +30,10 @@
 			border-inline-end: 1px solid #ddd;
 		}
 
-		&:first-child {
-			border-inline-start: 1px solid #ddd;
-			margin-inline-start: -1px;
-		}
+		// &:first-child {
+		// 	border-inline-start: 1px solid #ddd;
+		// 	margin-inline-start: -1px;
+		// }
 
 		&:after {
 			position: absolute;
@@ -47,7 +47,7 @@
 		}
 
 		&:hover {
-			--ui-color: #0071a1;
+			--ui-color: var(--ui-accent-color);
 			background: #fff;
 		}
 
@@ -65,7 +65,7 @@
 	// builder toggle
 	.ct-builder-toggle {
 		margin-inline-start: auto;
-		min-width: 148px;
+		min-width: 155px;
 		font-size: 12px;
 		border-inline-start: 1px solid #ddd;
 

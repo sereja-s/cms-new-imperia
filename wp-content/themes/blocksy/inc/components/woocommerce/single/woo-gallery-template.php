@@ -100,10 +100,23 @@ if ($blocksy_current_variation) {
 	] = $blocksy_current_variation->get_id();
 }
 
+/**
+ * Filters the list of product gallery image attachment IDs.
+ *
+ * @since 1.8.0
+ *
+ * @param array $gallery_images List of gallery image attachment IDs.
+ */
 $gallery_images = apply_filters(
 	'blocksy:woocommerce:product-view:product_gallery_images',
 	$gallery_images
 );
+
+$product_view_attr['data-gallery'] = 'default';
+
+if (count($gallery_images) > 1) {
+	$product_view_attr['data-thumbs'] = blocksy_get_product_gallery_thumbs();
+}
 
 $ratio = '3/4';
 $single_ratio = blocksy_get_theme_mod('product_gallery_ratio', '3/4');
@@ -116,16 +129,21 @@ $has_lazy_load_single_product_image = blocksy_get_theme_mod(
 	'yes'
 ) === 'yes';
 
-global $blocksy_is_quick_view;
-
-if (! $blocksy_is_quick_view) {
-	$product_view_attr = apply_filters(
-		'blocksy:woocommerce:product-view:attr',
-		$product_view_attr
-	);
-}
+/**
+ * Filters the HTML attributes of the product gallery wrapper element.
+ *
+ * @since 1.7.54
+ *
+ * @param array $product_view_attr Wrapper HTML attributes.
+ */
+$product_view_attr = apply_filters(
+	'blocksy:woocommerce:product-view:attr',
+	$product_view_attr
+);
 
 ob_start();
+
+global $blocksy_is_quick_view;
 
 $badges = [];
 $location_key = $blocksy_is_quick_view ? 'archive' : 'single';
@@ -151,6 +169,11 @@ if ($product->is_in_stock()) {
 	}
 }
 
+/**
+ * Fires before the single product gallery is rendered.
+ *
+ * @since 2.0.1
+ */
 do_action('blocksy:woocommerce:product-gallery:before');
 
 /**
@@ -169,11 +192,31 @@ echo '<div class="' . esc_attr(implode(' ', $gallery_container_class)) . '">';
 
 ob_start();
 
+/**
+ * Filters the list of badge markup strings shown over the product gallery.
+ *
+ * @since 2.0.1
+ *
+ * @param string[] $badges List of rendered badge markup strings.
+ */
 echo implode('', apply_filters('blocksy:woocommerce:single:after-sale-badge', $badges));
 
 $maybe_custom_content = null;
 
 if (! $blocksy_is_quick_view) {
+	/**
+	 * Filters the custom content rendered in place of the default product
+	 * gallery.
+	 *
+	 * Returning a non-null value short-circuits the default gallery markup.
+	 *
+	 * @since 1.7.54
+	 *
+	 * @param string|null $content        Custom gallery content. Default null.
+	 * @param WC_Product  $product        The current product.
+	 * @param array       $gallery_images List of gallery image attachment IDs.
+	 * @param bool        $is_single      Whether this renders on a single product page.
+	 */
 	$maybe_custom_content = apply_filters(
 		'blocksy:woocommerce:product-view:content',
 		null,
@@ -183,6 +226,13 @@ if (! $blocksy_is_quick_view) {
 	);
 }
 
+/**
+ * Fires at the start of the product gallery inner content.
+ *
+ * @since 1.7.21
+ *
+ * @param array $gallery_images List of gallery image attachment IDs.
+ */
 do_action('blocksy:woocommerce:product-view:start', $gallery_images);
 
 $gallery_actions = [];
@@ -202,6 +252,13 @@ if (
 	&&
 	! $maybe_custom_content
 	&&
+	/**
+	 * Filters whether the product gallery lightbox/zoom trigger is rendered.
+	 *
+	 * @since 1.8.0
+	 *
+	 * @param bool $has_trigger Whether the zoom trigger is shown. Default true.
+	 */
 	apply_filters('blocksy:woocommerce:product-review:has-gallery-zoom-trigger', true)
 ) {
 	$gallery_actions[] = '<a href="#" class="woocommerce-product-gallery__trigger">🔍</a>';
@@ -213,6 +270,14 @@ if (! empty($gallery_actions)) {
 	// echo '</div>';
 }
 
+/**
+ * Filters the default image ratio used for the product gallery when not on a
+ * single product page.
+ *
+ * @since 1.7.8
+ *
+ * @param string $default_ratio Image ratio (e.g. '3/4'). Default '3/4'.
+ */
 $default_ratio = apply_filters('blocksy:woocommerce:default_product_ratio', '3/4');
 
 if (! $maybe_custom_content && count($gallery_images) === 1) {
@@ -234,6 +299,14 @@ if (! $maybe_custom_content && count($gallery_images) === 1) {
 	}
 
 	echo blocksy_media(
+		/**
+		 * Filters the arguments used to render the single product gallery image
+		 * when there is a single image.
+		 *
+		 * @since 2.0.1
+		 *
+		 * @param array $attributes Arguments passed to blocksy_media().
+		 */
 		apply_filters(
 			'blocksy:woocommerce:image_additional_attributes',
 			[
@@ -263,6 +336,14 @@ if (! $maybe_custom_content && count($gallery_images) > 1) {
 		'yes'
 	) === 'yes';
 
+	/**
+	 * Filters the arguments passed to the Blocksy flexy slider for the single
+	 * product gallery.
+	 *
+	 * @since 1.8.0
+	 *
+	 * @param array $flexy_args Flexy slider arguments.
+	 */
 	$flexy_args = apply_filters(
 		'blocksy:woocommerce:single_product:flexy-args',
 		[
@@ -293,6 +374,11 @@ do_action('woocommerce_product_thumbnails');
 
 echo '</div>';
 
+/**
+ * Fires after the single product gallery is rendered.
+ *
+ * @since 2.0.1
+ */
 do_action('blocksy:woocommerce:product-gallery:after');
 
 $result_html = ob_get_clean();

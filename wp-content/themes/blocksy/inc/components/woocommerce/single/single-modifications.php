@@ -36,7 +36,21 @@ function blocksy_woocommerce_has_flexy_view() {
 		return false;
 	}
 
+	/**
+	 * Filters whether the default WooCommerce product gallery template should
+	 * be used instead of Blocksy's product view.
+	 *
+	 * @since 1.8.5
+	 *
+	 * @param bool $use_default Whether to force the default template. Default false.
+	 */
 	return !apply_filters('blocksy:woocommerce:product-view:use-default', false);
+}
+
+function blocksy_get_product_gallery_thumbs() {
+	return blocksy_get_theme_mod('gallery_style', 'horizontal') === 'vertical'
+		? 'left'
+		: 'bottom';
 }
 
 add_action('init', function() {
@@ -289,6 +303,11 @@ add_action($action_to_hook, function () {
 add_action(
 	'woocommerce_after_single_product_summary',
 	function () {
+		/**
+		 * Fires before the single product data tabs section.
+		 *
+		 * @since 1.8.0
+		 */
 		do_action('blocksy:woocommerce:product-single:tabs:before');
 	},
 	9
@@ -297,6 +316,11 @@ add_action(
 add_action(
 	'woocommerce_after_single_product_summary',
 	function () {
+		/**
+		 * Fires after the single product data tabs section.
+		 *
+		 * @since 1.8.0
+		 */
 		do_action('blocksy:woocommerce:product-single:tabs:after');
 	},
 	11
@@ -381,6 +405,11 @@ add_action(
 	function() {
 		blocksy_woo_single_product_after_main_content();
 
+		/**
+		 * Fires after the single product related/upsell products section.
+		 *
+		 * @since 2.0.23
+		 */
 		do_action('blocksy:woocommerce:product-single:related:after');
 	},
 	5

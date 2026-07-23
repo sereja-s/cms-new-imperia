@@ -1,3 +1,10 @@
+2.1.50: 2026-07-23
+- Improvement: Products additional action buttons - proper loader sync with request state
+- Improvement: Search module - correctly handles product price and product status metadata in live results
+- Improvement: Single product - refactor and improve logic of the AJAX add to cart button
+- Improvement: Smarter handling of product gallery layouts and variation swatches
+- Improvement: Updated cart and mini-cart template overrides for compatibility with the upcoming WooCommerce 11.0 release
+
 2.1.49: 2026-07-14
 - Improvement: Correctly apply related posts featured image lazy-loading setting
 - Improvement: Frontend tooltips - prevent overflow outside the viewport on mobile devices

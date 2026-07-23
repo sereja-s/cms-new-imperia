@@ -79,11 +79,7 @@ add_filter(
 
 			$blocksy_current_variation = null;
 
-			if (blocksy_get_theme_mod('gallery_style', 'horizontal') === 'vertical') {
-				$result['blocksy_gallery_style'] =  'thumbs-left';
-			} else {
-				$result['blocksy_gallery_style'] =  'thumbs-bottom';
-			}
+			$result['blocksy_gallery_thumbs'] = blocksy_get_product_gallery_thumbs();
 		}
 
 		return $result;
@@ -189,18 +185,11 @@ function blocksy_get_product_view_for_variation() {
 		}
 	}
 
-	$blocksy_gallery_style = 'thumbs-bottom';
-
-	if (blocksy_get_theme_mod('gallery_style', 'horizontal') === 'vertical') {
-		$blocksy_gallery_style = 'thumbs-left';
-	}
-
 	wp_send_json_success([
 		'html' => blocksy_render_view(
 			dirname(__FILE__) . '/../single/woo-gallery-template.php',
 			$gallery_args
 		),
-		'blocksy_gallery_style' => $blocksy_gallery_style,
+		'blocksy_gallery_thumbs' => blocksy_get_product_gallery_thumbs(),
 	]);
 }
-

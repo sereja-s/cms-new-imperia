@@ -9,21 +9,19 @@
 	}
 
 	.ct-media-container {
-		display: flex;
+		// display: flex;
 		border-radius: var(--border-radius);
 	}
 }
 
 
 // default & stacked gallery
-.ct-default-gallery,
-.ct-stacked-gallery {
-
-	.product-entry-wrapper {
-
-		@include functions.media-breakpoint-up (lg) {
-			display: flex;
-		}
+.product-entry-wrapper:has(
+	[data-gallery="default"], 
+	[data-gallery="stacked"]
+) {
+	@include functions.media-breakpoint-up (lg) {
+		display: flex;
 	}
 
 	.woocommerce-product-gallery {

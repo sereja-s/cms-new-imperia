@@ -129,6 +129,13 @@ if ($has_custom_icons) {
 	}
 }
 
+/**
+ * Filters the extra single product layer option definitions.
+ *
+ * @since 2.0.1
+ *
+ * @param array $options Map of layer id => layer option definition.
+ */
 $options = apply_filters(
 	'blocksy_woo_single_options_layers:extra',
 	[
@@ -185,6 +192,14 @@ $options = apply_filters(
 
 		'product_price' => [
 			'label' => __('Price', 'blocksy'),
+			/**
+			 * Filters the options for the product price single product layer.
+			 *
+			 * @since 2.0.1
+			 *
+			 * @param array  $options List of option definitions.
+			 * @param string $icon    The icon class used for the layer options.
+			 */
 			'options' => apply_filters(
 				'blocksy:single-product-layer:options:product_price',
 				[
@@ -253,6 +268,15 @@ $options = apply_filters(
 					'disableRevertButton' => true,
 					'sync' => [
 						'id' => 'woo_card_layout_skip'
+					],
+				],
+
+				'has_ajax_add_to_cart' => [
+					'label' => __('AJAX Add To Cart', 'blocksy'),
+					'type' => 'ct-switch',
+					'value' => 'yes',
+					'sync' => [
+						'id' => 'woo_single_layout_skip'
 					],
 				],
 
