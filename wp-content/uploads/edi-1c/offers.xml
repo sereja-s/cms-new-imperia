@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
-<КоммерческаяИнформация xmlns="urn:1C.ru:commerceml_210" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ВерсияСхемы="2.08" ДатаФормирования="2026-08-02T10:14:32">
+<КоммерческаяИнформация xmlns="urn:1C.ru:commerceml_210" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ВерсияСхемы="2.08" ДатаФормирования="2026-08-03T17:51:18">
 	<ПакетПредложений СодержитТолькоИзменения="false">
 		<Ид>2dc2f688-9e2b-497b-9d67-8b54955523d6#</Ид>
 		<Наименование>Пакет предложений (Каталог 2026.08.01 13:16:33)</Наименование>

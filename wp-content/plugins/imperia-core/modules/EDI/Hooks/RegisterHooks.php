@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Imperia\Modules\EDI\Hooks;
 
+use Imperia\Modules\EDI\Hooks\Product\ProductGalleryHook;
+use Imperia\Modules\EDI\Hooks\Product\ProductPrintNameParser;
 use Imperia\Modules\EDI\Infrastructure\ParserRegistry;
 
 /**
@@ -63,6 +65,24 @@ final class RegisterHooks
 		$this->parserRegistry = new ParserRegistry();
 
 		$this->register();
+
+		/*
+     * Использовать
+     * "Полное наименование"
+     * вместо стандартного названия.
+     */
+		(new ProductPrintNameParser())->register();
+
+		/*
+     * Исправление стандартной
+     * работы галереи изображений.
+     *
+     * Первое изображение
+     * становится главным
+     * и больше не попадает
+     * в галерею.
+     */
+		(new ProductGalleryHook())->register();
 	}
 
 	/**
