@@ -179,12 +179,12 @@ final class CategoryMatcher
 
 		if (!$term) {
 
-			imperia_log(
+			/* imperia_log(
 				sprintf(
 					'CategoryMatcher: category "%s" not found. A new category will be created.',
 					$name
 				)
-			);
+			); */
 
 			return null;
 		}

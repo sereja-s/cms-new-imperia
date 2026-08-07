@@ -6,6 +6,8 @@ namespace Imperia\Modules\EDI\Hooks;
 
 use Imperia\Modules\EDI\Hooks\Product\ProductGalleryHook;
 use Imperia\Modules\EDI\Hooks\Product\ProductPrintNameParser;
+use Imperia\Modules\EDI\Hooks\Product\ProtectManualCategories;
+use Imperia\Modules\EDI\Hooks\Product\ProtectManualProducts;
 use Imperia\Modules\EDI\Infrastructure\ParserRegistry;
 
 /**
@@ -83,6 +85,20 @@ final class RegisterHooks
      * в галерею.
      */
 		(new ProductGalleryHook())->register();
+
+		/*
+     * Защита категорий,
+     * добавленных администратором вручную.
+     */
+		//	(new ProtectManualCategories())->register();
+
+		/*
+     * Не позволять EDI изменять товары,
+     * которые ещё не приняты
+     * под управление обменом.
+     */
+		//(new ProtectManualProducts())->register();
+
 	}
 
 	/**
