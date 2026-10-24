@@ -49,7 +49,13 @@ final class Bootstrap
 
 		$this->modules = new ModuleManager();
 
-		//imperia_log('BOOTSTRAP RUN');
+		/* imperia_log(
+			sprintf(
+				'IMPERIA BOOTSTRAP RUN | context=%s | URI=%s',
+				Context::type(),
+				$_SERVER['REQUEST_URI'] ?? ''
+			)
+		); */
 
 		$this->modules->load();
 	}

@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Imperia\Modules\EDI\Hooks;
 
+use Imperia\Modules\EDI\Hooks\Product\DisablePendingStatus;
+use Imperia\Modules\EDI\Hooks\Product\ProductAttributesKeyCompatibility;
 use Imperia\Modules\EDI\Hooks\Product\ProductGalleryHook;
 use Imperia\Modules\EDI\Hooks\Product\ProductPrintNameParser;
-use Imperia\Modules\EDI\Hooks\Product\ProtectManualCategories;
-use Imperia\Modules\EDI\Hooks\Product\ProtectManualProducts;
 use Imperia\Modules\EDI\Infrastructure\ParserRegistry;
 
 /**
@@ -17,50 +17,19 @@ use Imperia\Modules\EDI\Infrastructure\ParserRegistry;
  *
  * Единственная задача данного класса —
  * зарегистрировать все хуки (Actions и Filters),
- * которыми модуль Imperia расширяет функциональность
- * плагина EDI.
- *
- * Здесь НЕ должно быть:
- *
- * • бизнес-логики;
- * • обработки XML;
- * • создания категорий;
- * • поиска товаров;
- * • работы с WooCommerce.
- *
- * Этот класс лишь сообщает WordPress:
- *
- * "Когда EDI вызовет такой-то фильтр —
- * передай управление нашему обработчику."
- *
- * Благодаря этому вся логика регистрации находится
- * в одном месте.
+ * которыми модуль Imperia расширяет
+ * функциональность плагина EDI.
  */
 final class RegisterHooks
 {
 	/**
 	 * Реестр наших парсеров.
-	 *
-	 * Сейчас он умеет заменять только CategoriesParser,
-	 * но позже здесь будут регистрироваться и другие:
-	 *
-	 * • ProductsParser
-	 * • OffersParser
-	 * • ImagesParser
-	 * • OrdersParser
 	 */
 	private ParserRegistry $parserRegistry;
 
 	/**
-	 * При создании объекта сразу регистрируем
-	 * все необходимые хуки WordPress.
-	 *
-	 * Поэтому Module достаточно выполнить:
-	 *
-	 * new RegisterHooks();
-	 *
-	 * и никаких дополнительных вызовов делать
-	 * уже не потребуется.
+	 * При создании объекта регистрируем
+	 * все необходимые расширения EDI.
 	 */
 	public function __construct()
 	{
@@ -69,51 +38,48 @@ final class RegisterHooks
 		$this->register();
 
 		/*
-     * Использовать
-     * "Полное наименование"
-     * вместо стандартного названия.
-     */
+		 * Использовать "Полное наименование"
+		 * вместо стандартного названия.
+		 */
 		(new ProductPrintNameParser())->register();
 
 		/*
-     * Исправление стандартной
-     * работы галереи изображений.
-     *
-     * Первое изображение
-     * становится главным
-     * и больше не попадает
-     * в галерею.
-     */
+		 * Исправление стандартной работы галереи.
+		 *
+		 * Первое изображение становится главным
+		 * и больше не попадает в галерею.
+		 */
 		(new ProductGalleryHook())->register();
 
 		/*
-     * Защита категорий,
-     * добавленных администратором вручную.
-     */
-		//	(new ProtectManualCategories())->register();
+		 * Отключает штатный перевод опубликованных
+		 * товаров в статус "pending" перед обменом.
+		 */
+		(new DisablePendingStatus())->register();
 
 		/*
-     * Не позволять EDI изменять товары,
-     * которые ещё не приняты
-     * под управление обменом.
-     */
-		//(new ProtectManualProducts())->register();
+		 * Приводим существующие ключи атрибутов
+		 * к ключам, которые использует WooCommerce.
+		 *
+		 * Ошибка этого механизма не должна
+		 * останавливать EDI-обмен.
+		 */
+		//$this->registerProductAttributesKeyCompatibility();
 
+		/*
+		 * После завершения тестирования эту строку
+		 * при необходимости можно удалить.
+		 */
+		/* imperia_log(
+			'ParserRegistry, ProductPrintNameParser, ' .
+				'ProductGalleryHook, DisablePendingStatus, ' .
+				'registerProductAttributesKeyCompatibility'
+		); */
 	}
 
 	/**
-	 * Регистрирует все фильтры и действия,
-	 * используемые данным модулем.
-	 *
-	 * Пока зарегистрирован только один фильтр —
-	 * замена стандартных XML-парсеров EDI
-	 * на наши расширенные версии.
-	 *
-	 * В дальнейшем здесь могут появиться:
-	 *
-	 * add_action(...)
-	 * add_filter(...)
-	 * и другие точки расширения EDI.
+	 * Регистрирует фильтры и действия EDI,
+	 * используемые Imperia Core.
 	 */
 	private function register(): void
 	{
@@ -124,21 +90,43 @@ final class RegisterHooks
 	}
 
 	/**
-	 * Позволяет заменить стандартные парсеры EDI
-	 * нашими собственными реализациями.
+	 * Заменяет штатные парсеры EDI
+	 * собственными реализациями Imperia.
 	 *
-	 * Сам RegisterHooks НЕ знает,
-	 * какие именно парсеры нужно заменить.
+	 * @param array $parsers
 	 *
-	 * Этим занимается ParserRegistry.
-	 *
-	 * @param array $parsers Список парсеров,
-	 *                       зарегистрированных EDI.
-	 *
-	 * @return array Обновлённый список парсеров.
+	 * @return array
 	 */
 	public function replaceParsers(array $parsers): array
 	{
 		return $this->parserRegistry->replace($parsers);
+	}
+
+	/**
+	 * Безопасная регистрация исправления ключей
+	 * индивидуальных атрибутов.
+	 *
+	 * Ошибка нашего расширения не должна останавливать
+	 * основной EDI-обмен.
+	 *
+	 * @return void
+	 */
+	private function registerProductAttributesKeyCompatibility(): void
+	{
+		try {
+			(new ProductAttributesKeyCompatibility())->register();
+		} catch (\Throwable $e) {
+			try {
+				imperia_log(
+					'[ProductAttributesKeyCompatibility] ERROR' .
+						' | stage=registration' .
+						' | message=' . $e->getMessage() .
+						' | file=' . $e->getFile() .
+						' | line=' . $e->getLine()
+				);
+			} catch (\Throwable $ignored) {
+				// Logging must never break the EDI exchange.
+			}
+		}
 	}
 }

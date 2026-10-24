@@ -19,13 +19,79 @@ class Request
 
 	const ZIP_IMPORT_FILENAME_MASK = '/^v8_.+\.zip$/';
 
-	const IMAGE_IMPORT_FILENAME_MASK =
-	'/^import_files\/[A-Za-z0-9_-]+\/[A-Za-z0-9_.-]+\.(?:jpg|jpeg|png|gif|webp)$/i';
+	const SALE_IMPORT_FILENAME_MASK = '/^orders-[a-f0-9-]*_?.\.xml$/';
 
+
+	// ==========================================================
+	// IMPERIA CUSTOM CODE
+	// ==========================================================
+	// Разрешаем EDI принимать файлы, которые 1С передаёт
+	// внутри каталога import_files/.
+	//
+	// Зачем это нужно:
+	// ----------------------------------------------------------
+	// В стандартном EDI Request разрешает только определённые
+	// типы файлов:
+	//   - import*.xml
+	//   - offers*.xml
+	//   - *.zip
+	//   - orders-*.xml
+	//
+	// При обмене с 1С изображения передаются отдельными запросами
+	// с mode=file и именем, например:
+	//
+	//   import_files/123456/image.jpg
+	//   import_files/123456/image.png
+	//
+	// Оригинальный EDI не пропускает такое имя файла через
+	// set_filename(), потому что для каталога import_files/
+	// в нём нет соответствующей маски.
+	//
+	// ВАЖНО:
+	// ----------------------------------------------------------
+	// Эта константа НЕ занимается загрузкой или обработкой
+	// изображения.
+	//
+	// Она только сообщает Request:
+	// "файл находится внутри разрешённого каталога
+	// import_files/ — не считай его недопустимым именем".
+	//
+	// Сам приём файла полностью выполняет оригинальный EDI:
+	//
+	//   AbstractInterchange::action_file()
+	//              ↓
+	//   EDI::filesystem()->receive_file()
+	//              ↓
+	//   DirectFileSystem::receive_file()
+	//
+	// Поэтому никакой собственной системы загрузки файлов
+	// в Imperia для этого делать не требуется.
+	//
+	// Почему используется общая маска import_files/:
+	// ----------------------------------------------------------
+	// Нам здесь не нужно проверять расширение файла.
+	// Задача Request — разрешить путь файла, который передаёт 1С.
+	// Обработка того, что это за файл, происходит дальше.
+	//
+	// Маска допускает:
+	//   import_files/123/image.jpg
+	//   import_files/123/image.jpeg
+	//   import_files/123/image.png
+	//   import_files/123/image.webp
+	//   и другие файлы внутри import_files/
+	//
+	//------------------------------------------------------------
+	// Мы намеренно не ограничиваем расширение файла здесь.
+	// Request отвечает только за допустимость пути.
+	//
+	// Каким является файл — изображением, XML или другим файлом —
+	// определяется последующей логикой EDI/Imperia.
+	// Само сохранение файла выполняет оригинальный EDI.
+	//
+	// ==========================================================
 	const IMPORT_FILES_MASK =
 	'/^import_files\/.+$/i';
 
-	const SALE_IMPORT_FILENAME_MASK = '/^orders-[a-f0-9-]*_?.\.xml$/';
 
 	const CLEAR_REPOSITORY        = true;
 	const DO_NOT_CLEAR_REPOSITORY = false;
@@ -54,6 +120,39 @@ class Request
 
 	public function __construct()
 	{
+
+		/**
+		 * ======================================================
+		 * IMPERIA DIAGNOSTIC
+		 * ======================================================
+		 *
+		 * Фиксируем момент запуска механизма EDI.
+		 *
+		 * Эта запись НЕ влияет на обмен.
+		 *
+		 * Она нужна только для диагностики:
+		 *
+		 * - был ли создан объект Request;
+		 * - какой URL вызвал EDI;
+		 * - какой mode передан;
+		 * - какой type передан;
+		 * - какой filename передан.
+		 *
+		 * Запись выполняется непосредственно в стандартный
+		 * WordPress debug.log через error_log().
+		 *
+		 * После завершения диагностики этот блок можно удалить.
+		 */
+		/* error_log(
+			sprintf(
+				'[IMPERIA EDI DIAGNOSTIC] EDI Request started | URI=%s | mode=%s | type=%s | filename=%s',
+				$_SERVER['REQUEST_URI'] ?? '',
+				$_REQUEST['mode'] ?? '',
+				$_REQUEST['type'] ?? '',
+				$_REQUEST['filename'] ?? ''
+			)
+		);
+ */
 		$this->previous_mode     = strval(get_option('_edi_mode', ''));
 		$this->previous_type     = strval(get_option('_edi_type', ''));
 		$this->previous_filename = strval(get_option('_edi_filename', ''));
@@ -115,8 +214,9 @@ class Request
 			! preg_match(self::ZIP_IMPORT_FILENAME_MASK, $this->filename)
 			&&
 			! preg_match(self::SALE_IMPORT_FILENAME_MASK, $this->filename)
-			&&
-			! preg_match(self::IMAGE_IMPORT_FILENAME_MASK, $this->filename)
+
+			// IMPERIA: разрешаем файлы из import_files/,
+			// передаваемые 1С в режиме mode=file.
 			&&
 			! preg_match(self::IMPORT_FILES_MASK, $this->filename)
 		) {

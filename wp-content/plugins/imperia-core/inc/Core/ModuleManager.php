@@ -37,42 +37,24 @@ final class ModuleManager
 		],
 
 		/*
-     * Модуль интеграции с EDI.
-     *
-     * Сам обмен выполняет плагин EDI.
-     *
-     * Imperia Core лишь подключает
-     * собственные фильтры и действия,
-     * расширяющие стандартную работу EDI.
-     */
+ * Модуль интеграции с EDI.
+ *
+ * Сам обмен выполняет оригинальный плагин EDI.
+ *
+ * Imperia Core подключает только собственные
+ * расширения и hooks.
+ *
+ * Контекст "edi" предназначен для запросов
+ * непосредственно к endpoint:
+ *
+ *     /edi/1c
+ *
+ * Это позволяет не загружать EDI-модуль
+ * на обычных frontend-страницах магазина.
+ */
 		'Imperia\\Modules\\EDI\\Module' => [
-
-			// Обмен идёт через обычный HTTP-запрос,
-			// поэтому обязательно нужен frontend.
-			'frontend',
-
-			// Позже здесь появятся
-			// настройки обмена.
-			'admin',
-
-			// Пригодится для ручной синхронизации
-			// и AJAX-инструментов диагностики.
-			'ajax',
+			'edi',
 		],
-
-		/* 'Imperia\\Modules\\Checkout\\Module' => [
-			'frontend',
-		],
-
-		'Imperia\\Modules\\Search\\Module' => [
-			'frontend',
-			'ajax',
-		],
-
-		'Imperia\\Modules\\Account\\Module' => [
-			'frontend',
-			'admin',
-		], */
 
 	];
 
@@ -112,9 +94,25 @@ final class ModuleManager
 
 		foreach (self::MODULES as $moduleClass => $allowedContexts) {
 
+			/* imperia_log(
+				sprintf(
+					'IMPERIA MODULE CHECK | context=%s | module=%s',
+					$context,
+					$moduleClass
+				)
+			); */
+
 			if (!in_array($context, $allowedContexts, true)) {
 				continue;
 			}
+
+			/* imperia_log(
+				sprintf(
+					'IMPERIA MODULE LOAD | context=%s | module=%s',
+					$context,
+					$moduleClass
+				)
+			); */
 
 			try {
 
