@@ -1,0 +1,101 @@
+
+/**
+ * Imperia Core — Product Notice
+ *
+ * Стили информационного блока на странице отдельного товара.
+ *
+ * Файл:
+ * modules/ProductNotice/Assets/product-notice.css
+ *
+ * Классы используют префикс imperia-product-notice,
+ * чтобы снизить вероятность конфликта со стилями Blocksy
+ * и других расширений WooCommerce.
+ */
+
+/*
+ * Основной контейнер уведомления.
+ *
+ * Ограничиваем селектор страницей отдельного товара:
+ * блок не должен влиять на другие разделы сайта.
+ */
+.single-product .imperia-product-notice {
+    box-sizing: border-box;
+
+    margin-top: 32px;
+    margin-bottom: 24px;
+    padding: 20px 24px;
+
+    background-color: #f1f7ef;
+    border-left: 4px solid #4f8a52;
+    border-radius: 4px;
+
+    color: #263b29;
+}
+
+/*
+ * Заголовок уведомления.
+ *
+ * Селектор уточнён классом блока, чтобы не менять
+ * заголовки h2 в описании и других секциях товара.
+ */
+.single-product .imperia-product-notice__title {
+    margin: 0 0 12px;
+    padding: 0;
+
+    color: #285b32;
+
+    font-size: 18px;
+    font-weight: 600;
+    line-height: 1.4;
+}
+
+/*
+ * Контейнер текстовых предупреждений.
+ */
+.single-product .imperia-product-notice__content {
+    margin: 0;
+    padding: 0;
+}
+
+/*
+ * Каждый пункт — отдельный абзац.
+ */
+.single-product .imperia-product-notice__item {
+    margin: 0;
+
+    color: #263b29;
+
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.65;
+
+    overflow-wrap: anywhere;
+}
+
+/*
+ * Расстояние между предупреждениями.
+ */
+.single-product .imperia-product-notice__item + .imperia-product-notice__item {
+    margin-top: 8px;
+}
+
+/*
+ * Адаптация для планшетов и смартфонов.
+ */
+@media (max-width: 767px) {
+    .single-product .imperia-product-notice {
+        margin-top: 24px;
+        margin-bottom: 20px;
+        padding: 16px;
+    }
+
+    .single-product .imperia-product-notice__title {
+        margin-bottom: 10px;
+        font-size: 16px;
+    }
+
+    .single-product .imperia-product-notice__item {
+        font-size: 14px;
+        line-height: 1.6;
+    }
+}
